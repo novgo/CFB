@@ -1,0 +1,13 @@
+//
+//  MSCFB.h
+//  MSCFB
+//
+//  Created by Hervey Wilson on 4/7/13.
+//  Copyright (c) 2013 Hervey Wilson. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface MSCFB : NSObject
+
+@end
