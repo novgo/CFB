@@ -9,12 +9,25 @@
 /* Begin PBXBuildFile section */
 		BC268C8617128BAC00687A1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8517128BAC00687A1D /* Cocoa.framework */; };
 		BC268C9017128BAC00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268C8E17128BAC00687A1D /* InfoPlist.strings */; };
-		BC268C9417128BAC00687A1D /* MSCFB.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268C9317128BAC00687A1D /* MSCFB.m */; };
 		BC268C9C17128BAC00687A1D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C9B17128BAC00687A1D /* SenTestingKit.framework */; };
 		BC268C9D17128BAC00687A1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8517128BAC00687A1D /* Cocoa.framework */; };
 		BC268CA017128BAC00687A1D /* MSCFB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8217128BAC00687A1D /* MSCFB.framework */; };
 		BC268CA617128BAC00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268CA417128BAC00687A1D /* InfoPlist.strings */; };
 		BC268CA917128BAC00687A1D /* MSCFBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CA817128BAC00687A1D /* MSCFBTests.m */; };
+		BC268D0917129F5800687A1D /* MSCFBDirectoryEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CFC17129F5800687A1D /* MSCFBDirectoryEntry.h */; };
+		BC268D0A17129F5800687A1D /* MSCFBDirectoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CFD17129F5800687A1D /* MSCFBDirectoryEntry.m */; };
+		BC268D0B17129F5800687A1D /* MSCFBObject.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CFE17129F5800687A1D /* MSCFBObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268D0C17129F5800687A1D /* MSCFBObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CFF17129F5800687A1D /* MSCFBObject.m */; };
+		BC268D0D17129F5800687A1D /* MSCFBObjectInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0017129F5800687A1D /* MSCFBObjectInternal.h */; };
+		BC268D0E17129F5800687A1D /* MSCFBStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0117129F5800687A1D /* MSCFBStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268D0F17129F5800687A1D /* MSCFBStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D0217129F5800687A1D /* MSCFBStorage.m */; };
+		BC268D1017129F5800687A1D /* MSCFBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0317129F5800687A1D /* MSCFBStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268D1117129F5800687A1D /* MSCFBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D0417129F5800687A1D /* MSCFBStream.m */; };
+		BC268D1217129F5800687A1D /* MSCFBTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0517129F5800687A1D /* MSCFBTypes.h */; };
+		BC268D1317129F5800687A1D /* MSCFBFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0617129F5800687A1D /* MSCFBFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268D1417129F5800687A1D /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D0717129F5800687A1D /* MSCFBFile.m */; };
+		BC268D1517129F5800687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0817129F5800687A1D /* MSCFBFileInternal.h */; };
+		BC268D1617129F9300687A1D /* MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268C9217128BAC00687A1D /* MSCFB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +50,25 @@
 		BC268C8F17128BAC00687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268C9117128BAC00687A1D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = OSX/Prefix.pch; sourceTree = "<group>"; };
 		BC268C9217128BAC00687A1D /* MSCFB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFB.h; sourceTree = "<group>"; };
-		BC268C9317128BAC00687A1D /* MSCFB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSCFB.m; sourceTree = "<group>"; };
 		BC268C9A17128BAC00687A1D /* MSCFBTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSCFBTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C9B17128BAC00687A1D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BC268CA317128BAC00687A1D /* MSCFBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MSCFBTests-Info.plist"; sourceTree = "<group>"; };
 		BC268CA517128BAC00687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268CA717128BAC00687A1D /* MSCFBTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFBTests.h; sourceTree = "<group>"; };
 		BC268CA817128BAC00687A1D /* MSCFBTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSCFBTests.m; sourceTree = "<group>"; };
+		BC268CFC17129F5800687A1D /* MSCFBDirectoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBDirectoryEntry.h; sourceTree = "<group>"; };
+		BC268CFD17129F5800687A1D /* MSCFBDirectoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBDirectoryEntry.m; sourceTree = "<group>"; };
+		BC268CFE17129F5800687A1D /* MSCFBObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBObject.h; sourceTree = "<group>"; };
+		BC268CFF17129F5800687A1D /* MSCFBObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBObject.m; sourceTree = "<group>"; };
+		BC268D0017129F5800687A1D /* MSCFBObjectInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBObjectInternal.h; sourceTree = "<group>"; };
+		BC268D0117129F5800687A1D /* MSCFBStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBStorage.h; sourceTree = "<group>"; };
+		BC268D0217129F5800687A1D /* MSCFBStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBStorage.m; sourceTree = "<group>"; };
+		BC268D0317129F5800687A1D /* MSCFBStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBStream.h; sourceTree = "<group>"; };
+		BC268D0417129F5800687A1D /* MSCFBStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBStream.m; sourceTree = "<group>"; };
+		BC268D0517129F5800687A1D /* MSCFBTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBTypes.h; sourceTree = "<group>"; };
+		BC268D0617129F5800687A1D /* MSCFBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFile.h; sourceTree = "<group>"; };
+		BC268D0717129F5800687A1D /* MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFile.m; sourceTree = "<group>"; };
+		BC268D0817129F5800687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +137,19 @@
 			isa = PBXGroup;
 			children = (
 				BC268C9217128BAC00687A1D /* MSCFB.h */,
-				BC268C9317128BAC00687A1D /* MSCFB.m */,
+				BC268CFC17129F5800687A1D /* MSCFBDirectoryEntry.h */,
+				BC268CFD17129F5800687A1D /* MSCFBDirectoryEntry.m */,
+				BC268D0617129F5800687A1D /* MSCFBFile.h */,
+				BC268D0717129F5800687A1D /* MSCFBFile.m */,
+				BC268D0817129F5800687A1D /* MSCFBFileInternal.h */,
+				BC268CFE17129F5800687A1D /* MSCFBObject.h */,
+				BC268CFF17129F5800687A1D /* MSCFBObject.m */,
+				BC268D0017129F5800687A1D /* MSCFBObjectInternal.h */,
+				BC268D0117129F5800687A1D /* MSCFBStorage.h */,
+				BC268D0217129F5800687A1D /* MSCFBStorage.m */,
+				BC268D0317129F5800687A1D /* MSCFBStream.h */,
+				BC268D0417129F5800687A1D /* MSCFBStream.m */,
+				BC268D0517129F5800687A1D /* MSCFBTypes.h */,
 				BC268C8C17128BAC00687A1D /* Supporting Files */,
 			);
 			path = Source;
@@ -171,6 +208,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC268D1617129F9300687A1D /* MSCFB.h in Headers */,
+				BC268D0B17129F5800687A1D /* MSCFBObject.h in Headers */,
+				BC268D0E17129F5800687A1D /* MSCFBStorage.h in Headers */,
+				BC268D1017129F5800687A1D /* MSCFBStream.h in Headers */,
+				BC268D1317129F5800687A1D /* MSCFBFile.h in Headers */,
+				BC268D0917129F5800687A1D /* MSCFBDirectoryEntry.h in Headers */,
+				BC268D0D17129F5800687A1D /* MSCFBObjectInternal.h in Headers */,
+				BC268D1217129F5800687A1D /* MSCFBTypes.h in Headers */,
+				BC268D1517129F5800687A1D /* MSCFBFileInternal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +327,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC268C9417128BAC00687A1D /* MSCFB.m in Sources */,
+				BC268D0A17129F5800687A1D /* MSCFBDirectoryEntry.m in Sources */,
+				BC268D0C17129F5800687A1D /* MSCFBObject.m in Sources */,
+				BC268D0F17129F5800687A1D /* MSCFBStorage.m in Sources */,
+				BC268D1117129F5800687A1D /* MSCFBStream.m in Sources */,
+				BC268D1417129F5800687A1D /* MSCFBFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

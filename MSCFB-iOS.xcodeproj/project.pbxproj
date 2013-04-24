@@ -24,7 +24,6 @@
 
 /* Begin PBXBuildFile section */
 		BC268C501712886800687A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C4F1712886800687A1D /* Foundation.framework */; };
-		BC268C571712886800687A1D /* MSCFB.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268C561712886800687A1D /* MSCFB.m */; };
 		BC268C5F1712886800687A1D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C5E1712886800687A1D /* SenTestingKit.framework */; };
 		BC268C611712886800687A1D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C601712886800687A1D /* UIKit.framework */; };
 		BC268C621712886800687A1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C4F1712886800687A1D /* Foundation.framework */; };
@@ -33,6 +32,19 @@
 		BC268C6E1712886800687A1D /* MSCFBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268C6D1712886800687A1D /* MSCFBTests.m */; };
 		BC268CB61712973300687A1D /* MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268C541712886800687A1D /* MSCFB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC268CD3171298EE00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268CC91712983400687A1D /* InfoPlist.strings */; };
+		BC268CEF17129F4800687A1D /* MSCFBDirectoryEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE217129F4800687A1D /* MSCFBDirectoryEntry.h */; };
+		BC268CF017129F4800687A1D /* MSCFBDirectoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CE317129F4800687A1D /* MSCFBDirectoryEntry.m */; };
+		BC268CF117129F4800687A1D /* MSCFBObject.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE417129F4800687A1D /* MSCFBObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268CF217129F4800687A1D /* MSCFBObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CE517129F4800687A1D /* MSCFBObject.m */; };
+		BC268CF317129F4800687A1D /* MSCFBObjectInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE617129F4800687A1D /* MSCFBObjectInternal.h */; };
+		BC268CF417129F4800687A1D /* MSCFBStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE717129F4800687A1D /* MSCFBStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268CF517129F4800687A1D /* MSCFBStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CE817129F4800687A1D /* MSCFBStorage.m */; };
+		BC268CF617129F4800687A1D /* MSCFBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE917129F4800687A1D /* MSCFBStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC268CF717129F4800687A1D /* MSCFBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CEA17129F4800687A1D /* MSCFBStream.m */; };
+		BC268CF817129F4800687A1D /* MSCFBTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CEB17129F4800687A1D /* MSCFBTypes.h */; };
+		BC268D191712A09100687A1D /* MSCFBFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D171712A09100687A1D /* MSCFBFile.h */; };
+		BC268D1A1712A09100687A1D /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D181712A09100687A1D /* MSCFBFile.m */; };
+		BC268D1C1712A17200687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +76,6 @@
 		BC268C4F1712886800687A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC268C531712886800687A1D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = iOS/Prefix.pch; sourceTree = "<group>"; };
 		BC268C541712886800687A1D /* MSCFB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFB.h; sourceTree = "<group>"; };
-		BC268C561712886800687A1D /* MSCFB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSCFB.m; sourceTree = "<group>"; };
 		BC268C5D1712886800687A1D /* MSCFBTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSCFBTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C5E1712886800687A1D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BC268C601712886800687A1D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -76,6 +87,19 @@
 		BC268CC41712983400687A1D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BC268CC81712983400687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268CCA1712983400687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BC268CE217129F4800687A1D /* MSCFBDirectoryEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBDirectoryEntry.h; sourceTree = "<group>"; };
+		BC268CE317129F4800687A1D /* MSCFBDirectoryEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBDirectoryEntry.m; sourceTree = "<group>"; };
+		BC268CE417129F4800687A1D /* MSCFBObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBObject.h; sourceTree = "<group>"; };
+		BC268CE517129F4800687A1D /* MSCFBObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBObject.m; sourceTree = "<group>"; };
+		BC268CE617129F4800687A1D /* MSCFBObjectInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBObjectInternal.h; sourceTree = "<group>"; };
+		BC268CE717129F4800687A1D /* MSCFBStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBStorage.h; sourceTree = "<group>"; };
+		BC268CE817129F4800687A1D /* MSCFBStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBStorage.m; sourceTree = "<group>"; };
+		BC268CE917129F4800687A1D /* MSCFBStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBStream.h; sourceTree = "<group>"; };
+		BC268CEA17129F4800687A1D /* MSCFBStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBStream.m; sourceTree = "<group>"; };
+		BC268CEB17129F4800687A1D /* MSCFBTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBTypes.h; sourceTree = "<group>"; };
+		BC268D171712A09100687A1D /* MSCFBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFile.h; sourceTree = "<group>"; };
+		BC268D181712A09100687A1D /* MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFile.m; sourceTree = "<group>"; };
+		BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +168,19 @@
 			isa = PBXGroup;
 			children = (
 				BC268C541712886800687A1D /* MSCFB.h */,
-				BC268C561712886800687A1D /* MSCFB.m */,
+				BC268CE217129F4800687A1D /* MSCFBDirectoryEntry.h */,
+				BC268CE317129F4800687A1D /* MSCFBDirectoryEntry.m */,
+				BC268D171712A09100687A1D /* MSCFBFile.h */,
+				BC268D181712A09100687A1D /* MSCFBFile.m */,
+				BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */,
+				BC268CE417129F4800687A1D /* MSCFBObject.h */,
+				BC268CE517129F4800687A1D /* MSCFBObject.m */,
+				BC268CE617129F4800687A1D /* MSCFBObjectInternal.h */,
+				BC268CE717129F4800687A1D /* MSCFBStorage.h */,
+				BC268CE817129F4800687A1D /* MSCFBStorage.m */,
+				BC268CE917129F4800687A1D /* MSCFBStream.h */,
+				BC268CEA17129F4800687A1D /* MSCFBStream.m */,
+				BC268CEB17129F4800687A1D /* MSCFBTypes.h */,
 				BC268C521712886800687A1D /* Supporting Files */,
 			);
 			path = Source;
@@ -212,6 +248,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC268CB61712973300687A1D /* MSCFB.h in Headers */,
+				BC268CF117129F4800687A1D /* MSCFBObject.h in Headers */,
+				BC268CF617129F4800687A1D /* MSCFBStream.h in Headers */,
+				BC268CF417129F4800687A1D /* MSCFBStorage.h in Headers */,
+				BC268CEF17129F4800687A1D /* MSCFBDirectoryEntry.h in Headers */,
+				BC268CF317129F4800687A1D /* MSCFBObjectInternal.h in Headers */,
+				BC268CF817129F4800687A1D /* MSCFBTypes.h in Headers */,
+				BC268D191712A09100687A1D /* MSCFBFile.h in Headers */,
+				BC268D1C1712A17200687A1D /* MSCFBFileInternal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +411,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC268C571712886800687A1D /* MSCFB.m in Sources */,
+				BC268CF017129F4800687A1D /* MSCFBDirectoryEntry.m in Sources */,
+				BC268CF217129F4800687A1D /* MSCFBObject.m in Sources */,
+				BC268CF517129F4800687A1D /* MSCFBStorage.m in Sources */,
+				BC268CF717129F4800687A1D /* MSCFBStream.m in Sources */,
+				BC268D1A1712A09100687A1D /* MSCFBFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +656,7 @@
 				BC268CCF1712983400687A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC268CD91712993800687A1D /* Build configuration list for PBXAggregateTarget "MSCFBFramework" */ = {
 			isa = XCConfigurationList;
@@ -616,6 +665,7 @@
 				BC268CDB1712993800687A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

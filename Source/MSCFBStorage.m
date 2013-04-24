@@ -1,0 +1,69 @@
+//
+//  MSCFBStorage.m
+//
+//  Created by Hervey Wilson on 3/12/13.
+//  Copyright (c) 2013 Hervey Wilson. All rights reserved.
+//
+
+#import "MSCFBTypes.h"
+
+#import "MSCFBDirectoryEntry.h"
+
+#import "MSCFBObject.h"
+#import "MSCFBObjectInternal.h"
+
+#import "MSCFBStream.h"
+#import "MSCFBStorage.h"
+
+@implementation MSCFBStorage
+{
+    NSMutableDictionary *_contents;
+}
+
+- (id)init
+{
+    NSAssert( false, @"Cannot call simple initializer" );
+    
+    return nil;
+}
+
+- (id)init:(MSCFBDirectoryEntry *)entry
+{
+    self = [super init:entry];
+    
+    if ( self )
+    {
+        _contents = [[NSMutableDictionary alloc] init];
+    }
+    
+    return self;
+}
+
+- (void)addObject:(MSCFBObject *)child
+{
+    NSAssert( child != nil, @"Child is nil" );
+    NSAssert( _contents != nil, @"Contents is nil" );
+    
+    [_contents setObject:child forKey:[child name]];
+}
+
+- (MSCFBObject *)objectForKey:(NSString *)key
+{
+    NSAssert( _contents != nil, @"Contents is nil" );
+    return [_contents objectForKey:key];
+}
+
+
+- (NSData *)read:(NSRange)range
+{
+    // TODO: Error cases
+    return [self.directoryEntry read:range];
+}
+
+- (NSData *)readAll
+{
+    return [self.directoryEntry readAll];
+}
+
+
+@end
