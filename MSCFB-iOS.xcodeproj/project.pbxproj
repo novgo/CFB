@@ -42,9 +42,11 @@
 		BC268CF617129F4800687A1D /* MSCFBStream.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CE917129F4800687A1D /* MSCFBStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC268CF717129F4800687A1D /* MSCFBStream.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CEA17129F4800687A1D /* MSCFBStream.m */; };
 		BC268CF817129F4800687A1D /* MSCFBTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CEB17129F4800687A1D /* MSCFBTypes.h */; };
-		BC268D191712A09100687A1D /* MSCFBFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D171712A09100687A1D /* MSCFBFile.h */; };
+		BC268D191712A09100687A1D /* MSCFBFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D171712A09100687A1D /* MSCFBFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC268D1A1712A09100687A1D /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D181712A09100687A1D /* MSCFBFile.m */; };
 		BC268D1C1712A17200687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */; };
+		BC92AB5F1727A1AA00A65134 /* MSDRMFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB5D1727A1AA00A65134 /* MSDRMFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC92AB601727A1AA00A65134 /* MSDRMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC92AB5E1727A1AA00A65134 /* MSDRMFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,8 @@
 		BC268D171712A09100687A1D /* MSCFBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFile.h; sourceTree = "<group>"; };
 		BC268D181712A09100687A1D /* MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFile.m; sourceTree = "<group>"; };
 		BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
+		BC92AB5D1727A1AA00A65134 /* MSDRMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMFile.h; sourceTree = "<group>"; };
+		BC92AB5E1727A1AA00A65134 /* MSDRMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,8 @@
 		BC268C511712886800687A1D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BC92AB5D1727A1AA00A65134 /* MSDRMFile.h */,
+				BC92AB5E1727A1AA00A65134 /* MSDRMFile.m */,
 				BC268C541712886800687A1D /* MSCFB.h */,
 				BC268CE217129F4800687A1D /* MSCFBDirectoryEntry.h */,
 				BC268CE317129F4800687A1D /* MSCFBDirectoryEntry.m */,
@@ -251,10 +257,11 @@
 				BC268CF117129F4800687A1D /* MSCFBObject.h in Headers */,
 				BC268CF617129F4800687A1D /* MSCFBStream.h in Headers */,
 				BC268CF417129F4800687A1D /* MSCFBStorage.h in Headers */,
+				BC268D191712A09100687A1D /* MSCFBFile.h in Headers */,
+				BC92AB5F1727A1AA00A65134 /* MSDRMFile.h in Headers */,
 				BC268CEF17129F4800687A1D /* MSCFBDirectoryEntry.h in Headers */,
 				BC268CF317129F4800687A1D /* MSCFBObjectInternal.h in Headers */,
 				BC268CF817129F4800687A1D /* MSCFBTypes.h in Headers */,
-				BC268D191712A09100687A1D /* MSCFBFile.h in Headers */,
 				BC268D1C1712A17200687A1D /* MSCFBFileInternal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +423,7 @@
 				BC268CF517129F4800687A1D /* MSCFBStorage.m in Sources */,
 				BC268CF717129F4800687A1D /* MSCFBStream.m in Sources */,
 				BC268D1A1712A09100687A1D /* MSCFBFile.m in Sources */,
+				BC92AB601727A1AA00A65134 /* MSDRMFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

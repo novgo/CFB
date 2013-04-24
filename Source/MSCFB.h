@@ -11,3 +11,4 @@
 #import <MSCFB/MSCFBStream.h>
 #import <MSCFB/MSCFBStorage.h>
 #import <MSCFB/MSCFBFile.h>
+#import <MSCFB/MSDRMFile.h>

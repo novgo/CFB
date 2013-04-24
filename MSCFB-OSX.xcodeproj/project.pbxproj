@@ -28,6 +28,8 @@
 		BC268D1417129F5800687A1D /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D0717129F5800687A1D /* MSCFBFile.m */; };
 		BC268D1517129F5800687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0817129F5800687A1D /* MSCFBFileInternal.h */; };
 		BC268D1617129F9300687A1D /* MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268C9217128BAC00687A1D /* MSCFB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC92AB5B17279D9500A65134 /* MSDRMFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB5917279D9500A65134 /* MSDRMFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC92AB5C17279D9500A65134 /* MSDRMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC92AB5A17279D9500A65134 /* MSDRMFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		BC268D0617129F5800687A1D /* MSCFBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFile.h; sourceTree = "<group>"; };
 		BC268D0717129F5800687A1D /* MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFile.m; sourceTree = "<group>"; };
 		BC268D0817129F5800687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
+		BC92AB5917279D9500A65134 /* MSDRMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMFile.h; sourceTree = "<group>"; };
+		BC92AB5A17279D9500A65134 /* MSDRMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,8 @@
 				BC268D0317129F5800687A1D /* MSCFBStream.h */,
 				BC268D0417129F5800687A1D /* MSCFBStream.m */,
 				BC268D0517129F5800687A1D /* MSCFBTypes.h */,
+				BC92AB5917279D9500A65134 /* MSDRMFile.h */,
+				BC92AB5A17279D9500A65134 /* MSDRMFile.m */,
 				BC268C8C17128BAC00687A1D /* Supporting Files */,
 			);
 			path = Source;
@@ -213,6 +219,7 @@
 				BC268D0E17129F5800687A1D /* MSCFBStorage.h in Headers */,
 				BC268D1017129F5800687A1D /* MSCFBStream.h in Headers */,
 				BC268D1317129F5800687A1D /* MSCFBFile.h in Headers */,
+				BC92AB5B17279D9500A65134 /* MSDRMFile.h in Headers */,
 				BC268D0917129F5800687A1D /* MSCFBDirectoryEntry.h in Headers */,
 				BC268D0D17129F5800687A1D /* MSCFBObjectInternal.h in Headers */,
 				BC268D1217129F5800687A1D /* MSCFBTypes.h in Headers */,
@@ -332,6 +339,7 @@
 				BC268D0F17129F5800687A1D /* MSCFBStorage.m in Sources */,
 				BC268D1117129F5800687A1D /* MSCFBStream.m in Sources */,
 				BC268D1417129F5800687A1D /* MSCFBFile.m in Sources */,
+				BC92AB5C17279D9500A65134 /* MSDRMFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
