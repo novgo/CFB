@@ -132,7 +132,7 @@ typedef struct _BlockHeader
     free( deflatedBlock );
     free( inflatedBlock );
     
-    _file = [[MSDRMFile alloc] initWithData:data error:outError];
+    _file = [[MSDRMFile alloc] initWithData:deflatedData error:outError];
     
     [self validate];
     
