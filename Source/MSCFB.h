@@ -12,3 +12,5 @@
 #import <MSCFB/MSCFBStorage.h>
 #import <MSCFB/MSCFBFile.h>
 #import <MSCFB/MSDRMFile.h>
+#import <MSCFB/MSDRMDocument.h>
+#import <MSCFB/MSDRMMessage.h>

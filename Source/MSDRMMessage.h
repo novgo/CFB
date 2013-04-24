@@ -1,0 +1,20 @@
+//
+//  MSDRMMessage.h
+//  MSCFB
+//
+//  Created by Hervey Wilson on 3/18/13.
+//  Copyright (c) 2013 Microsoft Corp. All rights reserved.
+//
+
+@class MSDRMFile;
+
+@interface MSDRMMessage : NSObject
+
+@property (readonly, nonatomic) NSData *license;
+@property (readonly, nonatomic) NSData *content;
+
+- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError;
+
+- (MSDRMFile *)compoundFile;
+
+@end

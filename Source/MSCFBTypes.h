@@ -51,7 +51,7 @@ typedef struct _MSCFB_DIFAT_Sector
 #define FAT_SECTOR_FREE         (u_int32_t)0xFFFFFFFF
 
 #define SECTOR_SIZE           ( 1 << _header.sectorShift )
-#define SECTOR_OFFSET(x)      ( x << _header.sectorShift )
+#define SECTOR_OFFSET(x)      ( ( x + 1 ) << _header.sectorShift )
 #define MINI_SECTOR_SIZE      ( 1 << _header.miniSectorShift )
 #define MINI_SECTOR_OFFSET(x) ( x << _header.miniSectorShift )
 
