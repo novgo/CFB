@@ -69,8 +69,9 @@
 
 - (void)validate
 {
-    _license = _file.license;
-    _content = _file.content;
+    _license       = _file.license;
+    _content       = _file.content;
+    _contentLength = _file.contentLength;
 }
 
 - (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix

@@ -33,8 +33,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( outError )
         *outError = nil;
     
-    _license = nil;
-    _content = nil;
+    _license       = nil;
+    _content       = nil;
+    _contentLength = 0;
     
     if ( ( self = [super initWithData:data error:outError] ) != nil )
     {
@@ -79,7 +80,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         [[cfbStream read:NSMakeRange(0, 8)] getBytes:&contentLength length:8];
         //NSAssert( contentLength == cfbStream.length - 8, @"Incorrect EncryptedPackage length" );
         
-        _content = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _content       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _contentLength = contentLength;
     }
     else
     {
@@ -94,7 +96,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         [[cfbStream read:NSMakeRange(0, 8)] getBytes:&contentLength length:8];
         NSAssert( contentLength == cfbStream.length - 8, @"Incorrect DRMContent length" );
         
-        _content = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        // TODO: What does contentLength mean in this case?
+        _content       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _contentLength = contentLength;
     }
     
     // Back to root: must have a DataSpaces storage

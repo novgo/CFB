@@ -10,8 +10,9 @@
 
 @interface MSDRMFile : MSCFBFile
 
-@property (readonly, nonatomic) NSData *license;
-@property (readonly, nonatomic) NSData *content;
+@property (readonly, nonatomic) NSData   *license;
+@property (readonly, nonatomic) NSData   *content;
+@property (readonly, nonatomic) u_int64_t contentLength;
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
 
