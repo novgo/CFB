@@ -95,30 +95,29 @@
         // Sector shift must be 0x0009, and sector size is 512
         if ( _header.sectorShift != 0x0009 )
             return nil;
-        
-        // Number of directory sectors
-        if ( _header.directorySectors != 0 )
-            return nil;
-        
-        // Load the FAT
-        [self loadFAT];
-        
-        // Load the mini FAT
-        [self loadMiniFAT];
-        
-        // Load the directory
-        [self loadDirectory];
-        
-        
-        // NOTE: the root storages stream is actually the mini stream
-        _root = [self initializeRoot];
     }
     else if ( _header.majorVersion == 4 )
     {
         if ( _header.sectorShift != 0x000C )
             return nil;
-        
     }
+    
+    // Number of directory sectors
+    if ( _header.directorySectors != 0 )
+        return nil;
+    
+    // Load the FAT
+    [self loadFAT];
+    
+    // Load the mini FAT
+    [self loadMiniFAT];
+    
+    // Load the directory
+    [self loadDirectory];
+    
+    
+    // NOTE: the root storages stream is actually the mini stream
+    _root = [self initializeRoot];
 
     return self;
 }
