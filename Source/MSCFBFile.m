@@ -122,6 +122,16 @@
     return self;
 }
 
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+    
+    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
+    
+    return self;
+}
+
 - (MSCFBObject *)objectForKey:(NSString *)key
 {
     return [_root objectForKey:key];

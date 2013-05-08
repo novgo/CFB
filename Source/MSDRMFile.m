@@ -28,16 +28,33 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
 
 #pragma mark - Public Methods
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError
+- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
-    if ( outError )
-        *outError = nil;
+    if ( error )
+        *error = nil;
     
     _license       = nil;
     _content       = nil;
     _contentLength = 0;
     
-    if ( ( self = [super initWithData:data error:outError] ) != nil )
+    if ( ( self = [super initWithData:data error:error] ) != nil )
+    {
+        [self validate];
+    }
+    
+    return self;
+}
+
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+    
+    _license       = nil;
+    _content       = nil;
+    _contentLength = 0;
+    
+    if ( ( self = [super initWithFileHandle:fileHandle error:error] ) != nil )
     {
         [self validate];
     }

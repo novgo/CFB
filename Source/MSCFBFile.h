@@ -10,6 +10,7 @@
 @interface MSCFBFile : NSObject
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
 
 - (MSCFBObject *)objectForKey:(NSString *)key;
 

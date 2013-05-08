@@ -15,6 +15,7 @@
 @property (readonly, nonatomic) u_int32_t  contentLength;
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError;
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error;
 
 - (MSDRMFile *)compoundFile;
 

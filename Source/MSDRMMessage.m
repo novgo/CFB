@@ -31,14 +31,14 @@ typedef struct _BlockHeader
 
 #pragma mark - Public Methods
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError
+- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     
-    if ( outError )
-        *outError = nil;
+    if ( error )
+        *error = nil;
     
 #define ZLIB_BUFFER_SIZE (4 * 1024)
     
@@ -132,21 +132,23 @@ typedef struct _BlockHeader
     free( deflatedBlock );
     free( inflatedBlock );
     
-    _file = [[MSDRMFile alloc] initWithData:deflatedData error:outError];
+    _file = [[MSDRMFile alloc] initWithData:deflatedData error:error];
     
     [self validate];
-    
-    //NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    //@throw exception;
-    
-    //NSString *text = [[NSString alloc] initWithData:deflatedData encoding:NSUTF16StringEncoding];
-    
-    //[[NSFileManager defaultManager] createFileAtPath:@"/Users/herveyw/Documents/decompressed" contents:deflatedData attributes:nil];
-    
-    //NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    //@throw exception;
+
     return self;
 }
+
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+
+    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
+    
+    return self;
+}
+
 
 /*
 // The default implementation of this method reads all the file data and calls readFromData:ofType:error

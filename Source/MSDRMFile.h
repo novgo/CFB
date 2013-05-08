@@ -15,5 +15,6 @@
 @property (readonly, nonatomic) u_int64_t contentLength;
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
 
 @end

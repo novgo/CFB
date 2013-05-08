@@ -14,6 +14,7 @@
 @property (readonly, nonatomic) NSData *content;
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError;
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error;
 
 - (MSDRMFile *)compoundFile;
 

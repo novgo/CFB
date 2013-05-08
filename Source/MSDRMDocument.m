@@ -46,6 +46,18 @@
     return self;
 }
 
+
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+    
+    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
+    
+    return self;
+}
+
+
 /*
 // The default implementation of this method reads all the file data and calls readFromData:ofType:error
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
