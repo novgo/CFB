@@ -349,10 +349,11 @@
         
         [_data getBytes:fatIndex range:dataRange];
         
-        if ( i == 0 && *((u_int32_t *)fatIndex) != FAT_SECTOR_SIGNATURE )
-        {
-            NSAssert( false, @"No FAT_SECTOR_SIGNATURE" );
-        }
+        // TODO: The following condition only appears to be true of protected content
+        //if ( i == 0 && *((u_int32_t *)fatIndex) != FAT_SECTOR_SIGNATURE )
+        //{
+        //    NSAssert( false, @"No FAT_SECTOR_SIGNATURE" );
+        //}
         
         fatIndex += SECTOR_SIZE;
     }
