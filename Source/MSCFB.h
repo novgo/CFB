@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import <MSCFB/MSCFBError.h>
 #import <MSCFB/MSCFBObject.h>
 #import <MSCFB/MSCFBStream.h>
 #import <MSCFB/MSCFBStorage.h>

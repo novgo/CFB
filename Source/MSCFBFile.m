@@ -6,6 +6,7 @@
 //
 
 #import "MSCFBTypes.h"
+#import "MSCFBError.h"
 
 #import "MSCFBDirectoryEntry.h"
 
@@ -13,23 +14,28 @@
 #import "MSCFBStorage.h"
 #import "MSCFBStream.h"
 
+#import "MSCFBSource.h"
+
 #import "MSCFBFile.h"
 #import "MSCFBFileInternal.h"
 
+extern void setError( NSError * __autoreleasing *error, NSString *domain, int code, NSDictionary *userInfo );
+
+
 // Private Interface
 @interface MSCFBFile ()
+
+- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error;
 
 - (void)loadDirectory;
 - (void)loadFAT;
 - (void)loadMiniFAT;
 
-- (NSData *)readStream:(u_int32_t)index range:(NSRange)range;
-
 @end
 
 @implementation MSCFBFile
 {
-    MSCFB_HEADER      _header;
+    MSCFB_HEADER    _header;
     
     NSMutableArray *_directory;
     NSData         *_directoryData;
@@ -37,7 +43,8 @@
     NSMutableData  *_fat;
     NSMutableData  *_miniFat;
     
-    NSData         *_data;
+    //    NSData         *_data;
+    id<MSCFBSource> _source;
     
     MSCFBStorage   *_root;
 }
@@ -49,57 +56,94 @@
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
+    return [self initWithSource:[[MSCFBDataSource alloc] initWithData:data] error:error];
+}
+
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
+{
+    return [self initWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
+}
+
+- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
+{
     if ( error )
         *error = nil;
     
-    _data = data;
+    _source = source;
     
-    [data getBytes:&_header length:sizeof(MSCFB_HEADER)];
+    [_source getBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
     
     // Verify header signatures
     if ( _header.signature[0] != MSCFB_SIGNATURE_1 || _header.signature[1] != MSCFB_SIGNATURE_2 )
+    {
+        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
         return nil;
+    }
     
     // Verify CLSID
     for ( int i = 0; i < 3; i++ )
     {
         if ( _header.dwClsid[i] != 0 )
+        {
+            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
             return nil;
+        }
     }
     
     // Verify major version
     if ( _header.majorVersion != 3 && _header.majorVersion != 4 )
+    {
+        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
         return nil;
+    }
     
     // Minor Version
     if ( _header.minorVersion != 0x3E )
+    {
+        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
         return nil;
+    }
     
     // Byte order
     if ( _header.byteOrder != 0xFFFE )
+    {
+        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
         return nil;
+    }
     
     // Mini sector shift must be 0x0006, and mini sector size is 64
     if ( _header.miniSectorShift != 0x0006 )
+    {
+        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
         return nil;
+    }
     
     // Reserved bytes
     for ( int i = 0; i < 3; i++ )
     {
         if ( _header.reserved[i] != 0 )
+        {
+            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
             return nil;
+        }
     }
     
     if ( _header.majorVersion == 3 )
     {
         // Sector shift must be 0x0009, and sector size is 512
         if ( _header.sectorShift != 0x0009 )
+        {
+            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
             return nil;
+        }
     }
     else if ( _header.majorVersion == 4 )
     {
         if ( _header.sectorShift != 0x000C )
+        {
+            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
             return nil;
+        }
     }
     
     // Number of directory sectors
@@ -119,16 +163,6 @@
     // NOTE: the root storages stream is actually the mini stream
     _root = [self initializeRoot];
 
-    return self;
-}
-
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
-    
     return self;
 }
 
@@ -176,8 +210,7 @@
     // If we are not at the end of the chain, then we can start reading data
     if ( sector != FAT_SECTOR_END_OF_CHAIN )
     {
-        const Byte *dataBytes = [_data bytes];
-        NSRange     byteRange = { 0, 0 };
+        NSRange byteRange = { 0, 0 };
         
         // Location is offset into first sector. Length is bytes to read.
         // TODO: Check for off-by-one errors
@@ -195,7 +228,7 @@
             NSAssert( sector != FAT_SECTOR_END_OF_CHAIN, @"Current sector is End of Chain" );
             
             // Copy the data
-            [bytes appendBytes:(dataBytes + SECTOR_OFFSET( sector ) + byteRange.location) length:byteRange.length];
+            [bytes appendData:[_source readRange:NSMakeRange( SECTOR_OFFSET(sector) + byteRange.location, byteRange.length)]];
             
             // Reduce remaining
             bytesRemaining -= byteRange.length;
@@ -345,9 +378,9 @@
         dataRange.location = SECTOR_OFFSET( _header.difat[i] );
         
         NSAssert( fatIndex - (Byte *)[_fat bytes] < _fat.length, @"Attempt to read past end of FAT space" );
-        NSAssert( dataRange.location + dataRange.length < _data.length, @"Attempt to read past end of data" );
+        NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
         
-        [_data getBytes:fatIndex range:dataRange];
+        [_source getBytes:fatIndex range:dataRange];
         
         // TODO: The following condition only appears to be true of protected content
         //if ( i == 0 && *((u_int32_t *)fatIndex) != FAT_SECTOR_SIGNATURE )
@@ -369,8 +402,8 @@
         
         for ( i = 0; i < _header.difatSectors; i++ )
         {
-            NSAssert( dataRange.location + dataRange.length < _data.length, @"Attempt to read past end of data" );
-            [_data getBytes:difatSector range:dataRange];
+            NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
+            [_source getBytes:difatSector range:dataRange];
             
             // Read the FAT sectors that the DIFAT points to
             for ( j = 0; j < ( SECTOR_SIZE / sizeof( u_int32_t) - 1 ); j++ )
@@ -383,9 +416,9 @@
                 
                 
                 NSAssert( fatIndex - (Byte *)[_fat bytes] < _fat.length, @"Attempt to read past end of FAT space" );
-                NSAssert( dataRange.location + dataRange.length < _data.length, @"Attempt to read past end of data" );
+                NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
                 
-                [_data getBytes:fatIndex range:dataRange];
+                [_source getBytes:fatIndex range:dataRange];
                 
                 fatIndex += SECTOR_SIZE;
             }
@@ -424,8 +457,8 @@
         
         for ( i = 0; i < _header.miniFatSectors; i++ )
         {
-            NSAssert( dataRange.location + dataRange.length < _data.length, @"Attempt to read past end of data" );
-            [_miniFat appendData:[self read:dataRange]];
+            NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
+            [_miniFat appendData:[_source readRange:dataRange]];
             
             sector             = fatTable->nextSector[sector];
             dataRange.location = SECTOR_OFFSET( sector );
@@ -444,7 +477,7 @@
 // Reads data from the real file
 - (NSData *)read:(NSRange)range
 {
-    return [[NSData alloc] initWithBytesNoCopy:( [_data bytes] + range.location ) length:range.length freeWhenDone:NO];
+    return [_source readRange:range];
 }
 
 - (MSCFBDirectoryEntry *)directoryEntryAtIndex:(NSInteger)index
