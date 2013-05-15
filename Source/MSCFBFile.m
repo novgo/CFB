@@ -262,7 +262,7 @@ extern void setError( NSError * __autoreleasing *error, NSString *domain, int co
     // Calculate the range of sectors that must be read
     // TODO: Check for off-by-one errors
     sectorRange.location = range.location >> _header.miniSectorShift;
-    sectorRange.length   = ( range.length >> _header.miniSectorShift ) + 1;
+    sectorRange.length   = ( range.length >> _header.miniSectorShift );
     
     const MSCFB_FAT_SECTOR *fatTable = [_miniFat bytes];
     
