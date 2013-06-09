@@ -1,9 +1,8 @@
 //
 //  MSDRMMessage.m
-//  MSCFB
 //
 //  Created by Hervey Wilson on 3/18/13.
-//  Copyright (c) 2013 Microsoft Corp. All rights reserved.
+//  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 #include <zlib.h>
 

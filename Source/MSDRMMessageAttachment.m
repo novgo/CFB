@@ -1,9 +1,8 @@
 //
 //  MSDRMMessageAttachment.m
-//  RPMessageViewer
 //
 //  Created by Hervey Wilson on 6/8/13.
-//  Copyright (c) 2013 Microsoft Corp. All rights reserved.
+//  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 #import "NSData+MSCFB.h"
 
@@ -49,7 +48,6 @@
         description = (MSCFBStream *)cfbObject;
         
         NSData *descriptionData  = [description readAll];
-        Byte   *descriptionBytes = [descriptionData bytes];
         NSRange readRange        = NSMakeRange( 0, 0 );
         
         // u_int16_t version must be 0x0203
@@ -61,82 +59,59 @@
         NSAssert( version == 0x0203, @"Invalid attachment version" );
         readRange.location += readRange.length;
         
-        NSString *string;
-        
-        // Long Path Name
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        // Path Name
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        // Display Name
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        // Long File Name
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        // File Name
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        // Extension
-        string = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        
-        u_int64_t time = 0;
+        // Read the LPString variants of the names
+        _longPathName = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
+        _pathName     = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
+        _displayName  = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
+        _longFileName = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
+        _fileName     = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
+        _extension    = [descriptionData readLPString:readRange.location setLocation:&readRange.location];
         
         // Creation and Last Modified (dont actually read)
+        //u_int64_t time = 0;
+        
         readRange.length    = sizeof( u_int64_t );
         readRange.location += readRange.length;
         readRange.location += readRange.length;
         
-        u_int32_t attachMethod = 0;
-        
         readRange.length    = sizeof( u_int32_t );
-        [descriptionData getBytes:&attachMethod range:readRange];
+        [descriptionData getBytes:&_attachMethod range:readRange];
         readRange.location += readRange.length;
         
         // Now all the names again, but this time in unicode
         
         // Content ID
-        string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
-        _contentID = string;
+        _contentID = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
         
         // Content Location
-        string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        _contentLocation = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
         
         // Long path name
-        string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        NSString *string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
+        if ( !_longPathName || _longPathName == 0 ) _longPathName = string;
 
         // path name
         string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        if ( !_pathName || _pathName == 0 ) _pathName = string;
         
         // display name
         string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        if ( !_displayName || _displayName == 0 ) _displayName = string;
         
         // long file name
         string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        if ( !_longFileName || _longFileName == 0 ) _longFileName = string;
         
         // file name
         string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        if ( !_fileName || _fileName == 0 ) _fileName = string;
         
         // extension
         string = [descriptionData readLPUnicodeString:readRange.location setLocation:&readRange.location];
-        DebugLog( @"%@", string );
+        if ( !_extension || _extension == 0 ) _extension = string;
     }
     
-    // Try to access the attachment description stream
+    // Try to access the attachment contents stream
     cfbObject = [storage objectForKey:@"AttachContents"];
     NSAssert( cfbObject != nil, @"AttachContents not found!" );
     NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );

@@ -1,12 +1,12 @@
 //
 //  MSDRMMessageContent.h
-//  RPMessageViewer
 //
 //  Created by Hervey Wilson on 6/8/13.
-//  Copyright (c) 2013 Microsoft Corp. All rights reserved.
+//  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
-enum MessageContentType {
+enum MessageContentType
+{
     MessageContentTypePlain = 1,
     MessageContentTypeHTML  = 2,
     MessageContentTypeRTF   = 3

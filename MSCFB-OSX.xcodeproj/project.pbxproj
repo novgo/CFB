@@ -37,6 +37,12 @@
 		BC57737017435C9D004ACC65 /* MSCFBError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57736E17435C9D004ACC65 /* MSCFBError.m */; };
 		BC57737717436080004ACC65 /* MSCFBSource.h in Headers */ = {isa = PBXBuildFile; fileRef = BC57737517436080004ACC65 /* MSCFBSource.h */; };
 		BC57737817436080004ACC65 /* MSCFBSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57737617436080004ACC65 /* MSCFBSource.m */; };
+		BC915F461764E4C400DABD46 /* MSDRMMessageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC915F471764E4C400DABD46 /* MSDRMMessageAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = BC915F411764E4C400DABD46 /* MSDRMMessageAttachment.m */; };
+		BC915F481764E4C400DABD46 /* MSDRMMessageContent.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F421764E4C400DABD46 /* MSDRMMessageContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC915F491764E4C400DABD46 /* MSDRMMessageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC915F431764E4C400DABD46 /* MSDRMMessageContent.m */; };
+		BC915F4A1764E4C400DABD46 /* NSData+MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F441764E4C400DABD46 /* NSData+MSCFB.h */; };
+		BC915F4B1764E4C400DABD46 /* NSData+MSCFB.m in Sources */ = {isa = PBXBuildFile; fileRef = BC915F451764E4C400DABD46 /* NSData+MSCFB.m */; };
 		BC92AB5B17279D9500A65134 /* MSDRMFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB5917279D9500A65134 /* MSDRMFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC92AB5C17279D9500A65134 /* MSDRMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC92AB5A17279D9500A65134 /* MSDRMFile.m */; };
 		BC92AB8A1727B63800A65134 /* MSDRMDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB861727B63800A65134 /* MSDRMDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -94,6 +100,12 @@
 		BC57736E17435C9D004ACC65 /* MSCFBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBError.m; sourceTree = "<group>"; };
 		BC57737517436080004ACC65 /* MSCFBSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBSource.h; sourceTree = "<group>"; };
 		BC57737617436080004ACC65 /* MSCFBSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBSource.m; sourceTree = "<group>"; };
+		BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageAttachment.h; sourceTree = "<group>"; };
+		BC915F411764E4C400DABD46 /* MSDRMMessageAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessageAttachment.m; sourceTree = "<group>"; };
+		BC915F421764E4C400DABD46 /* MSDRMMessageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageContent.h; sourceTree = "<group>"; };
+		BC915F431764E4C400DABD46 /* MSDRMMessageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessageContent.m; sourceTree = "<group>"; };
+		BC915F441764E4C400DABD46 /* NSData+MSCFB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MSCFB.h"; sourceTree = "<group>"; };
+		BC915F451764E4C400DABD46 /* NSData+MSCFB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MSCFB.m"; sourceTree = "<group>"; };
 		BC92AB5917279D9500A65134 /* MSDRMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMFile.h; sourceTree = "<group>"; };
 		BC92AB5A17279D9500A65134 /* MSDRMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMFile.m; sourceTree = "<group>"; };
 		BC92AB861727B63800A65134 /* MSDRMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMDocument.h; sourceTree = "<group>"; };
@@ -206,6 +218,12 @@
 				BC92AB5A17279D9500A65134 /* MSDRMFile.m */,
 				BC92AB881727B63800A65134 /* MSDRMMessage.h */,
 				BC92AB891727B63800A65134 /* MSDRMMessage.m */,
+				BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */,
+				BC915F411764E4C400DABD46 /* MSDRMMessageAttachment.m */,
+				BC915F421764E4C400DABD46 /* MSDRMMessageContent.h */,
+				BC915F431764E4C400DABD46 /* MSDRMMessageContent.m */,
+				BC915F441764E4C400DABD46 /* NSData+MSCFB.h */,
+				BC915F451764E4C400DABD46 /* NSData+MSCFB.m */,
 				BC268C8C17128BAC00687A1D /* Supporting Files */,
 			);
 			path = Source;
@@ -274,11 +292,14 @@
 				BC92AB5B17279D9500A65134 /* MSDRMFile.h in Headers */,
 				BC92AB8A1727B63800A65134 /* MSDRMDocument.h in Headers */,
 				BC92AB8C1727B63800A65134 /* MSDRMMessage.h in Headers */,
+				BC915F461764E4C400DABD46 /* MSDRMMessageAttachment.h in Headers */,
+				BC915F481764E4C400DABD46 /* MSDRMMessageContent.h in Headers */,
 				BC268D0917129F5800687A1D /* MSCFBDirectoryEntry.h in Headers */,
 				BC268D0D17129F5800687A1D /* MSCFBObjectInternal.h in Headers */,
 				BC268D1217129F5800687A1D /* MSCFBTypes.h in Headers */,
 				BC268D1517129F5800687A1D /* MSCFBFileInternal.h in Headers */,
 				BC57737717436080004ACC65 /* MSCFBSource.h in Headers */,
+				BC915F4A1764E4C400DABD46 /* NSData+MSCFB.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +425,9 @@
 				BC92AB8D1727B63800A65134 /* MSDRMMessage.m in Sources */,
 				BC57737017435C9D004ACC65 /* MSCFBError.m in Sources */,
 				BC57737817436080004ACC65 /* MSCFBSource.m in Sources */,
+				BC915F471764E4C400DABD46 /* MSDRMMessageAttachment.m in Sources */,
+				BC915F491764E4C400DABD46 /* MSDRMMessageContent.m in Sources */,
+				BC915F4B1764E4C400DABD46 /* NSData+MSCFB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

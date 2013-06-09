@@ -50,13 +50,13 @@
 - (MSCFBObject *)objectForKey:(NSString *)key
 {
     NSAssert( _contents != nil, @"Contents is nil" );
+
     return [_contents objectForKey:key];
 }
 
 
 - (NSData *)read:(NSRange)range
 {
-    // TODO: Error cases
     return [self.directoryEntry read:range];
 }
 

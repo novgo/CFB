@@ -1,6 +1,5 @@
 //
 //  NSData+MSCFB.m
-//  MSCFB-iOS
 //
 //  Created by Hervey Wilson on 6/9/13.
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
