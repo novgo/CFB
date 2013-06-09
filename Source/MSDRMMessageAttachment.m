@@ -7,7 +7,9 @@
 //
 #import "NSData+MSCFB.h"
 
-#import <MSCFB/MSCFB.h>
+#import "MSCFBObject.h"
+#import "MSCFBStream.h"
+#import "MSCFBStorage.h"
 
 #import "MSDRMMessageAttachment.h"
 

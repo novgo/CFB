@@ -60,6 +60,8 @@
 		BC75409F176469AA00B07012 /* MSDRMMessageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = BC75409B176469AA00B07012 /* MSDRMMessageContent.m */; };
 		BC7540A2176469CB00B07012 /* NSData+MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC7540A0176469CB00B07012 /* NSData+MSCFB.h */; };
 		BC7540A3176469CB00B07012 /* NSData+MSCFB.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7540A1176469CB00B07012 /* NSData+MSCFB.m */; };
+		BC7540A71764763500B07012 /* message-5.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC7540A51764763500B07012 /* message-5.rpmsg */; };
+		BC7540A81764763500B07012 /* message-6.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC7540A61764763500B07012 /* message-6.rpmsg */; };
 		BC92AB5F1727A1AA00A65134 /* MSDRMFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB5D1727A1AA00A65134 /* MSDRMFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC92AB601727A1AA00A65134 /* MSDRMFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC92AB5E1727A1AA00A65134 /* MSDRMFile.m */; };
 		BC92AB751727AF7000A65134 /* MSDRMDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB711727AF7000A65134 /* MSDRMDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -137,6 +139,8 @@
 		BC75409B176469AA00B07012 /* MSDRMMessageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessageContent.m; sourceTree = "<group>"; };
 		BC7540A0176469CB00B07012 /* NSData+MSCFB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MSCFB.h"; sourceTree = "<group>"; };
 		BC7540A1176469CB00B07012 /* NSData+MSCFB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MSCFB.m"; sourceTree = "<group>"; };
+		BC7540A51764763500B07012 /* message-5.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-5.rpmsg"; sourceTree = "<group>"; };
+		BC7540A61764763500B07012 /* message-6.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-6.rpmsg"; sourceTree = "<group>"; };
 		BC92AB5D1727A1AA00A65134 /* MSDRMFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMFile.h; sourceTree = "<group>"; };
 		BC92AB5E1727A1AA00A65134 /* MSDRMFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMFile.m; sourceTree = "<group>"; };
 		BC92AB711727AF7000A65134 /* MSDRMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMDocument.h; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				BC1BCD651743D69F000F4D85 /* message-2.rpmsg */,
 				BC1BCD661743D69F000F4D85 /* message-3.rpmsg */,
 				BC1BCD671743D69F000F4D85 /* message-4.rpmsg */,
+				BC7540A51764763500B07012 /* message-5.rpmsg */,
+				BC7540A61764763500B07012 /* message-6.rpmsg */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -439,6 +445,8 @@
 				BC1BCD6A1743D69F000F4D85 /* message-2.rpmsg in Resources */,
 				BC1BCD6B1743D69F000F4D85 /* message-3.rpmsg in Resources */,
 				BC1BCD6C1743D69F000F4D85 /* message-4.rpmsg in Resources */,
+				BC7540A71764763500B07012 /* message-5.rpmsg in Resources */,
+				BC7540A81764763500B07012 /* message-6.rpmsg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Microsoft Corp. All rights reserved.
 //
 
-#import <MSCFB/MSCFB.h>
+#import "MSCFBObject.h"
+#import "MSCFBFile.h"
+#import "MSCFBStream.h"
+#import "MSCFBStorage.h"
 
 #import "MSDRMMessageAttachment.h"
 #import "MSDRMMessageContent.h"
