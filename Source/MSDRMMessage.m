@@ -173,8 +173,8 @@ typedef struct _BlockHeader
 
 - (void)validate
 {
-    _license = _file.license;
-    _content = _file.content;
+    _license          = _file.license;
+    _protectedContent = _file.protectedContent;
 }
 
 - (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix

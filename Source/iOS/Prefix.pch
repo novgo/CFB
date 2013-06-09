@@ -6,3 +6,14 @@
     #import <Foundation/Foundation.h>
 #endif
 
+
+// Debug tracing
+#ifndef DebugLog
+
+#ifdef DEBUG
+#   define DebugLog(fmt, ...) NSLog((@"%s[%d][%@] " fmt), __PRETTY_FUNCTION__, __LINE__, [[NSThread currentThread] isEqual:[NSThread mainThread]] ? @"main" : @"work", ##__VA_ARGS__);
+#else
+#   define DebugLog(...)
+#endif
+
+#endif

@@ -33,9 +33,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( error )
         *error = nil;
     
-    _license       = nil;
-    _content       = nil;
-    _contentLength = 0;
+    _license                = nil;
+    _protectedContent       = nil;
+    _protectedContentLength = 0;
     
     if ( ( self = [super initWithData:data error:error] ) != nil )
     {
@@ -50,9 +50,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( error )
         *error = nil;
     
-    _license       = nil;
-    _content       = nil;
-    _contentLength = 0;
+    _license                = nil;
+    _protectedContent       = nil;
+    _protectedContentLength = 0;
     
     if ( ( self = [super initWithFileHandle:fileHandle error:error] ) != nil )
     {
@@ -97,8 +97,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         [[cfbStream read:NSMakeRange(0, 8)] getBytes:&contentLength length:8];
         //NSAssert( contentLength == cfbStream.length - 8, @"Incorrect EncryptedPackage length" );
         
-        _content       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
-        _contentLength = contentLength;
+        _protectedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _protectedContentLength = contentLength;
     }
     else
     {
@@ -114,8 +114,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         NSAssert( contentLength == cfbStream.length - 8, @"Incorrect DRMContent length" );
         
         // TODO: What does contentLength mean in this case?
-        _content       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
-        _contentLength = contentLength;
+        _protectedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _protectedContentLength = contentLength;
     }
     
     // Back to root: must have a DataSpaces storage

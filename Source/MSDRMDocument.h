@@ -11,8 +11,8 @@
 @interface MSDRMDocument : NSObject
 
 @property (readonly, nonatomic) NSData    *license;
-@property (readonly, nonatomic) NSData    *content;
-@property (readonly, nonatomic) u_int32_t  contentLength;
+@property (readonly, nonatomic) NSData    *protectedContent;
+@property (readonly, nonatomic) u_int32_t  protectedContentLength;
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError;
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error;
