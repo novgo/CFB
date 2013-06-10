@@ -72,12 +72,16 @@
     NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo object is not a stream" );
     cfbStream = (MSCFBStream *)cfbObject;
     
-    // The first 4 bytes of the OutlookBodyStreamInfo stream are the content type
-    
+    // The first 2 bytes of the OutlookBodyStreamInfo stream are the content type
     u_int16_t contentType = 0;
     [[cfbStream read:NSMakeRange(0, 2)] getBytes:&contentType length:2];
     _contentType = (enum MessageContentType)contentType;
     NSAssert( _contentType == MessageContentTypeHTML || _contentType == MessageContentTypePlain || _contentType == MessageContentTypeRTF, @"Incorrect content type" );
+    
+    // The second 4 bytes of the OutlookBodyStreamInfo stream are the code page
+    u_int32_t codePage = 0;
+    [[cfbStream read:NSMakeRange(2, 4)] getBytes:&codePage length:2];
+    _codePage = codePage;
     
     // The BodyPT-HTML contains either plain text or HTML content and must be present
     cfbObject = [_file objectForKey:@"BodyPT-HTML"];
@@ -139,7 +143,6 @@
             readRange.length    = pipeLength << 1; // pipeLength is in unicode characters
 
             NSString *pipe = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
-            DebugLog( @"Pipe: %@", pipe );
             
             // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
             // than the number of attachments and that last entry should be empty
@@ -152,8 +155,6 @@
             {
                 if ( name.length != 0 )
                 {
-                    DebugLog( @"Attachment %@", name );
-                    
                     cfbObject = [cfbStorage objectForKey:name];
                     NSAssert( cfbObject != nil, @"Attachment not found!" );
                     NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment object is not a storage" );

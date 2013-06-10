@@ -14,6 +14,7 @@ enum MessageContentType
 
 @interface MSDRMMessageContent : NSObject
 
+@property (readonly, nonatomic) u_int32_t               codePage;
 @property (readonly, nonatomic) enum MessageContentType contentType;
 @property (readonly, nonatomic) MSCFBStream            *bodyStream;
 @property (readonly, nonatomic) MSCFBStream            *bodyRTF;

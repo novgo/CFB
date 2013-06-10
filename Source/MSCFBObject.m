@@ -43,8 +43,6 @@
     if ( self )
     {
         _entry = entry;
-        
-        NSLog( @"Initialized object=%@", [self name] );
     }
     
     return self;
