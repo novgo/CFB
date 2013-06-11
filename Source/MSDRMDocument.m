@@ -29,19 +29,15 @@
     if ( outError )
         *outError = nil;
     
-    _file = [[MSDRMFile alloc] initWithData:data error:outError];
+    self = [super init];
     
-    [self validate];
-    
-    //NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    //@throw exception;
-    
-    //NSString *text = [[NSString alloc] initWithData:deflatedData encoding:NSUTF16StringEncoding];
-    
-    //[[NSFileManager defaultManager] createFileAtPath:@"/Users/herveyw/Documents/decompressed" contents:deflatedData attributes:nil];
-    
-    //NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    //@throw exception;
+    if ( self )
+    {
+        _file = [[MSDRMFile alloc] initWithData:data error:outError];
+        
+        [self validate];
+    }
+
     return self;
 }
 
@@ -80,7 +76,7 @@
 
 - (void)validate
 {
-    _license       = _file.license;
+    _license                = _file.license;
     _protectedContent       = _file.protectedContent;
     _protectedContentLength = _file.protectedContentLength;
 }

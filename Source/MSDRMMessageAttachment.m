@@ -35,6 +35,9 @@
     
     self = [super init];
     
+    _content   = nil;
+    _contentID = nil;
+    
     MSCFBStream *description = nil;
     
     // Try to access the attachment description stream
@@ -74,6 +77,7 @@
         readRange.location += readRange.length;
         readRange.location += readRange.length;
         
+        // Attachment Method
         readRange.length    = sizeof( u_int32_t );
         [descriptionData getBytes:&_attachMethod range:readRange];
         readRange.location += readRange.length;
@@ -111,11 +115,37 @@
         if ( !_extension || _extension == 0 ) _extension = string;
     }
     
-    // Try to access the attachment contents stream
-    cfbObject = [storage objectForKey:@"AttachContents"];
-    NSAssert( cfbObject != nil, @"AttachContents not found!" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
-    _content = (MSCFBStream *)cfbObject;
+    if ( _attachMethod == afByValue )
+    {
+        // Try to access the attachment contents stream
+        cfbObject = [storage objectForKey:@"AttachContents"];
+        NSAssert( cfbObject != nil, @"AttachContents not found!" );
+        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+        _content = (MSCFBStream *)cfbObject;
+        
+        // AttachPres has the icon
+        cfbObject = [storage objectForKey:@"AttachPres"];
+        NSAssert( cfbObject != nil, @"AttachContents not found!" );
+        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+    }
+    else if ( _attachMethod == afEmbeddedMessage )
+    {
+        // An embedded message: the content is another msg in the stream.
+        // TODO: MS-OXORMMS is confusing here, in tests there is neither an AttachContents or a .msg stream
+        //cfbObject = [storage objectForKey:@".msg"];
+        //NSAssert( cfbObject != nil, @"AttachContents not found!" );
+        //NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+        //_content = (MSCFBStream *)cfbObject;
+        
+        // AttachPres has the icon
+        cfbObject = [storage objectForKey:@"AttachPres"];
+        NSAssert( cfbObject != nil, @"AttachContents not found!" );
+        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+    }
+    else
+    {
+        // We don't support anything else, but MS-OXORMMS says we might see afOle
+    }
     
     return self;
 }

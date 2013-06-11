@@ -69,6 +69,11 @@ extern void setError( NSError * __autoreleasing *error, NSString *domain, int co
     if ( error )
         *error = nil;
     
+    self = [super init];
+    
+    if ( !self )
+        return nil;
+    
     _source = source;
     
     [_source getBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];

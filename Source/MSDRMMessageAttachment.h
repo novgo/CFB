@@ -5,9 +5,19 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
+enum MSAttachMethod
+{
+    afNone            = 0x00000000,
+    afByValue         = 0x00000001,
+    afByReference     = 0x00000002,
+    afByReferenceOnly = 0x00000004,
+    afEmbeddedMessage = 0x00000005,
+    afStorage         = 0x00000006
+};
+
 @interface MSDRMMessageAttachment : NSObject
 
-@property (readonly, nonatomic) u_int32_t attachMethod;
+@property (readonly, nonatomic) enum MSAttachMethod attachMethod;
 
 @property (readonly, nonatomic) NSData   *content;
 @property (readonly, nonatomic) NSString *contentID;
