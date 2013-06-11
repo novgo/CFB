@@ -634,7 +634,6 @@
 		BC268C721712886800687A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/MSCFB.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
@@ -646,7 +645,6 @@
 		BC268C731712886800687A1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/MSCFB.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
