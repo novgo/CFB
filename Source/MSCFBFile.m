@@ -19,9 +19,6 @@
 #import "MSCFBFile.h"
 #import "MSCFBFileInternal.h"
 
-extern void setError( NSError * __autoreleasing *error, NSString *domain, int code, NSDictionary *userInfo );
-
-
 // Private Interface
 @interface MSCFBFile ()
 
@@ -43,7 +40,6 @@ extern void setError( NSError * __autoreleasing *error, NSString *domain, int co
     NSMutableData  *_fat;
     NSMutableData  *_miniFat;
     
-    //    NSData         *_data;
     id<MSCFBSource> _source;
     
     MSCFBStorage   *_root;
@@ -66,9 +62,6 @@ extern void setError( NSError * __autoreleasing *error, NSString *domain, int co
 
 - (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
 {
-    if ( error )
-        *error = nil;
-    
     self = [super init];
     
     if ( !self )
@@ -79,80 +72,53 @@ extern void setError( NSError * __autoreleasing *error, NSString *domain, int co
     [_source getBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
     
     // Verify header signatures
-    if ( _header.signature[0] != MSCFB_SIGNATURE_1 || _header.signature[1] != MSCFB_SIGNATURE_2 )
-    {
-        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+    if ( !ASSERT( error, ( _header.signature[0] == MSCFB_SIGNATURE_1 || _header.signature[1] == MSCFB_SIGNATURE_2 ), @"Invalid signature" ) )
         return nil;
-    }
     
     // Verify CLSID
     for ( int i = 0; i < 3; i++ )
     {
-        if ( _header.dwClsid[i] != 0 )
-        {
-            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+        if ( !ASSERT(error, _header.dwClsid[i] == 0, @"Invalid CLSID" ) )
             return nil;
-        }
     }
     
     // Verify major version
-    if ( _header.majorVersion != 3 && _header.majorVersion != 4 )
-    {
-        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+    if ( !ASSERT( error, _header.majorVersion == 3 || _header.majorVersion == 4, @"Invalid major version" ) )
         return nil;
-    }
     
     // Minor Version
-    if ( _header.minorVersion != 0x3E )
-    {
-        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+    if ( !ASSERT( error, _header.minorVersion == 0x3E, @"Invalid minor version" ) )
         return nil;
-    }
     
     // Byte order
-    if ( _header.byteOrder != 0xFFFE )
-    {
-        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+    if ( !ASSERT( error, _header.byteOrder == 0xFFFE, @"Invalid byte order" ) )
         return nil;
-    }
     
     // Mini sector shift must be 0x0006, and mini sector size is 64
-    if ( _header.miniSectorShift != 0x0006 )
-    {
-        setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+    if ( !ASSERT( error, _header.miniSectorShift == 0x0006, @"Invalid mini sector shift" ) )
         return nil;
-    }
     
     // Reserved bytes
     for ( int i = 0; i < 3; i++ )
     {
-        if ( _header.reserved[i] != 0 )
-        {
-            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+        if ( !ASSERT( error, _header.reserved[i] == 0, @"Invalid reserved field" ) )
             return nil;
-        }
     }
     
     if ( _header.majorVersion == 3 )
     {
         // Sector shift must be 0x0009, and sector size is 512
-        if ( _header.sectorShift != 0x0009 )
-        {
-            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+        if ( !ASSERT( error, _header.sectorShift == 0x0009, @"Invalid sector size for version 3" ) )
             return nil;
-        }
     }
     else if ( _header.majorVersion == 4 )
     {
-        if ( _header.sectorShift != 0x000C )
-        {
-            setError( error, MSCFBErrorDomain, MSCFBBadHeader, nil );
+        if ( !ASSERT( error, _header.sectorShift == 0x000C, @"Invalid sector size for version 4" ) )
             return nil;
-        }
     }
     
     // Number of directory sectors
-    if ( _header.directorySectors != 0 )
+    if ( !ASSERT( error, _header.directorySectors == 0, @"Invalid number of directory sectors" ) )
         return nil;
     
     // Load the FAT

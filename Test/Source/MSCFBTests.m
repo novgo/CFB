@@ -26,46 +26,67 @@
     [super tearDown];
 }
 
-- (void)testDocument1AsFile
+- (void)testDocuments
 {
-    NSString     *filePath   = [[NSBundle bundleForClass:[self class]] pathForResource:@"document-1" ofType:@"doc"];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+    NSString *filePath = nil;
     
-    MSCFBFile *file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:nil];
+    for ( int i = 1; ; i++ )
+    {
+        filePath = [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"document-%d", i] ofType:@"doc"];
     
-    STAssertTrue( file != nil, @"Failed to load file" );
+        if ( filePath )
+        {
+            NSError      *error      = nil;
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+            NSData       *fileData   = [fileHandle readDataToEndOfFile];
+            MSCFBFile    *file       = nil;
+            
+            file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load document-%d as file: %@", i, error.localizedDescription );
+
+            file = [[MSCFBFile alloc] initWithData:fileData error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );
+            
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
-- (void)testDocument1AsData
+- (void)testMessages
 {
-    NSString     *filePath   = [[NSBundle bundleForClass:[self class]] pathForResource:@"document-1" ofType:@"doc"];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    NSData       *fileData   = [fileHandle readDataToEndOfFile];
+    NSString *filePath = nil;
     
-    MSCFBFile *file = [[MSCFBFile alloc] initWithData:fileData error:nil];
-    
-    STAssertTrue( file != nil, @"Failed to load file" );
-}
-
-- (void)testMessage1AsFile
-{
-    NSString     *filePath   = [[NSBundle bundleForClass:[self class]] pathForResource:@"message-1" ofType:@"rpmsg"];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    
-    MSDRMMessage *file = [[MSDRMMessage alloc] initWithFileHandle:fileHandle error:nil];
-    
-    STAssertTrue( file != nil, @"Failed to load file" );
-}
-
-- (void)testMessage1AsData
-{
-    NSString     *filePath   = [[NSBundle bundleForClass:[self class]] pathForResource:@"message-1" ofType:@"rpmsg"];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    NSData       *fileData   = [fileHandle readDataToEndOfFile];
-    
-    MSDRMMessage *file = [[MSDRMMessage alloc] initWithData:fileData error:nil];
-    
-    STAssertTrue( file != nil, @"Failed to load file" );
+    for ( int i = 1; ; i++ )
+    {
+        filePath = [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"message-%d", i] ofType:@"rpmsg"];
+        
+        if ( filePath )
+        {
+            NSError      *error      = nil;
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+            NSData       *fileData   = [fileHandle readDataToEndOfFile];
+            MSDRMMessage *file       = nil;
+            
+            [fileHandle seekToFileOffset:0];
+            file = [[MSDRMMessage alloc] initWithFileHandle:fileHandle error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load message-%d as file: %@", i, error.localizedDescription );
+            
+            file = [[MSDRMMessage alloc] initWithData:fileData error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load message-%d as data: %@", i, error.localizedDescription );
+            
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
 @end

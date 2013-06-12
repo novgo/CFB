@@ -9,4 +9,12 @@
 
 extern NSString * const MSCFBErrorDomain;
 
-extern const int MSCFBBadHeader;
+enum MSCFBErrorCode
+{
+    MSCFBBadHeader = 1
+};
+
+
+#define ASSERT( error, condition, fmt, ... ) Assert( __PRETTY_FUNCTION__, __LINE__, error, condition, fmt, ##__VA_ARGS__ )
+
+extern BOOL Assert( const char *function, int line, NSError * __autoreleasing *error, bool condition, NSString *fmt, ...);
