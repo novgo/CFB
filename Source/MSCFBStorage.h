@@ -13,6 +13,8 @@
 - (id)init:(MSCFBDirectoryEntry *)entry;
 
 - (void)addObject:(MSCFBObject *)object;
+- (NSArray *)allKeys;
+- (NSArray *)allValues;
 - (MSCFBObject *)objectForKey:(NSString *)key;
 
 - (NSData *)read:(NSRange)range;

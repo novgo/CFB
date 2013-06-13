@@ -66,6 +66,9 @@
     MSCFBStorage   *cfbStorage;
     MSCFBStream    *cfbStream;
     
+    for ( NSString *key in [_file allKeys] )
+        DebugLog( @"Storage entry: %@", key );
+    
     // The OutlookBodyStreamInfo contains two values: a WORD with the content type and a DWORD with a codepage
     cfbObject = [_file objectForKey:@"OutlookBodyStreamInfo"];
     NSAssert( cfbObject != nil, @"Missing OutlookBodyStreamInfo stream" );
@@ -100,10 +103,11 @@
             break;
             
         case MessageContentTypeRTF:
-            cfbObject = [_file objectForKey:@"BodyRtf"];
-            NSAssert( cfbObject != nil, @"Missing BodyRtf stream" );
+            cfbObject = [_file objectForKey:@"BodyRTF"];
+            NSAssert( cfbObject != nil, @"Missing BodyRTF stream" );
             NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRtf object is not a stream" );
             _bodyRTF = (MSCFBStream *)cfbObject;
+            _bodyStream = _bodyRTF;
             break;
     }
     
@@ -147,9 +151,10 @@
             // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
             // than the number of attachments and that last entry should be empty
             NSArray *attachmentNames = [pipe componentsSeparatedByString:@"|"];
-            NSAssert( attachmentNames.count == _attachmentCount + 1, @"Error: number of attachment names != attachment count" );
+            NSAssert( _contentType == MessageContentTypeRTF || attachmentNames.count == _attachmentCount + 1, @"Error: number of attachment names != attachment count" );
             
-            _attachments = [[NSMutableArray alloc] initWithCapacity:_attachmentCount];
+            // TODO: The RTF attachment count is stored elsewhere!
+            _attachments = [[NSMutableArray alloc] init];
             
             for ( NSString *name in attachmentNames )
             {
