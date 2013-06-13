@@ -17,6 +17,8 @@
 {
     MSCFBFile      *_file;
     NSMutableArray *_attachments;
+    
+    MSCFBStream    *_bodyHTML;
 }
 
 - (NSArray *)attachments
@@ -66,107 +68,110 @@
     MSCFBStorage   *cfbStorage;
     MSCFBStream    *cfbStream;
     
-    // The OutlookBodyStreamInfo contains two values: a WORD with the content type and a DWORD with a codepage
+    // We must load the OutlookBodyStreamInfo first before we can process other streams
     cfbObject = [_file objectForKey:@"OutlookBodyStreamInfo"];
-    NSAssert( cfbObject != nil, @"Missing OutlookBodyStreamInfo stream" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo object is not a stream" );
+    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo is not a stream" );
+    [self loadOutlookBodyStream:(MSCFBStream *)cfbObject];
+    
+    for ( NSString *key in [_file allKeys] )
+    {
+        DebugLog( @"Storage entry: %@", key );
+        
+        if ( [key isEqualToString:@"Attachment List"] )
+        {
+            // Try to access the attachment contents stream
+            cfbObject = [_file objectForKey:key];
+            NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment List object is not a storage" );
+            [self loadAttachmentList:(MSCFBStorage *)cfbObject];
+        }
+        else if ( [key isEqualToString:@"BodyPT-HTML"] )
+        {
+            // Try to access the attachment contents stream
+            cfbObject = [_file objectForKey:key];
+            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyPT-HTML object is not a stream" );
+            _bodyHTML = (MSCFBStream *)cfbObject;
+        }
+        else if ( [key isEqualToString:@"BodyRTF"] )
+        {
+            // Try to access the attachment contents stream
+            cfbObject = [_file objectForKey:key];
+            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRTF object is not a stream" );
+            _bodyRTF = (MSCFBStream *)cfbObject;
+        }
+        
+    }
+    
+    return YES;
+}
+
+- (void)loadAttachmentList:(MSCFBStorage *)storage
+{
+    MSCFBObject *cfbObject = nil;
+    MSCFBStream *cfbStream = nil;
+    
+    // The attachment list must have an Attachment Info stream
+    cfbObject = [storage objectForKey:@"Attachment Info"];
+    NSAssert( cfbObject != nil, @"Missing Attachment Info stream" );
+    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Attachment Info object is not a stream" );
     cfbStream = (MSCFBStream *)cfbObject;
     
+    NSRange   readRange = NSMakeRange( 0 , sizeof( u_int32_t) );
+    
+    // The number of attachments is the the first 4 bytes iff the content type is not RTF
+    u_int32_t attachmentCount = 0;
+    [[cfbStream read:readRange] getBytes:&attachmentCount length:readRange.length];
+    readRange.location += readRange.length;
+    
+    if ( _contentType == MessageContentTypeRTF ) NSAssert( attachmentCount == 0xFFFFFFFF, @"Incorrect attachment count for RTF message" );
+    if ( attachmentCount == 0xFFFFFFFF ) NSAssert( _contentType == MessageContentTypeRTF, @"Incorrect content type for non-RTF message" );
+    _attachmentCount = attachmentCount;
+    _attachments     = nil;
+    
+    if ( _attachmentCount > 0 )
+    {
+        u_int8_t pipeLength = 0;
+        readRange.length = 1;
+        [[cfbStream read:readRange] getBytes:&pipeLength length:readRange.length];
+        readRange.location += readRange.length;
+        readRange.length    = pipeLength << 1; // pipeLength is in unicode characters
+        
+        NSString *pipe = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
+        
+        // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
+        // than the number of attachments and that last entry should be empty
+        NSArray *attachmentNames = [pipe componentsSeparatedByString:@"|"];
+        NSAssert( _contentType == MessageContentTypeRTF || attachmentNames.count == _attachmentCount + 1, @"Error: number of attachment names != attachment count" );
+        
+        // TODO: The RTF attachment count is stored elsewhere!
+        _attachments = [[NSMutableArray alloc] init];
+        
+        for ( NSString *name in attachmentNames )
+        {
+            if ( name.length != 0 )
+            {
+                cfbObject = [storage objectForKey:name];
+                NSAssert( cfbObject != nil, @"Attachment not found!" );
+                NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment object is not a storage" );
+                MSDRMMessageAttachment *attachment = [[MSDRMMessageAttachment alloc] initWithStorage:(MSCFBStorage *)cfbObject];
+                
+                [_attachments addObject:attachment];
+            }
+        }
+    }
+}
+
+- (void)loadOutlookBodyStream:(MSCFBStream *)stream
+{
     // The first 2 bytes of the OutlookBodyStreamInfo stream are the content type
     u_int16_t contentType = 0;
-    [[cfbStream read:NSMakeRange(0, 2)] getBytes:&contentType length:2];
+    [[stream read:NSMakeRange(0, 2)] getBytes:&contentType length:2];
     _contentType = (enum MessageContentType)contentType;
     NSAssert( _contentType == MessageContentTypeHTML || _contentType == MessageContentTypePlain || _contentType == MessageContentTypeRTF, @"Incorrect content type" );
     
     // The second 4 bytes of the OutlookBodyStreamInfo stream are the code page
     u_int32_t codePage = 0;
-    [[cfbStream read:NSMakeRange(2, 4)] getBytes:&codePage length:2];
+    [[stream read:NSMakeRange(2, 4)] getBytes:&codePage length:2];
     _codePage = codePage;
-    
-    // The BodyPT-HTML contains either plain text or HTML content and must be present
-    cfbObject = [_file objectForKey:@"BodyPT-HTML"];
-    NSAssert( cfbObject != nil, @"Missing BodyPT-HTML stream" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyPT-HTML object is not a stream" );
-    _bodyStream = (MSCFBStream *)cfbObject;
-    
-    _bodyRTF = nil;
-    
-    switch ( _contentType )
-    {
-        case MessageContentTypeHTML:
-            break;
-            
-        case MessageContentTypePlain:
-            break;
-            
-        case MessageContentTypeRTF:
-            cfbObject = [_file objectForKey:@"BodyRtf"];
-            NSAssert( cfbObject != nil, @"Missing BodyRtf stream" );
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRtf object is not a stream" );
-            _bodyRTF = (MSCFBStream *)cfbObject;
-            break;
-    }
-    
-    // Look for an attachments list
-    cfbObject = [_file objectForKey:@"Attachment List"];
-    
-    if ( cfbObject )
-    {
-        // Message has attachments
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment List object is not a storage" );
-        cfbStorage = (MSCFBStorage *)cfbObject;
-        
-        // The attachment list must have an Attachment Info stream
-        cfbObject = [cfbStorage objectForKey:@"Attachment Info"];
-        NSAssert( cfbObject != nil, @"Missing Attachment Info stream" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Attachment Info object is not a stream" );
-        cfbStream = (MSCFBStream *)cfbObject;
-        
-        NSRange   readRange = NSMakeRange( 0 , sizeof( u_int32_t) );
-        
-        // The number of attachments is the the first 4 bytes iff the content type is not RTF
-        u_int32_t attachmentCount = 0;
-        [[cfbStream read:readRange] getBytes:&attachmentCount length:readRange.length];
-        readRange.location += readRange.length;
-        
-        if ( _contentType == MessageContentTypeRTF ) NSAssert( attachmentCount == 0xFFFFFFFF, @"Incorrect attachment count for RTF message" );
-        if ( attachmentCount == 0xFFFFFFFF ) NSAssert( _contentType == MessageContentTypeRTF, @"Incorrect content type for non-RTF message" );
-        _attachmentCount = attachmentCount;
-        _attachments     = nil;
-        
-        if ( _attachmentCount > 0 )
-        {
-            u_int8_t pipeLength = 0;
-            readRange.length = 1;
-            [[cfbStream read:readRange] getBytes:&pipeLength length:readRange.length];
-            readRange.location += readRange.length;
-            readRange.length    = pipeLength << 1; // pipeLength is in unicode characters
-
-            NSString *pipe = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
-            
-            // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
-            // than the number of attachments and that last entry should be empty
-            NSArray *attachmentNames = [pipe componentsSeparatedByString:@"|"];
-            NSAssert( attachmentNames.count == _attachmentCount + 1, @"Error: number of attachment names != attachment count" );
-            
-            _attachments = [[NSMutableArray alloc] initWithCapacity:_attachmentCount];
-            
-            for ( NSString *name in attachmentNames )
-            {
-                if ( name.length != 0 )
-                {
-                    cfbObject = [cfbStorage objectForKey:name];
-                    NSAssert( cfbObject != nil, @"Attachment not found!" );
-                    NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment object is not a storage" );
-                    MSDRMMessageAttachment *attachment = [[MSDRMMessageAttachment alloc] initWithStorage:(MSCFBStorage *)cfbObject];
-
-                    [_attachments addObject:attachment];
-                }
-            }
-        }
-    }
-    
-    return YES;
 }
 
 @end

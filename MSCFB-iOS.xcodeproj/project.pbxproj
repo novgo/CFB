@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		BC0A148C176A8C0B00F4B31E /* message-10.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC0A148B176A8BE200F4B31E /* message-10.rpmsg */; };
 		BC1BCD681743D69F000F4D85 /* document-1.doc in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD631743D69F000F4D85 /* document-1.doc */; };
 		BC1BCD691743D69F000F4D85 /* message-1.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD641743D69F000F4D85 /* message-1.rpmsg */; };
 		BC1BCD6A1743D69F000F4D85 /* message-2.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD651743D69F000F4D85 /* message-2.rpmsg */; };
@@ -69,6 +70,11 @@
 		BC92AB771727AF7000A65134 /* MSDRMMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB731727AF7000A65134 /* MSDRMMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC92AB781727AF7000A65134 /* MSDRMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC92AB741727AF7000A65134 /* MSDRMMessage.m */; };
 		BC92AB921727B6EB00A65134 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC92AB911727B6EB00A65134 /* libz.dylib */; };
+		BCCEDCDC176A484700A41739 /* document-1.docx in Resources */ = {isa = PBXBuildFile; fileRef = BCCEDCD7176A484700A41739 /* document-1.docx */; };
+		BCCEDCDD176A484700A41739 /* document-2.docx in Resources */ = {isa = PBXBuildFile; fileRef = BCCEDCD8176A484700A41739 /* document-2.docx */; };
+		BCCEDCDE176A484700A41739 /* message-7.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCCEDCD9176A484700A41739 /* message-7.rpmsg */; };
+		BCCEDCDF176A484700A41739 /* message-8.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCCEDCDA176A484700A41739 /* message-8.rpmsg */; };
+		BCCEDCE0176A484700A41739 /* message-9.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCCEDCDB176A484700A41739 /* message-9.rpmsg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +102,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC0A148B176A8BE200F4B31E /* message-10.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-10.rpmsg"; sourceTree = "<group>"; };
 		BC1BCD631743D69F000F4D85 /* document-1.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.doc"; sourceTree = "<group>"; };
 		BC1BCD641743D69F000F4D85 /* message-1.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-1.rpmsg"; sourceTree = "<group>"; };
 		BC1BCD651743D69F000F4D85 /* message-2.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-2.rpmsg"; sourceTree = "<group>"; };
@@ -148,6 +155,11 @@
 		BC92AB731727AF7000A65134 /* MSDRMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessage.h; sourceTree = "<group>"; };
 		BC92AB741727AF7000A65134 /* MSDRMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessage.m; sourceTree = "<group>"; };
 		BC92AB911727B6EB00A65134 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		BCCEDCD7176A484700A41739 /* document-1.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.docx"; sourceTree = "<group>"; };
+		BCCEDCD8176A484700A41739 /* document-2.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-2.docx"; sourceTree = "<group>"; };
+		BCCEDCD9176A484700A41739 /* message-7.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-7.rpmsg"; sourceTree = "<group>"; };
+		BCCEDCDA176A484700A41739 /* message-8.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-8.rpmsg"; sourceTree = "<group>"; };
+		BCCEDCDB176A484700A41739 /* message-9.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-9.rpmsg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +196,12 @@
 		BC1BCD621743D69F000F4D85 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				BC0A148B176A8BE200F4B31E /* message-10.rpmsg */,
+				BCCEDCD7176A484700A41739 /* document-1.docx */,
+				BCCEDCD8176A484700A41739 /* document-2.docx */,
+				BCCEDCD9176A484700A41739 /* message-7.rpmsg */,
+				BCCEDCDA176A484700A41739 /* message-8.rpmsg */,
+				BCCEDCDB176A484700A41739 /* message-9.rpmsg */,
 				BC1BCD631743D69F000F4D85 /* document-1.doc */,
 				BC1BCD641743D69F000F4D85 /* message-1.rpmsg */,
 				BC1BCD651743D69F000F4D85 /* message-2.rpmsg */,
@@ -447,6 +465,12 @@
 				BC1BCD6C1743D69F000F4D85 /* message-4.rpmsg in Resources */,
 				BC7540A71764763500B07012 /* message-5.rpmsg in Resources */,
 				BC7540A81764763500B07012 /* message-6.rpmsg in Resources */,
+				BCCEDCDC176A484700A41739 /* document-1.docx in Resources */,
+				BCCEDCDD176A484700A41739 /* document-2.docx in Resources */,
+				BCCEDCDE176A484700A41739 /* message-7.rpmsg in Resources */,
+				BCCEDCDF176A484700A41739 /* message-8.rpmsg in Resources */,
+				BCCEDCE0176A484700A41739 /* message-9.rpmsg in Resources */,
+				BC0A148C176A8C0B00F4B31E /* message-10.rpmsg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

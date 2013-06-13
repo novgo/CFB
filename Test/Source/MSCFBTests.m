@@ -26,7 +26,7 @@
     [super tearDown];
 }
 
-- (void)testDocuments
+- (void)testDoc
 {
     NSString *filePath = nil;
     
@@ -47,6 +47,39 @@
             
             STAssertTrue( file != nil, @"Failed to load document-%d as file: %@", i, error.localizedDescription );
 
+            file = [[MSCFBFile alloc] initWithData:fileData error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );
+            
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+- (void)testDocx
+{
+    NSString *filePath = nil;
+    
+    for ( int i = 1; ; i++ )
+    {
+        filePath = [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"document-%d", i] ofType:@"docx"];
+        
+        if ( filePath )
+        {
+            NSLog( @"Testing document-%d.docx", i );
+            
+            NSError      *error      = nil;
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+            NSData       *fileData   = [fileHandle readDataToEndOfFile];
+            MSCFBFile    *file       = nil;
+            
+            file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:&error];
+            
+            STAssertTrue( file != nil, @"Failed to load document-%d as file: %@", i, error.localizedDescription );
+            
             file = [[MSCFBFile alloc] initWithData:fileData error:&error];
             
             STAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );

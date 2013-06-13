@@ -137,6 +137,16 @@
     return self;
 }
 
+- (NSArray *)allKeys
+{
+    return [_root allKeys];
+}
+
+- (NSArray *)allValues
+{
+    return [_root allValues];
+}
+
 - (MSCFBObject *)objectForKey:(NSString *)key
 {
     return [_root objectForKey:key];

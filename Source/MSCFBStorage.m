@@ -42,9 +42,19 @@
 - (void)addObject:(MSCFBObject *)child
 {
     NSAssert( child != nil, @"Child is nil" );
+
     NSAssert( _contents != nil, @"Contents is nil" );
-    
     [_contents setObject:child forKey:[child name]];
+}
+
+- (NSArray *)allKeys
+{
+    return [_contents allKeys];
+}
+
+- (NSArray *)allValues
+{
+    return [_contents allValues];
 }
 
 - (MSCFBObject *)objectForKey:(NSString *)key

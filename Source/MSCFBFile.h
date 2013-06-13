@@ -12,6 +12,8 @@
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
 
+- (NSArray *)allKeys;
+- (NSArray *)allValues;
 - (MSCFBObject *)objectForKey:(NSString *)key;
 
 @end
