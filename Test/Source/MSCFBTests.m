@@ -36,6 +36,8 @@
     
         if ( filePath )
         {
+            NSLog( @"Testing document-%d.doc", i );
+            
             NSError      *error      = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
             NSData       *fileData   = [fileHandle readDataToEndOfFile];
@@ -67,6 +69,8 @@
         
         if ( filePath )
         {
+            NSLog( @"Testing message-%d.rpmsg", i );
+            
             NSError      *error      = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
             NSData       *fileData   = [fileHandle readDataToEndOfFile];
