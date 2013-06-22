@@ -57,7 +57,7 @@
     if ( range.location + range.length > self.length )
         return nil;
     
-    return [[NSData alloc] initWithBytesNoCopy:( [_data bytes] + range.location ) length:range.length freeWhenDone:NO];
+    return [[NSData alloc] initWithBytesNoCopy:( (void *)([_data bytes] + range.location) ) length:range.length freeWhenDone:NO];
 }
 
 @end
@@ -88,6 +88,11 @@
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [_handle closeFile];
 }
 
 #pragma mark - Data Access

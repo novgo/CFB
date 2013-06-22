@@ -35,7 +35,6 @@
     MSCFB_HEADER    _header;
     
     NSMutableArray *_directory;
-    NSData         *_directoryData;
     
     NSMutableData  *_fat;
     NSMutableData  *_miniFat;
@@ -318,13 +317,13 @@
     u_int32_t sector        = _header.firstDirectorySector;
     u_int32_t sectorCount   = [self sectorsInChain:sector];
     NSRange   sectorRange   = { 0, sectorCount << _header.sectorShift };
+    NSData   *directoryData = [self readStream:sector range:sectorRange];
     
-    _directory     = [[NSMutableArray alloc] init];
-    _directoryData = [self readStream:sector range:sectorRange];
+    _directory = [[NSMutableArray alloc] init];
+
+    MSCFB_DIRECTORY_ENTRY *directoryEntry = (MSCFB_DIRECTORY_ENTRY *)directoryData.bytes;
     
-    MSCFB_DIRECTORY_ENTRY *directoryEntry = (MSCFB_DIRECTORY_ENTRY *)_directoryData.bytes;
-    
-    for ( int i = 0; i < _directoryData.length / sizeof(MSCFB_DIRECTORY_ENTRY); ++i )
+    for ( int i = 0; i < directoryData.length / sizeof(MSCFB_DIRECTORY_ENTRY); ++i )
     {
         if ( directoryEntry[i].cbEntryName != 0 )
         {

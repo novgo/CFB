@@ -5,6 +5,7 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
+#import "MSCFBError.h"
 #import "MSCFBObject.h"
 #import "MSCFBFile.h"
 #import "MSCFBStream.h"
@@ -36,8 +37,8 @@
         
         if ( !_file )
             self = nil;
-        else
-            [self initialize:error];
+        else if ( ![self initialize:error] )
+            self = nil;
     }
     
     return self;
@@ -53,8 +54,8 @@
         
         if ( !_file )
             self = nil;
-        else
-            [self initialize:error];
+        else if ( ![self initialize:error] )
+            self = nil;
     }
     
     return self;
@@ -65,12 +66,13 @@
 - (BOOL)initialize:(NSError *__autoreleasing *)error
 {
     MSCFBObject    *cfbObject;
-    MSCFBStorage   *cfbStorage;
-    MSCFBStream    *cfbStream;
     
     // We must load the OutlookBodyStreamInfo first before we can process other streams
     cfbObject = [_file objectForKey:@"OutlookBodyStreamInfo"];
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo is not a stream" );
+    
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo is not a stream" ) )
+        return NO;
+    
     [self loadOutlookBodyStream:(MSCFBStream *)cfbObject];
     
     for ( NSString *key in [_file allKeys] )
@@ -81,21 +83,30 @@
         {
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment List object is not a storage" );
+            
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment List object is not a storage" ) )
+                return NO;
+            
             [self loadAttachmentList:(MSCFBStorage *)cfbObject];
         }
         else if ( [key isEqualToString:@"BodyPT-HTML"] )
         {
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyPT-HTML object is not a stream" );
+            
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyPT-HTML object is not a stream" ) )
+                return NO;
+            
             _bodyHTML = (MSCFBStream *)cfbObject;
         }
         else if ( [key isEqualToString:@"BodyRTF"] )
         {
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRTF object is not a stream" );
+            
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRTF object is not a stream" ) )
+                return NO;
+            
             _bodyRTF = (MSCFBStream *)cfbObject;
         }
         

@@ -12,6 +12,8 @@
 #import "MSCFBStorage.h"
 #import "MSCFBStream.h"
 #import "MSCFBFile.h"
+#import "MSCFBSource.h"
+
 #import "MSDRMFile.h"
 
 #import "MSDRMMessage.h"
@@ -33,44 +35,16 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     MSDRMFile *_file;
 }
 
-#pragma mark - Public Properties
-
-#pragma mark - Public Methods
+#pragma mark - Initialization and Termination
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
     if ( error )
         *error = nil;
-    
-    NSError *internalError = nil;
-    
-    self = [super init];
-    
-    if ( self )
-    {
-        NSData *deflatedData = [self decompress:data error:&internalError];
-        
-        if ( internalError )
-        {
-            self = nil;
-        }
-        else
-        {
-            _file = [[MSDRMFile alloc] initWithData:deflatedData error:&internalError];
 
-            if ( !internalError )
-            {
-                _license          = _file.license;
-                _protectedContent = _file.protectedContent;
-            }
-            else
-            {
-                self = nil;
-            }
-        }
-    }
-
-    return self;
+    MSCFBDataSource *source = [[MSCFBDataSource alloc] initWithData:data];
+    
+    return [self initWithSource:source error:error];
 }
 
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
@@ -80,25 +54,67 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     
     if ( !ASSERT( error, fileHandle != 0, @"Invalid file handle" ) )
         return nil;
+
+    MSCFBFileSource *source = [[MSCFBFileSource alloc] initWithFileHandle:fileHandle];
     
-    [fileHandle seekToFileOffset:0];
-    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
+    return [self initWithSource:source error:error];
+}
+
+- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+    
+    
+    self = [super init];
+    
+    if ( self )
+    {
+        NSError *internalError = nil;
+        NSData  *deflatedData  = [self decompress:source error:&internalError];
+        
+        if ( internalError )
+        {
+            if ( error ) *error = internalError;
+            self = nil;
+        }
+        else
+        {
+            _file = [[MSDRMFile alloc] initWithData:deflatedData error:&internalError];
+            
+            if ( !internalError )
+            {
+                _license          = _file.license;
+                _protectedContent = _file.protectedContent;
+            }
+            else
+            {
+                if ( error ) *error = internalError;
+                self = nil;
+            }
+        }
+    }
     
     return self;
 }
+
+#pragma mark - Public Methods
 
 - (MSDRMFile *)compoundFile
 {
     return _file;
 }
 
-- (NSData *)decompress:(NSData *)compressedData error:(NSError * __autoreleasing *)error
+#pragma mark - Internal Methods
+
+- (NSData *)decompress:(id<MSCFBSource>)compressedData error:(NSError * __autoreleasing *)error
 {
     if ( error ) *error = nil;
     
-    unsigned char szHeader[sizeof(compressedDrmMessageHeader)] = {0};
+    unsigned char  szHeader[sizeof(compressedDrmMessageHeader)] = {0};
+    NSRange        range                                        = NSMakeRange(0,sizeof(compressedDrmMessageHeader));
     
-    [compressedData getBytes:szHeader length:sizeof( compressedDrmMessageHeader)];
+    [compressedData getBytes:szHeader range:range];
     
     if ( !ASSERT( error, memcmp( szHeader, compressedDrmMessageHeader, sizeof( compressedDrmMessageHeader) ) == 0, @"Invalid message magic value" ) )
         return nil;
@@ -108,7 +124,6 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     BLOCKHEADER    blockHeader   = {0};
     Byte          *deflatedBlock = malloc( 4096 << 1 ); // Blocks are generally ~4k
     Byte          *inflatedBlock = malloc( 4096 << 1 ); // Blocks are generally ~4k
-    NSRange        range         = NSMakeRange(0,0);
     NSMutableData *deflatedData  = [[NSMutableData alloc] init];
     
     int ret=Z_OK;
@@ -117,7 +132,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     
     inflateInit(&zcpr);
     
-    range.location = sizeof( szHeader );
+    range.location += range.length;
     
     while ( *error == nil && ret == Z_OK && range.location < compressedData.length )
     {
@@ -130,7 +145,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
             if ( ASSERT( error, ( blockHeader.sizeBeforeInflation <= ( 4096 << 1 ) ) || ( blockHeader.sizeAfterInflation <= ( 4096 << 1 ) ), @"Size after inflation exceeds allocated space" ) )
             {
                 // Read the compressed data
-                range.location += sizeof( BLOCKHEADER ); // Skip over header
+                range.location += range.length; // Skip over header
                 range.length    = blockHeader.sizeBeforeInflation;
 
                 if ( ASSERT( error, range.location + range.length <= compressedData.length, @"Compressed data corrupt" ) )
@@ -152,7 +167,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
                     }
                     
                     // Skip to next block header
-                    range.location += blockHeader.sizeBeforeInflation;
+                    range.location += range.length;
                 }
             }
         }
