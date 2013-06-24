@@ -24,9 +24,9 @@
 
 - (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error;
 
-- (void)loadDirectory;
-- (void)loadFAT;
-- (void)loadMiniFAT;
+- (BOOL)loadDirectory:(NSError * __autoreleasing *)error;
+- (BOOL)loadFAT:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)loadMiniFAT:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
 
 @end
 
@@ -66,9 +66,14 @@
     if ( !self )
         return nil;
     
-    _source = source;
+    // Initialize private fields
+    _directory = nil;
+    _fat       = nil;
+    _miniFat   = nil;
+    _root      = nil;
+    _source    = nil;
     
-    [_source getBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
+    [source getBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
     
     // Verify header signatures
     if ( !ASSERT( error, ( _header.signature[0] == MSCFB_SIGNATURE_1 || _header.signature[1] == MSCFB_SIGNATURE_2 ), @"Invalid signature" ) )
@@ -119,19 +124,43 @@
     // Number of directory sectors
     if ( !ASSERT( error, _header.directorySectors == 0, @"Invalid number of directory sectors" ) )
         return nil;
-    
+
     // Load the FAT
-    [self loadFAT];
-    
-    // Load the mini FAT
-    [self loadMiniFAT];
-    
-    // Load the directory
-    [self loadDirectory];
-    
-    
-    // NOTE: the root storages stream is actually the mini stream
-    _root = [self initializeRoot];
+    if ( [self loadFAT:source error:error] )
+    {
+        // Load the mini FAT
+        if ( [self loadMiniFAT:source error:error] )
+        {
+            // Save the source end, when all is safe
+            _source = source;
+            
+            // Load the directory
+            if ( [self loadDirectory:error] )
+            {
+                // NOTE: the root storages stream is actually the mini stream
+                _root = [self initializeRoot];
+            }
+            else
+            {
+                // Cleanup
+                _miniFat = nil;
+                _fat     = nil;
+                _source  = nil;
+                self     = nil;
+            }
+        }
+        else
+        {
+            // Cleanup
+            _fat = nil;
+            self = nil;
+        }
+    }
+    else
+    {
+        // Cleanup
+        self = nil;
+    }
 
     return self;
 }
@@ -172,7 +201,6 @@
     NSRange        sectorRange    = { 0, 0 };
     
     // Calculate the range of sectors that must be read
-    // TODO: Check for off-by-one errors
     sectorRange.location = range.location >> _header.sectorShift;
     sectorRange.length   = ( range.length >> _header.sectorShift ) + 1;
     
@@ -193,7 +221,6 @@
         NSRange byteRange = { 0, 0 };
         
         // Location is offset into first sector. Length is bytes to read.
-        // TODO: Check for off-by-one errors
         byteRange.location = range.location % SECTOR_SIZE;
         byteRange.length   = ( bytesRemaining < ( SECTOR_SIZE - byteRange.location ) ) ? bytesRemaining : ( SECTOR_SIZE - byteRange.location );
         
@@ -307,7 +334,7 @@
 
 #pragma mark Private Methods
 
-- (void)loadDirectory
+- (BOOL)loadDirectory:(NSError * __autoreleasing *)error
 {
     // There are up to 4 directory entries in a directory sector.
     // Additional sectors may exist and are found by following the
@@ -330,20 +357,22 @@
             [_directory addObject:[[MSCFBDirectoryEntry alloc] init:&directoryEntry[i] container:self]];
         }
     }
+    
+    return YES;
 }
 
 // Load the FAT table
-- (void)loadFAT
+- (BOOL)loadFAT:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
 {
-    NSAssert( _header.fatSectors > 0, @"No FAT sectors in header" );
+    if ( !ASSERT( error, _header.fatSectors > 0, @"No FAT sectors in header" ) ) return NO;
     
     // The header tells us the number of FAT sectors and the DIFAT entries
     // tell us the sector numbers within the file.
-    _fat = [[NSMutableData alloc] initWithCapacity:( _header.fatSectors << _header.sectorShift)];
-    [_fat setLength:( _header.fatSectors << _header.sectorShift)];
+    NSMutableData *fat = [[NSMutableData alloc] initWithCapacity:( _header.fatSectors << _header.sectorShift)];
+    [fat setLength:( _header.fatSectors << _header.sectorShift)];
     
     // Local pointers and index using bytes
-    Byte *fatIndex = (Byte *)[_fat bytes];
+    Byte *fatIndex = (Byte *)[fat bytes];
     int   i, j;
     
     NSRange dataRange = { 0, SECTOR_SIZE };
@@ -357,10 +386,10 @@
         // Set location in data for current sector
         dataRange.location = SECTOR_OFFSET( _header.difat[i] );
         
-        NSAssert( fatIndex - (Byte *)[_fat bytes] < _fat.length, @"Attempt to read past end of FAT space" );
-        NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
+        if ( !ASSERT( error, fatIndex - (Byte *)[fat bytes] < fat.length, @"Attempt to read past end of FAT space" ) ) return NO;
+        if ( !ASSERT( error, dataRange.location + dataRange.length < source.length, @"Attempt to read past end of data" ) ) return NO;
         
-        [_source getBytes:fatIndex range:dataRange];
+        [source getBytes:fatIndex range:dataRange];
         
         // TODO: The following condition only appears to be true of protected content
         //if ( i == 0 && *((u_int32_t *)fatIndex) != FAT_SECTOR_SIGNATURE )
@@ -378,12 +407,12 @@
         
         // Last entry in DIFAT sector is the chain pointer
         MSCFB_DIFAT_SECTOR *difatSector = malloc( SECTOR_SIZE );
-        u_int32_t        *difatNext   = &difatSector->sector[SECTOR_SIZE / sizeof( u_int32_t) - 1];
+        u_int32_t          *difatNext   = &difatSector->sector[SECTOR_SIZE / sizeof( u_int32_t) - 1];
         
         for ( i = 0; i < _header.difatSectors; i++ )
         {
-            NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
-            [_source getBytes:difatSector range:dataRange];
+            if ( !ASSERT( error, dataRange.location + dataRange.length < source.length, @"Attempt to read past end of data" ) ) return NO;
+            [source getBytes:difatSector range:dataRange];
             
             // Read the FAT sectors that the DIFAT points to
             for ( j = 0; j < ( SECTOR_SIZE / sizeof( u_int32_t) - 1 ); j++ )
@@ -395,38 +424,52 @@
                 dataRange.location = SECTOR_OFFSET( difatSector->sector[j] );
                 
                 
-                NSAssert( fatIndex - (Byte *)[_fat bytes] < _fat.length, @"Attempt to read past end of FAT space" );
-                NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
+                if ( !ASSERT( error, fatIndex - (Byte *)[fat bytes] < fat.length, @"Attempt to read past end of FAT space" ) ) return NO;
+                if ( !ASSERT( error, dataRange.location + dataRange.length < source.length, @"Attempt to read past end of data" ) ) return NO;
                 
-                [_source getBytes:fatIndex range:dataRange];
+                [source getBytes:fatIndex range:dataRange];
                 
                 fatIndex += SECTOR_SIZE;
             }
             
             if ( i < _header.difatSectors - 1 )
-                NSAssert( *difatNext == FAT_SECTOR_DIFAT, @"Expected DIFAT sector" );
+            {
+                if ( !ASSERT( error, *difatNext == FAT_SECTOR_DIFAT, @"Expected DIFAT sector" ) ) return NO;
+            }
             else
-                NSAssert( *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" );
+            {
+                if ( !ASSERT( error, *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
+            }
             
             dataRange.location = SECTOR_OFFSET( *difatNext );
         }
         
-        NSAssert( *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" );
-        NSAssert( i == _header.difatSectors, @"Did not read enough DIFAT sectors" );
+        if ( !ASSERT( error, *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
+        if ( !ASSERT( error, i == _header.difatSectors, @"Did not read enough DIFAT sectors" ) ) return NO;
         
         free( difatSector );
     }
+    
+    // Save the FAT object
+    _fat = fat;
+    
+    return YES;
 }
 
-- (void)loadMiniFAT
+- (BOOL)loadMiniFAT:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
 {
+    if ( !ASSERT( error, _fat != nil, @"FAT should be initialized first" ) ) return NO;
+    
+    // Default to no mini FAT
+    _miniFat = nil;
+    
     if ( _header.miniFatSectors > 0 )
     {
         // The header tells us the number of mini FAT sectors and the start
         // sector in the file. Mini FAT sectors are like any other stream
         // and are chained via the FAT table. So we can read them like a
         // stream.
-        _miniFat = [[NSMutableData alloc] initWithCapacity:( _header.miniFatSectors << _header.sectorShift)];
+        NSMutableData *miniFat = [[NSMutableData alloc] initWithCapacity:( _header.miniFatSectors << _header.sectorShift)];
         
         // Local pointers and index using bytes
         const MSCFB_FAT_SECTOR *fatTable = [_fat bytes];
@@ -437,21 +480,21 @@
         
         for ( i = 0; i < _header.miniFatSectors; i++ )
         {
-            NSAssert( dataRange.location + dataRange.length < _source.length, @"Attempt to read past end of data" );
-            [_miniFat appendData:[_source readRange:dataRange]];
+            if ( !ASSERT( error, dataRange.location + dataRange.length < source.length, @"Attempt to read past end of data" ) ) return NO;
+            [miniFat appendData:[source readRange:dataRange]];
             
             sector             = fatTable->nextSector[sector];
             dataRange.location = SECTOR_OFFSET( sector );
         }
         
-        NSAssert( sector == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" );
-        NSAssert( i == _header.miniFatSectors, @"Did not read enough mini FAT sectors" );
-        NSAssert( _miniFat.length == ( _header.miniFatSectors << _header.sectorShift), @"Did not read enough mini FAT data" );
+        if ( !ASSERT( error, sector == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
+        if ( !ASSERT( error, i == _header.miniFatSectors, @"Did not read enough mini FAT sectors" ) ) return NO;
+        if ( !ASSERT( error, miniFat.length == ( _header.miniFatSectors << _header.sectorShift), @"Did not read enough mini FAT data" ) ) return NO;
+        
+        _miniFat = miniFat;
     }
-    else
-    {
-        _miniFat = nil;
-    }
+    
+    return YES;
 }
 
 // Reads data from the real file

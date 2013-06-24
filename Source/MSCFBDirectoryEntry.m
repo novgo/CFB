@@ -15,7 +15,7 @@
 @implementation MSCFBDirectoryEntry
 {
     MSCFB_DIRECTORY_ENTRY _entry;
-    __weak MSCFBFile     *_container;
+    MSCFBFile * __weak    _container;
 }
 
 - (id)init:(MSCFB_DIRECTORY_ENTRY *)directoryEntry container:(MSCFBFile *)container
