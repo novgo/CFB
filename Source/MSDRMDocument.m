@@ -8,6 +8,7 @@
 #include <zlib.h>
 
 #import "MSCFBObject.h"
+#import "MSCFBSource.h"
 #import "MSCFBStorage.h"
 #import "MSCFBStream.h"
 #import "MSCFBFile.h"
@@ -24,16 +25,16 @@
 
 #pragma mark - Public Methods
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError
+- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
-    if ( outError )
-        *outError = nil;
+    if ( error )
+        *error = nil;
     
     self = [super init];
     
     if ( self )
     {
-        _file = [[MSDRMFile alloc] initWithData:data error:outError];
+        _file = [[MSDRMFile alloc] initWithData:data error:error];
         
         [self validate];
     }
@@ -47,25 +48,17 @@
     if ( error )
         *error = nil;
     
-    self = [self initWithData:[fileHandle readDataToEndOfFile] error:error];
+    self = [super init];
+    
+    if ( self )
+    {
+        _file = [[MSDRMFile alloc] initWithFileHandle:fileHandle error:error];
+        
+        [self validate];
+    }
     
     return self;
 }
-
-
-/*
-// The default implementation of this method reads all the file data and calls readFromData:ofType:error
-- (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
-{
-    return [super readFromFileWrapper:fileWrapper ofType:typeName error:outError];
-}
-
-// The default implementation of this method creates a file wrapper and calls readFromFileWrapper:ofType:error
-- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
-{
-    return [super readFromURL:url ofType:typeName error:outError];
-}
-*/
 
 - (MSDRMFile *)compoundFile
 {
@@ -80,27 +73,5 @@
     _protectedContent       = _file.protectedContent;
     _protectedContentLength = _file.protectedContentLength;
 }
-
-- (NSString *)pathForTemporaryFileWithPrefix:(NSString *)prefix
-{
-    NSString   *result;
-    CFUUIDRef   uuid;
-    CFStringRef uuidString;
-    
-    uuid = CFUUIDCreate(NULL);
-    assert(uuid != NULL);
-    
-    uuidString = CFUUIDCreateString(NULL, uuid);
-    assert(uuidString != NULL);
-    
-    result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", prefix, uuidString]];
-    assert(result != nil);
-    
-    CFRelease(uuidString);
-    CFRelease(uuid);
-    
-    return result;
-}
-
 
 @end

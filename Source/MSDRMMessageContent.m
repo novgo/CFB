@@ -131,34 +131,55 @@
     // The number of attachments is the the first 4 bytes iff the content type is not RTF
     u_int32_t attachmentCount = 0;
     [[cfbStream read:readRange] getBytes:&attachmentCount length:readRange.length];
-    readRange.location += readRange.length;
     
     if ( _contentType == MessageContentTypeRTF ) NSAssert( attachmentCount == 0xFFFFFFFF, @"Incorrect attachment count for RTF message" );
     if ( attachmentCount == 0xFFFFFFFF ) NSAssert( _contentType == MessageContentTypeRTF, @"Incorrect content type for non-RTF message" );
+
     _attachmentCount = attachmentCount;
     _attachments     = nil;
     
+    // Big gotcha on the pipe string: this is limited to 255 characters so that if there are more, then the
+    // pipe is truncated and is not helpful for loading the attachments to the message. Anything we do with
+    // the pipe is really just cross-checking since to be safe we have to load the attachments by searching
+    // for them by name.
+    u_int8_t pipeLength = 0;
+    
+    readRange.location += readRange.length;
+    readRange.length    = sizeof( u_int8_t );
+    
+    [[cfbStream read:readRange] getBytes:&pipeLength length:readRange.length];
+    
+    readRange.location += readRange.length;
+    readRange.length    = pipeLength << 1; // pipeLength is in unicode characters
+    
+    if ( pipeLength < 255 )
+    {
+        // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
+        // than the number of attachments and that last entry should be empty.
+        NSString *pipe  = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
+        NSArray  *names = [pipe componentsSeparatedByString:@"|"];
+    }
+    
+    // If the message format is RTF, then after the pipe string we have an attachment count that overrides
+    // the one specified at the start of the stream.
+    if ( _contentType == MessageContentTypeRTF )
+    {
+        readRange.location += readRange.length;
+        readRange.length    = sizeof( u_int32_t );
+        
+        [[cfbStream read:readRange] getBytes:&attachmentCount length:readRange.length];
+        _attachmentCount = attachmentCount;
+    }
+
     if ( _attachmentCount > 0 )
     {
-        u_int8_t pipeLength = 0;
-        readRange.length = 1;
-        [[cfbStream read:readRange] getBytes:&pipeLength length:readRange.length];
-        readRange.location += readRange.length;
-        readRange.length    = pipeLength << 1; // pipeLength is in unicode characters
-        
-        NSString *pipe = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
-        
-        // The storage names are separated by the | character and there is a trailing |. When split, we get one more entry
-        // than the number of attachments and that last entry should be empty
-        NSArray *attachmentNames = [pipe componentsSeparatedByString:@"|"];
-        NSAssert( _contentType == MessageContentTypeRTF || attachmentNames.count == _attachmentCount + 1, @"Error: number of attachment names != attachment count" );
-        
-        // TODO: The RTF attachment count is stored elsewhere!
+        // Now we load the attachment for real by examining each of the storages and comparing their
+        // name with the marker "MailAttachment".
         _attachments = [[NSMutableArray alloc] init];
         
-        for ( NSString *name in attachmentNames )
+        for ( NSString *name in [storage allKeys] )
         {
-            if ( name.length != 0 )
+            if ( [name hasPrefix:@"MailAttachment"] )
             {
                 cfbObject = [storage objectForKey:name];
                 NSAssert( cfbObject != nil, @"Attachment not found!" );
@@ -168,6 +189,8 @@
                 [_attachments addObject:attachment];
             }
         }
+        
+        NSAssert( _attachments.count == _attachmentCount, @"Error: number of attachments != attachment count" );
     }
 }
 
