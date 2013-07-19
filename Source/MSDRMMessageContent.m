@@ -179,11 +179,14 @@
         
         for ( NSString *name in [storage allKeys] )
         {
+            DebugLog( @"Attachment: %@", name );
+            
             if ( [name hasPrefix:@"MailAttachment"] )
             {
                 cfbObject = [storage objectForKey:name];
                 NSAssert( cfbObject != nil, @"Attachment not found!" );
                 NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment object is not a storage" );
+                
                 MSDRMMessageAttachment *attachment = [[MSDRMMessageAttachment alloc] initWithStorage:(MSCFBStorage *)cfbObject];
                 
                 [_attachments addObject:attachment];

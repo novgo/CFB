@@ -33,9 +33,6 @@
     if ( storage == nil )
         return nil;
     
-    for ( NSString *key in [storage allKeys] )
-        DebugLog( @"Storage entry: %@", key );
-    
     self = [super init];
     
     _content      = nil;
@@ -54,8 +51,6 @@
     
     for ( NSString *key in [storage allKeys] )
     {
-        DebugLog( @"Storage entry: %@", key );
-        
         if ( [key isEqualToString:@"AttachDesc"] )
         {
             cfbObject = [storage objectForKey:key];
