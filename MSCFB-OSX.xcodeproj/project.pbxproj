@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC1BCD5C1743D0CF000F4D85 /* message-1.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD541743D0C0000F4D85 /* message-1.rpmsg */; };
-		BC1BCD5D1743D0CF000F4D85 /* message-2.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD551743D0C0000F4D85 /* message-2.rpmsg */; };
-		BC1BCD5E1743D0CF000F4D85 /* message-3.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD561743D0C0000F4D85 /* message-3.rpmsg */; };
-		BC1BCD5F1743D0CF000F4D85 /* message-4.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD571743D0C0000F4D85 /* message-4.rpmsg */; };
-		BC1BCD611743D51B000F4D85 /* document-1.doc in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD601743D51B000F4D85 /* document-1.doc */; };
 		BC268C8617128BAC00687A1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8517128BAC00687A1D /* Cocoa.framework */; };
 		BC268C9017128BAC00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268C8E17128BAC00687A1D /* InfoPlist.strings */; };
 		BC268C9C17128BAC00687A1D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C9B17128BAC00687A1D /* SenTestingKit.framework */; };
@@ -33,10 +28,22 @@
 		BC268D1417129F5800687A1D /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D0717129F5800687A1D /* MSCFBFile.m */; };
 		BC268D1517129F5800687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D0817129F5800687A1D /* MSCFBFileInternal.h */; };
 		BC268D1617129F9300687A1D /* MSCFB.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268C9217128BAC00687A1D /* MSCFB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC32F93D1795C01D005E440B /* message-1.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC32F93B1795C01D005E440B /* message-1.rpmsg */; };
+		BC32F93E1795C01D005E440B /* message-3.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC32F93C1795C01D005E440B /* message-3.rpmsg */; };
+		BC32F93F1795C032005E440B /* message-2.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5751795BFBD000CEC35 /* message-2.rpmsg */; };
+		BC32F9401795C032005E440B /* message-4.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5771795BFBD000CEC35 /* message-4.rpmsg */; };
 		BC57736F17435C9D004ACC65 /* MSCFBError.h in Headers */ = {isa = PBXBuildFile; fileRef = BC57736D17435C9D004ACC65 /* MSCFBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC57737017435C9D004ACC65 /* MSCFBError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57736E17435C9D004ACC65 /* MSCFBError.m */; };
 		BC57737717436080004ACC65 /* MSCFBSource.h in Headers */ = {isa = PBXBuildFile; fileRef = BC57737517436080004ACC65 /* MSCFBSource.h */; };
 		BC57737817436080004ACC65 /* MSCFBSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57737617436080004ACC65 /* MSCFBSource.m */; };
+		BC8DD57F1795BFBD000CEC35 /* document-1.docx in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5721795BFBD000CEC35 /* document-1.docx */; };
+		BC8DD5801795BFBD000CEC35 /* document-2.docx in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5731795BFBD000CEC35 /* document-2.docx */; };
+		BC8DD5811795BFBD000CEC35 /* message-5.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5781795BFBD000CEC35 /* message-5.rpmsg */; };
+		BC8DD5821795BFBD000CEC35 /* message-6.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD5791795BFBD000CEC35 /* message-6.rpmsg */; };
+		BC8DD5831795BFBD000CEC35 /* message-7.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD57A1795BFBD000CEC35 /* message-7.rpmsg */; };
+		BC8DD5841795BFBD000CEC35 /* message-8.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD57B1795BFBD000CEC35 /* message-8.rpmsg */; };
+		BC8DD5851795BFBD000CEC35 /* message-9.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD57C1795BFBD000CEC35 /* message-9.rpmsg */; };
+		BC8DD5861795BFBD000CEC35 /* message-10.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC8DD57D1795BFBD000CEC35 /* message-10.rpmsg */; };
 		BC915F461764E4C400DABD46 /* MSDRMMessageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC915F471764E4C400DABD46 /* MSDRMMessageAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = BC915F411764E4C400DABD46 /* MSDRMMessageAttachment.m */; };
 		BC915F481764E4C400DABD46 /* MSDRMMessageContent.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F421764E4C400DABD46 /* MSDRMMessageContent.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -63,11 +70,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BC1BCD541743D0C0000F4D85 /* message-1.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-1.rpmsg"; sourceTree = "<group>"; };
-		BC1BCD551743D0C0000F4D85 /* message-2.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-2.rpmsg"; sourceTree = "<group>"; };
-		BC1BCD561743D0C0000F4D85 /* message-3.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-3.rpmsg"; sourceTree = "<group>"; };
-		BC1BCD571743D0C0000F4D85 /* message-4.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-4.rpmsg"; sourceTree = "<group>"; };
-		BC1BCD601743D51B000F4D85 /* document-1.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.doc"; sourceTree = "<group>"; };
 		BC268C8217128BAC00687A1D /* MSCFB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MSCFB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C8517128BAC00687A1D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BC268C8817128BAC00687A1D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -96,10 +98,23 @@
 		BC268D0617129F5800687A1D /* MSCFBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFile.h; sourceTree = "<group>"; };
 		BC268D0717129F5800687A1D /* MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFile.m; sourceTree = "<group>"; };
 		BC268D0817129F5800687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
+		BC32F93B1795C01D005E440B /* message-1.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-1.rpmsg"; sourceTree = "<group>"; };
+		BC32F93C1795C01D005E440B /* message-3.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-3.rpmsg"; sourceTree = "<group>"; };
 		BC57736D17435C9D004ACC65 /* MSCFBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBError.h; sourceTree = "<group>"; };
 		BC57736E17435C9D004ACC65 /* MSCFBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBError.m; sourceTree = "<group>"; };
 		BC57737517436080004ACC65 /* MSCFBSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBSource.h; sourceTree = "<group>"; };
 		BC57737617436080004ACC65 /* MSCFBSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBSource.m; sourceTree = "<group>"; };
+		BC8DD5711795BFBD000CEC35 /* document-1.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.doc"; sourceTree = "<group>"; };
+		BC8DD5721795BFBD000CEC35 /* document-1.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.docx"; sourceTree = "<group>"; };
+		BC8DD5731795BFBD000CEC35 /* document-2.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-2.docx"; sourceTree = "<group>"; };
+		BC8DD5751795BFBD000CEC35 /* message-2.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-2.rpmsg"; sourceTree = "<group>"; };
+		BC8DD5771795BFBD000CEC35 /* message-4.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-4.rpmsg"; sourceTree = "<group>"; };
+		BC8DD5781795BFBD000CEC35 /* message-5.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-5.rpmsg"; sourceTree = "<group>"; };
+		BC8DD5791795BFBD000CEC35 /* message-6.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-6.rpmsg"; sourceTree = "<group>"; };
+		BC8DD57A1795BFBD000CEC35 /* message-7.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-7.rpmsg"; sourceTree = "<group>"; };
+		BC8DD57B1795BFBD000CEC35 /* message-8.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-8.rpmsg"; sourceTree = "<group>"; };
+		BC8DD57C1795BFBD000CEC35 /* message-9.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-9.rpmsg"; sourceTree = "<group>"; };
+		BC8DD57D1795BFBD000CEC35 /* message-10.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-10.rpmsg"; sourceTree = "<group>"; };
 		BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageAttachment.h; sourceTree = "<group>"; };
 		BC915F411764E4C400DABD46 /* MSDRMMessageAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessageAttachment.m; sourceTree = "<group>"; };
 		BC915F421764E4C400DABD46 /* MSDRMMessageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageContent.h; sourceTree = "<group>"; };
@@ -141,11 +156,19 @@
 		BC1BCD531743D0C0000F4D85 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BC1BCD601743D51B000F4D85 /* document-1.doc */,
-				BC1BCD541743D0C0000F4D85 /* message-1.rpmsg */,
-				BC1BCD551743D0C0000F4D85 /* message-2.rpmsg */,
-				BC1BCD561743D0C0000F4D85 /* message-3.rpmsg */,
-				BC1BCD571743D0C0000F4D85 /* message-4.rpmsg */,
+				BC32F93B1795C01D005E440B /* message-1.rpmsg */,
+				BC32F93C1795C01D005E440B /* message-3.rpmsg */,
+				BC8DD5711795BFBD000CEC35 /* document-1.doc */,
+				BC8DD5721795BFBD000CEC35 /* document-1.docx */,
+				BC8DD5731795BFBD000CEC35 /* document-2.docx */,
+				BC8DD57D1795BFBD000CEC35 /* message-10.rpmsg */,
+				BC8DD5751795BFBD000CEC35 /* message-2.rpmsg */,
+				BC8DD5771795BFBD000CEC35 /* message-4.rpmsg */,
+				BC8DD5781795BFBD000CEC35 /* message-5.rpmsg */,
+				BC8DD5791795BFBD000CEC35 /* message-6.rpmsg */,
+				BC8DD57A1795BFBD000CEC35 /* message-7.rpmsg */,
+				BC8DD57B1795BFBD000CEC35 /* message-8.rpmsg */,
+				BC8DD57C1795BFBD000CEC35 /* message-9.rpmsg */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -383,12 +406,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC1BCD5C1743D0CF000F4D85 /* message-1.rpmsg in Resources */,
-				BC1BCD5D1743D0CF000F4D85 /* message-2.rpmsg in Resources */,
-				BC1BCD5E1743D0CF000F4D85 /* message-3.rpmsg in Resources */,
-				BC1BCD5F1743D0CF000F4D85 /* message-4.rpmsg in Resources */,
+				BC8DD57F1795BFBD000CEC35 /* document-1.docx in Resources */,
+				BC8DD5801795BFBD000CEC35 /* document-2.docx in Resources */,
+				BC32F93D1795C01D005E440B /* message-1.rpmsg in Resources */,
+				BC32F93F1795C032005E440B /* message-2.rpmsg in Resources */,
+				BC32F93E1795C01D005E440B /* message-3.rpmsg in Resources */,
+				BC32F9401795C032005E440B /* message-4.rpmsg in Resources */,
+				BC8DD5811795BFBD000CEC35 /* message-5.rpmsg in Resources */,
+				BC8DD5821795BFBD000CEC35 /* message-6.rpmsg in Resources */,
+				BC8DD5831795BFBD000CEC35 /* message-7.rpmsg in Resources */,
+				BC8DD5841795BFBD000CEC35 /* message-8.rpmsg in Resources */,
+				BC8DD5851795BFBD000CEC35 /* message-9.rpmsg in Resources */,
+				BC8DD5861795BFBD000CEC35 /* message-10.rpmsg in Resources */,
 				BC268CA617128BAC00687A1D /* InfoPlist.strings in Resources */,
-				BC1BCD611743D51B000F4D85 /* document-1.doc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

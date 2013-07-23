@@ -196,19 +196,19 @@
 		BC1BCD621743D69F000F4D85 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BC0A148B176A8BE200F4B31E /* message-10.rpmsg */,
+				BC1BCD631743D69F000F4D85 /* document-1.doc */,
 				BCCEDCD7176A484700A41739 /* document-1.docx */,
 				BCCEDCD8176A484700A41739 /* document-2.docx */,
-				BCCEDCD9176A484700A41739 /* message-7.rpmsg */,
-				BCCEDCDA176A484700A41739 /* message-8.rpmsg */,
-				BCCEDCDB176A484700A41739 /* message-9.rpmsg */,
-				BC1BCD631743D69F000F4D85 /* document-1.doc */,
 				BC1BCD641743D69F000F4D85 /* message-1.rpmsg */,
+				BC0A148B176A8BE200F4B31E /* message-10.rpmsg */,
 				BC1BCD651743D69F000F4D85 /* message-2.rpmsg */,
 				BC1BCD661743D69F000F4D85 /* message-3.rpmsg */,
 				BC1BCD671743D69F000F4D85 /* message-4.rpmsg */,
 				BC7540A51764763500B07012 /* message-5.rpmsg */,
 				BC7540A61764763500B07012 /* message-6.rpmsg */,
+				BCCEDCD9176A484700A41739 /* message-7.rpmsg */,
+				BCCEDCDA176A484700A41739 /* message-8.rpmsg */,
+				BCCEDCDB176A484700A41739 /* message-9.rpmsg */,
 			);
 			path = Data;
 			sourceTree = "<group>";
