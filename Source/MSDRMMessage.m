@@ -65,31 +65,29 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     if ( error )
         *error = nil;
     
-    
     self = [super init];
     
     if ( self )
     {
-        NSError *internalError = nil;
-        NSData  *deflatedData  = [self decompress:source error:&internalError];
+        // Try to deflate the data
+        NSData *deflatedData = [self decompress:source error:error];
         
-        if ( internalError )
+        if ( !deflatedData )
         {
-            if ( error ) *error = internalError;
             self = nil;
         }
         else
         {
-            _file = [[MSDRMFile alloc] initWithData:deflatedData error:&internalError];
+            // Load the deflated data
+            _file = [[MSDRMFile alloc] initWithData:deflatedData error:error];
             
-            if ( !internalError )
+            if ( _file )
             {
                 _license          = _file.license;
                 _protectedContent = _file.protectedContent;
             }
             else
             {
-                if ( error ) *error = internalError;
                 self = nil;
             }
         }
@@ -134,7 +132,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     
     range.location += range.length;
     
-    while ( *error == nil && ret == Z_OK && range.location < compressedData.length )
+    while ( deflatedData && ret == Z_OK && range.location < compressedData.length )
     {
         // Read the block header
         range.length = sizeof( BLOCKHEADER );
@@ -169,17 +167,29 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
                     // Skip to next block header
                     range.location += range.length;
                 }
+                else
+                {
+                    // Drop the deflated data if there is an error.
+                    deflatedData = nil;
+                }
+            }
+            else
+            {
+                // Drop the deflated data if there is an error.
+                deflatedData = nil;
             }
         }
+        else
+        {
+            // Drop the deflated data if there is an error.
+            deflatedData = nil;
+        }
     }
-    
+
     free( deflatedBlock );
     free( inflatedBlock );
     
-    if ( *error )
-        return nil;
-    else
-        return deflatedData;
+    return deflatedData;
 }
 
 @end

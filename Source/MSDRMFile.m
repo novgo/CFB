@@ -19,7 +19,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
 
 @interface MSDRMFile ()
 
-- (void)validate;
+- (BOOL)validate:(NSError *__autoreleasing *)error;
 
 @end
 
@@ -38,7 +38,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     
     if ( ( self = [super initWithData:data error:error] ) != nil )
     {
-        [self validate];
+        self = [self validate:error] ? self : nil;
     }
     
     return self;
@@ -55,7 +55,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     
     if ( ( self = [super initWithFileHandle:fileHandle error:error] ) != nil )
     {
-        [self validate];
+        self = [self validate:error] ? self : nil;
     }
     
     return self;
@@ -63,8 +63,10 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
 
 #pragma mark - Private Methods
 
-- (void)validate
+- (BOOL)validate:(NSError *__autoreleasing *)error
 {
+    if ( error ) *error = nil;
+        
     NSString *DRMContent            = [NSString stringWithCharacters:_DRMContent length:sizeof(_DRMContent) >> 1];
     NSString *DRMDataSpace          = [NSString stringWithCharacters:_DRMDataSpace length:sizeof(_DRMDataSpace) >> 1];
     NSString *DRMTransform          = [NSString stringWithCharacters:_DRMTransform length:sizeof(_DRMTransform) >> 1];
@@ -82,13 +84,14 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     MSCFBStorage   *cfbStorage;
     MSCFBStream    *cfbStream;
     
-    // ECMA content must have a EncryptedPackage stream; otherwise a DRMContent stream
+    // ECMA content has an EncryptedPackage stream; otherwise a DRMContent stream
     cfbObject = [self objectForKey:EncryptedPackage];
     
     if ( cfbObject != nil )
     {
-        NSAssert( cfbObject != nil, @"Missing EncryptedPackage stream" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"EncryptedPackage object is not a stream" );
+        // ECMA Content
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"EncryptedPackage object is not a stream" ) ) return NO;
+        
         cfbStream = (MSCFBStream *)cfbObject;
         
         // The first 8 bytes of the EncryptedPackage stream are the length of the *plaintext* data, not the encrypted data
@@ -101,16 +104,17 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     }
     else
     {
-        // ECMA content must have a EncryptedPackage stream; otherwise a DRMContent stream
+        // DRM Content
         cfbObject = [self objectForKey:DRMContent];
-        NSAssert( cfbObject != nil, @"Missing DRMContent stream" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"DRMContent object is not a stream" );
+        if ( !ASSERT( error, cfbObject != nil, @"Missing DRMContent stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"DRMContent object is not a stream" ) ) return NO;
+
         cfbStream = (MSCFBStream *)cfbObject;
         
         // The first 8 bytes of the DRMContent stream are the length
         u_int64_t contentLength = 0;
         [[cfbStream read:NSMakeRange(0, 8)] getBytes:&contentLength length:8];
-        NSAssert( contentLength == cfbStream.length - 8, @"Incorrect DRMContent length" );
+        if ( !ASSERT( error, contentLength == cfbStream.length - 8, @"Incorrect DRMContent length" ) ) return NO;
         
         // TODO: What does contentLength mean in this case?
         _protectedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
@@ -119,30 +123,32 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     
     // Back to root: must have a DataSpaces storage
     cfbObject = [self objectForKey:DataSpaces];
-    NSAssert( cfbObject != nil, @"Missing DataSpaces storage" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpace object is not a storage" );
+    if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaces storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpace object is not a storage" ) ) return NO;
     
     cfbStorage = (MSCFBStorage *)cfbObject;
     
     // DataSpaces must have a Version stream
     cfbObject = [cfbStorage objectForKey:Version];
-    NSAssert( cfbObject != nil, @"Missing Version stream" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Version object is not a stream" );
+    if ( !ASSERT( error, cfbObject != nil, @"Missing Version stream" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Version object is not a stream" ) ) return NO;
     
     // DataSpaces must have a DataSpaceMap stream
     cfbObject = [cfbStorage objectForKey:DataSpaceMap];
-    NSAssert( cfbObject != nil, @"Missing DataSpaceMap stream" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"DataSpaceMap object is not a stream" );
+    
+    if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaceMap stream" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"DataSpaceMap object is not a stream" ) ) return NO;
     
     // DataSpaces must have a DataSpaceInfo storage
     cfbObject = [cfbStorage objectForKey:DataSpaceInfo];
-    NSAssert( cfbObject != nil, @"Missing DataSpaceInfo storage" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpaceInfo object is not a storage" );
+
+    if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaceInfo storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpaceInfo object is not a storage" ) ) return NO;
     
     // DataSpaces must have a TranformInfo storage
     cfbObject = [cfbStorage objectForKey:TransformInfo];
-    NSAssert( cfbObject != nil, @"Missing TransformInfo storage" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"TransformInfo object is not a storage" );
+    if ( !ASSERT( error, cfbObject != nil, @"Missing TransformInfo storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"TransformInfo object is not a storage" ) ) return NO;
     
     cfbStorage = (MSCFBStorage *)cfbObject;
     
@@ -150,15 +156,15 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( [self objectForKey:EncryptedPackage] != nil )
     {
         cfbObject = [cfbStorage objectForKey:DRMEncryptedTransform];
-        NSAssert( cfbObject != nil, @"Missing DRMEncryptedTransform storage" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMEncryptedTransform object is not a storage" );
+        if ( !ASSERT( error, cfbObject != nil, @"Missing DRMEncryptedTransform storage" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMEncryptedTransform object is not a storage" ) ) return NO;
         
         cfbStorage = (MSCFBStorage *)cfbObject;
         
         // DRMEncryptedTransform must have a Primary stream
         cfbObject = [cfbStorage objectForKey:Primary];
-        NSAssert( cfbObject != nil, @"Missing Primary stream" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" );
+        if ( !ASSERT( error, cfbObject != nil, @"Missing Primary stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" ) ) return NO;
         
         cfbStream = (MSCFBStream *)cfbObject;
     }
@@ -166,15 +172,15 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     {
         // TranformInfo must have a DRMTransform storage
         cfbObject = [cfbStorage objectForKey:DRMTransform];
-        NSAssert( cfbObject != nil, @"Missing DRMTransform storage" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMTransform object is not a storage" );
+        if ( !ASSERT( error, cfbObject != nil, @"Missing DRMTransform storage" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMTransform object is not a storage" ) ) return NO;
         
         cfbStorage = (MSCFBStorage *)cfbObject;
         
         // DRMTransform must have a Primary stream
         cfbObject = [cfbStorage objectForKey:Primary];
-        NSAssert( cfbObject != nil, @"Missing Primary stream" );
-        NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" );
+        if ( !ASSERT( error, cfbObject != nil, @"Missing Primary stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" ) ) return NO;
         
         cfbStream = (MSCFBStream *)cfbObject;
     }
@@ -200,7 +206,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     readRange.location += readRange.length;
     readRange.length    = transformInfoHeader.cbTransformID;
     NSString *transformID = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
-    NSAssert( [transformID isEqualToString:@"{C73DFACD-061F-43B0-8B64-0C620D2A8B50}"], @"Invalid transform id" );
+    if ( !ASSERT( error, [transformID isEqualToString:@"{C73DFACD-061F-43B0-8B64-0C620D2A8B50}"], @"Invalid transform id" ) ) return NO;
     
     // Alignment
     u_int32_t paddedLength = transformInfoHeader.cbTransformID;
@@ -216,7 +222,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     readRange.location += readRange.length;
     readRange.length    = cbTransformName;
     NSString *transformName = [[NSString alloc] initWithCharacters:[[cfbStream read:readRange] bytes] length:readRange.length >> 1];
-    NSAssert( [transformName isEqualToString:@"Microsoft.Metadata.DRMTransform"], @"Invalid transform name" );
+    if ( !ASSERT( error, [transformName isEqualToString:@"Microsoft.Metadata.DRMTransform"], @"Invalid transform name" ) ) return NO;
     
     // Alignment
     paddedLength = cbTransformName;
@@ -243,6 +249,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     readRange.location += readRange.length;
     readRange.length    = transformVersion.cbLicense;
     _license = [cfbStream read:readRange];
+    
+    return YES;
 }
 
 

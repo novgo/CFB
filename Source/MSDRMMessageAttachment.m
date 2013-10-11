@@ -4,6 +4,9 @@
 //  Created by Hervey Wilson on 6/8/13.
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
+
+#import "MSCFBError.h"
+
 #import "NSData+MSCFB.h"
 
 #import "MSCFBObject.h"
@@ -35,17 +38,7 @@
     
     self = [super init];
     
-    _content      = nil;
-    _contentID    = nil;
-    
     _attachMethod = afNone;
-    
-    _displayName  = nil;
-    _extension    = nil;
-    _fileName     = nil;
-    _longFileName = nil;
-    _longPathName = nil;
-    _pathName     = nil;
 
     MSCFBObject *cfbObject = nil;
     
@@ -53,40 +46,58 @@
     {
         if ( [key isEqualToString:@"AttachDesc"] )
         {
+            // Attachment Description
             cfbObject = [storage objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachDesc is not a stream" );
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachDesc is not a stream" ) )
+            {
+                self = nil;
+                return self;
+            }
+            
             [self loadAttachmentDescription:(MSCFBStream *)cfbObject];
         }
         else if ( [key isEqualToString:@"AttachContents"] )
         {
-            // Try to access the attachment contents stream
+            // Attachment Content
             cfbObject = [storage objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" ) )
+            {
+                self = nil;
+                return self;
+            }
+
             _content = (MSCFBStream *)cfbObject;
         }
         else if ( [key isEqualToString:@"AttachPres"] )
         {
-            // Try to access the attachment contents stream
+            // Attachment Presentation
             cfbObject = [storage objectForKey:key];
-            NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachPres object is not a stream" );
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachPres object is not a stream" ) )
+            {
+                self = nil;
+                return self;
+            }
         }
     }
     
-    if ( _attachMethod == afByValue )
+    if ( self )
     {
-    }
-    else if ( _attachMethod == afEmbeddedMessage )
-    {
-        // An embedded message: the content is another msg in the stream.
-        // TODO: MS-OXORMMS is confusing here, in tests there is neither an AttachContents or a .msg stream
-        //cfbObject = [storage objectForKey:@".msg"];
-        //NSAssert( cfbObject != nil, @"AttachContents not found!" );
-        //NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
-        //_content = (MSCFBStream *)cfbObject;
-    }
-    else
-    {
-        // We don't support anything else, but MS-OXORMMS says we might see afOle
+        if ( _attachMethod == afByValue )
+        {
+        }
+        else if ( _attachMethod == afEmbeddedMessage )
+        {
+            // An embedded message: the content is another msg in the stream.
+            // TODO: MS-OXORMMS is confusing here, in tests there is neither an AttachContents or a .msg stream
+            //cfbObject = [storage objectForKey:@".msg"];
+            //NSAssert( cfbObject != nil, @"AttachContents not found!" );
+            //NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" );
+            //_content = (MSCFBStream *)cfbObject;
+        }
+        else
+        {
+            // We don't support anything else, but MS-OXORMMS says we might see afOle
+        }
     }
     
     return self;
