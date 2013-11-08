@@ -7,7 +7,10 @@
 
 #import "MSCFBError.h"
 #import "MSCFBObject.h"
+
 #import "MSCFBFile.h"
+#import "MSCFBFileInternal.h"
+
 #import "MSCFBStream.h"
 #import "MSCFBStorage.h"
 
@@ -22,10 +25,14 @@
     MSCFBStream    *_bodyHTML;
 }
 
+#pragma mark - Public Properties
+
 - (NSArray *)attachments
 {
     return _attachments;
 }
+
+#pragma mark - Public Methods
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error
 {

@@ -27,26 +27,15 @@
 
 #pragma mark Public Methods
 
-- (id)init:(MSCFBDirectoryEntry *)entry
+- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container
 {
-    self = [super init:entry];
+    self = [super init:entry container:container];
     
     if ( self )
     {
     }
     
     return self;
-}
-
-- (NSData *)read:(NSRange)range
-{
-    // TODO: Error cases
-    return [self.directoryEntry read:range];
-}
-
-- (NSData *)readAll
-{
-    return [self.directoryEntry readAll];
 }
 
 @end

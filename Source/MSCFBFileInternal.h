@@ -11,6 +11,13 @@
 
 @property (readonly, nonatomic) u_int32_t miniStreamCutoffSize;
 
+
+- (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
+- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
+
+- (id)initForWritingWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
+
+
 - (NSData *)readStream:(u_int32_t)index range:(NSRange)range;
 - (NSData *)readMiniStream:(u_int32_t)index range:(NSRange)range;
 

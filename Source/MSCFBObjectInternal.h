@@ -13,4 +13,6 @@
 
 @property (readonly, nonatomic) MSCFBDirectoryEntry *directoryEntry;
 
+- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
+
 @end

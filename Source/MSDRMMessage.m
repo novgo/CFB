@@ -15,14 +15,14 @@
 #import "MSCFBSource.h"
 
 #import "MSDRMFile.h"
-
+#import "MSDRMDocument.h"
 #import "MSDRMMessage.h"
 
 typedef struct _BlockHeader
 {
     u_int32_t ulCheck;
-    u_int32_t sizeAfterInflation;
-    u_int32_t sizeBeforeInflation;
+    u_int32_t sizeDecompressed;
+    u_int32_t sizeCompressed;
 } BLOCKHEADER;
 
 #define ZLIB_BUFFER_SIZE      (4 * 1024)
@@ -32,10 +32,12 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
 @implementation MSDRMMessage
 {
-    MSDRMFile *_file;
 }
 
-#pragma mark - Initialization and Termination
+#pragma mark - Public Properties
+
+
+#pragma mark - Public Methods
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
@@ -44,7 +46,26 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
     MSCFBDataSource *source = [[MSCFBDataSource alloc] initWithData:data];
     
-    return [self initWithSource:source error:error];
+    NSError *internalError = nil;
+    NSData  *deflatedData  = [self decompress:source error:&internalError];
+    
+    if ( internalError )
+    {
+        if ( error ) *error = internalError;
+        self = nil;
+    }
+    else
+    {
+        self = [super initWithData:deflatedData error:&internalError];
+        
+        if ( internalError )
+        {
+            if ( error ) *error = internalError;
+            self = nil;
+        }
+    }
+    
+    return self;
 }
 
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
@@ -57,53 +78,29 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
     MSCFBFileSource *source = [[MSCFBFileSource alloc] initWithFileHandle:fileHandle];
     
-    return [self initWithSource:source error:error];
-}
-
-- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
+    NSError *internalError = nil;
+    NSData  *deflatedData  = [self decompress:source error:&internalError];
     
-    self = [super init];
-    
-    if ( self )
+    if ( internalError )
     {
-        // Try to deflate the data
-        NSData *deflatedData = [self decompress:source error:error];
+        if ( error ) *error = internalError;
+        self = nil;
+    }
+    else
+    {
+        self = [super initWithData:deflatedData error:&internalError];
         
-        if ( !deflatedData )
+        if ( internalError )
         {
+            if ( error ) *error = internalError;
             self = nil;
-        }
-        else
-        {
-            // Load the deflated data
-            _file = [[MSDRMFile alloc] initWithData:deflatedData error:error];
-            
-            if ( _file )
-            {
-                _license          = _file.license;
-                _protectedContent = _file.protectedContent;
-            }
-            else
-            {
-                self = nil;
-            }
         }
     }
     
     return self;
 }
 
-#pragma mark - Public Methods
-
-- (MSDRMFile *)compoundFile
-{
-    return _file;
-}
-
-#pragma mark - Internal Methods
+#pragma mark - Private Methods
 
 - (NSData *)decompress:(id<MSCFBSource>)compressedData error:(NSError * __autoreleasing *)error
 {
@@ -112,17 +109,17 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     unsigned char  szHeader[sizeof(compressedDrmMessageHeader)] = {0};
     NSRange        range                                        = NSMakeRange(0,sizeof(compressedDrmMessageHeader));
     
-    [compressedData getBytes:szHeader range:range];
+    [compressedData readBytes:szHeader range:range];
     
     if ( !ASSERT( error, memcmp( szHeader, compressedDrmMessageHeader, sizeof( compressedDrmMessageHeader) ) == 0, @"Invalid message magic value" ) )
         return nil;
     
     z_stream zcpr;
     
-    BLOCKHEADER    blockHeader   = {0};
-    Byte          *deflatedBlock = malloc( 4096 << 1 ); // Blocks are generally ~4k
-    Byte          *inflatedBlock = malloc( 4096 << 1 ); // Blocks are generally ~4k
-    NSMutableData *deflatedData  = [[NSMutableData alloc] init];
+    BLOCKHEADER    blockHeader       = {0};
+    Byte          *compressedBlock   = malloc( 4096 << 1 ); // Blocks are generally ~4k
+    Byte          *decompressedBlock = malloc( 4096 << 1 ); // Blocks are generally ~4k
+    NSMutableData *deflatedData      = [[NSMutableData alloc] init];
     
     int ret=Z_OK;
     
@@ -132,64 +129,64 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     
     range.location += range.length;
     
-    while ( deflatedData && ret == Z_OK && range.location < compressedData.length )
+    while ( *error == nil && ret == Z_OK && range.location < compressedData.length )
     {
         // Read the block header
         range.length = sizeof( BLOCKHEADER );
-        [compressedData getBytes:&blockHeader range:range];
+        [compressedData readBytes:&blockHeader range:range];
         
         if ( ASSERT( error, blockHeader.ulCheck == ZLIB_DRM_HEADER_MAGIC, @"Incorrect block magic value" ) )
         {
-            if ( ASSERT( error, ( blockHeader.sizeBeforeInflation <= ( 4096 << 1 ) ) || ( blockHeader.sizeAfterInflation <= ( 4096 << 1 ) ), @"Size after inflation exceeds allocated space" ) )
+            if ( ASSERT( error, ( blockHeader.sizeCompressed <= ( 4096 << 1 ) ) || ( blockHeader.sizeDecompressed <= ( 4096 << 1 ) ), @"Size after inflation exceeds allocated space" ) )
             {
                 // Read the compressed data
                 range.location += range.length; // Skip over header
-                range.length    = blockHeader.sizeBeforeInflation;
+                range.length    = blockHeader.sizeCompressed;
 
                 if ( ASSERT( error, range.location + range.length <= compressedData.length, @"Compressed data corrupt" ) )
                 {
-                    [compressedData getBytes:deflatedBlock range:range];
+                    [compressedData readBytes:compressedBlock range:range];
                     
                     // Deflate the data
-                    zcpr.next_in   = deflatedBlock;
-                    zcpr.avail_in  = blockHeader.sizeBeforeInflation;
+                    zcpr.next_in   = compressedBlock;
+                    zcpr.avail_in  = blockHeader.sizeCompressed;
                     
-                    zcpr.next_out  = inflatedBlock;
-                    zcpr.avail_out = blockHeader.sizeAfterInflation;
+                    zcpr.next_out  = decompressedBlock;
+                    zcpr.avail_out = 4096 << 1; //blockHeader.sizeDecompressed;
                     
                     ret = inflate( &zcpr, Z_SYNC_FLUSH );
                     
                     if ( ret == Z_OK )
                     {
-                        [deflatedData appendBytes:inflatedBlock length:blockHeader.sizeAfterInflation];
+                        [deflatedData appendBytes:decompressedBlock length:zcpr.avail_out]; //blockHeader.sizeDecompressed];
                     }
                     
                     // Skip to next block header
                     range.location += range.length;
                 }
-                else
-                {
-                    // Drop the deflated data if there is an error.
-                    deflatedData = nil;
-                }
             }
-            else
-            {
-                // Drop the deflated data if there is an error.
-                deflatedData = nil;
-            }
-        }
-        else
-        {
-            // Drop the deflated data if there is an error.
-            deflatedData = nil;
         }
     }
-
-    free( deflatedBlock );
-    free( inflatedBlock );
     
-    return deflatedData;
+    // BUGBUG: After decompression, the resultant data should be a multiple of 512 byte sectors.
+    //         Frequently, it is not and so it is padded here with zeros to reach a multiple of 512.
+    //         Reading past the end of the actual data in the stream could cause errors later.
+    if ( deflatedData.length % 512 != 0 )
+    {
+        int paddingLength = 512 - ( deflatedData.length % 512 );
+        
+        memset( decompressedBlock, 0, paddingLength );
+        
+        [deflatedData appendBytes:decompressedBlock length:paddingLength];
+    }
+    
+    free( compressedBlock );
+    free( decompressedBlock );
+    
+    if ( *error )
+        return nil;
+    else
+        return deflatedData;
 }
 
 @end

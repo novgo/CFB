@@ -5,8 +5,6 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
-#import <MSCFB/MSCFB.h>
-
 @interface MSDRMFile : MSCFBFile
 
 @property (readonly, nonatomic) NSData   *license;

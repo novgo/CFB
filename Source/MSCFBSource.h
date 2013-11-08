@@ -11,8 +11,11 @@
 
 @property (readonly, nonatomic) u_int64_t length;
 
-- (void)getBytes:(void *)bytes range:(NSRange)range;
+- (void)readBytes:(void *)bytes range:(NSRange)range;
+
+// Read a range of bytes from the source.
 - (NSData *)readRange:(NSRange)range;
+- (void)writeData:(NSData *)data location:(NSUInteger)location;
 
 @end
 

@@ -35,7 +35,7 @@
 
 #pragma mark - Data Access
 
-- (void)getBytes:(void *)bytes range:(NSRange)range
+- (void)readBytes:(void *)bytes range:(NSRange)range
 {
     if ( !bytes )
         return;
@@ -49,15 +49,30 @@
     [_data getBytes:bytes range:range];
 }
 
+- (void)writeData:(NSData *)data location:(NSUInteger)location
+{
+    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+}
+
 - (NSData *)readRange:(NSRange)range
 {
     if ( range.location > self.length )
+    {
+        NSAssert( false, @"Range.location is out of bounds" );
         return nil;
+    }
     
     if ( range.location + range.length > self.length )
+    {
+        NSAssert( false, @"Range is out of bounds" );
         return nil;
+    }
     
-    return [[NSData alloc] initWithBytesNoCopy:( (void *)([_data bytes] + range.location) ) length:range.length freeWhenDone:NO];
+    NSData *data = [[NSData alloc] initWithBytesNoCopy:( (void *)([_data bytes] + range.location) ) length:range.length freeWhenDone:NO];
+    
+    NSAssert( data.length == range.length, @"Failed to read correct number of bytes" );
+    
+    return data;
 }
 
 @end
@@ -97,7 +112,7 @@
 
 #pragma mark - Data Access
 
-- (void)getBytes:(void *)bytes range:(NSRange)range
+- (void)readBytes:(void *)bytes range:(NSRange)range
 {
     if ( !bytes )
         return;
@@ -114,6 +129,17 @@
     
     [result getBytes:bytes range:NSMakeRange( 0, range.length )];
 }
+
+
+- (void)writeData:(NSData *)data location:(NSUInteger)location
+{
+    [_handle seekToFileOffset:location];
+    [_handle writeData:data];
+    [_handle synchronizeFile];
+    
+    _length = [_handle seekToEndOfFile];
+}
+
 
 - (NSData *)readRange:(NSRange)range
 {

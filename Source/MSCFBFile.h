@@ -5,12 +5,19 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
+#pragma once
+
 @class MSCFBObject;
 
 @interface MSCFBFile : NSObject
 
-- (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
++ (MSCFBFile *)compoundFileForReadingAtPath:(NSString *)path;
++ (MSCFBFile *)compoundFileForReadingWithData:(NSData *)data;
+
++ (MSCFBFile *)compoundFileForUpdatingAtPath:(NSString *)path;
++ (MSCFBFile *)compoundFileForWritingAtPath:(NSString *)path;
+
+- (void)close;
 
 - (NSArray *)allKeys;
 - (NSArray *)allValues;

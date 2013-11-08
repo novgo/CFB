@@ -12,9 +12,6 @@
 
 @property (readonly, nonatomic) u_int64_t length;
 
-- (id)init:(MSCFBDirectoryEntry *)entry;
-
-- (NSData *)read:(NSRange)range;
-- (NSData *)readAll;
+- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
 
 @end

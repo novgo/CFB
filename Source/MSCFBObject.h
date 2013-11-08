@@ -5,6 +5,8 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
+#pragma once
+
 @class MSCFBDirectoryEntry;
 @class MSCFBFile;
 
@@ -13,6 +15,9 @@
 @property (readonly, nonatomic) NSString *name;
 @property (readonly, nonatomic) Byte      objectType;
 
-- (id)init:(MSCFBDirectoryEntry *)entry;
+- (id)init __attribute__( ( unavailable("init not available") ) );
+
+- (NSData *)read:(NSRange)range;
+- (NSData *)readAll;
 
 @end

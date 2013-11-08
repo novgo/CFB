@@ -5,6 +5,15 @@
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
 //
 
+#import "MSCFBError.h"
+
+#import "MSCFBFile.h"
+#import "MSCFBFileInternal.h"
+
+#import "MSCFBObject.h"
+#import "MSCFBStorage.h"
+#import "MSCFBStream.h"
+
 #import "MSDRMFile.h"
 
 #pragma mark - Implementation constants
@@ -16,7 +25,6 @@ static const unichar _DataSpaces[]       = { '\x6', 'D', 'a', 't', 'a', 'S', 'p'
 static const unichar _EncryptedPackage[] = { 'E', 'n', 'c', 'r', 'y', 'p', 't', 'e', 'd', 'P', 'a', 'c', 'k', 'a', 'g', 'e' };
 static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r', 'y' };
 
-
 @interface MSDRMFile ()
 
 - (BOOL)validate:(NSError *__autoreleasing *)error;
@@ -24,6 +32,12 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
 @end
 
 @implementation MSDRMFile
+
+#pragma mark - Public Properties
+
+@synthesize license                = _license;
+@synthesize protectedContent       = _protectedContent;
+@synthesize protectedContentLength = _protectedContentLength;
 
 #pragma mark - Public Methods
 

@@ -10,14 +10,11 @@
 
 @interface MSCFBStorage : MSCFBObject //MSCFBDirectoryEntry
 
-- (id)init:(MSCFBDirectoryEntry *)entry;
+- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
 
 - (void)addObject:(MSCFBObject *)object;
 - (NSArray *)allKeys;
 - (NSArray *)allValues;
 - (MSCFBObject *)objectForKey:(NSString *)key;
-
-- (NSData *)read:(NSRange)range;
-- (NSData *)readAll;
 
 @end

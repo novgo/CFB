@@ -27,9 +27,9 @@
     return nil;
 }
 
-- (id)init:(MSCFBDirectoryEntry *)entry
+- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container
 {
-    self = [super init:entry];
+    self = [super init:entry container:container];
     
     if ( self )
     {
@@ -63,17 +63,5 @@
 
     return [_contents objectForKey:key];
 }
-
-
-- (NSData *)read:(NSRange)range
-{
-    return [self.directoryEntry read:range];
-}
-
-- (NSData *)readAll
-{
-    return [self.directoryEntry readAll];
-}
-
 
 @end

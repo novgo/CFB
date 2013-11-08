@@ -7,22 +7,21 @@
 
 #import "MSCFBTypes.h"
 
-@class MSCFBFile;
-
 @interface MSCFBDirectoryEntry : NSObject
 
-@property (readonly, nonatomic) NSString *name;
-@property (readonly, nonatomic) u_int32_t left;
-@property (readonly, nonatomic) u_int32_t right;
-@property (readonly, nonatomic) u_int32_t child;
+@property (readwrite, nonatomic) NSString *name;
+@property (readwrite, nonatomic) u_int32_t left;
+@property (readwrite, nonatomic) u_int32_t right;
+@property (readwrite, nonatomic) u_int32_t child;
 
-@property (readonly, nonatomic) Byte      objectType;
+@property (readwrite, nonatomic) Byte      objectType;
 
-@property (readonly, nonatomic) u_int64_t streamLength;
+@property (readwrite, nonatomic) u_int64_t streamStart;
+@property (readwrite, nonatomic) u_int64_t streamLength;
 
-- (id)init:(MSCFB_DIRECTORY_ENTRY *)directoryEntry container:(MSCFBFile *)container;
+- (id)init;
+- (id)init:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
 
-- (NSData *)read:(NSRange)range;
-- (NSData *)readAll;
+- (void)getDirectoryEntry:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
 
 @end
