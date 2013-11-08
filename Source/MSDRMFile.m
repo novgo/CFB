@@ -6,6 +6,7 @@
 //
 
 #import "MSCFBError.h"
+#import "MSCFBTypes.h"
 
 #import "MSCFBFile.h"
 #import "MSCFBFileInternal.h"

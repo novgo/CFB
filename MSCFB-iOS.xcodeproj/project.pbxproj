@@ -47,6 +47,8 @@
 		BC268D191712A09100687A1D /* MSCFBFile.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D171712A09100687A1D /* MSCFBFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC268D1C1712A17200687A1D /* MSCFBFileInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */; };
 		BC57737317435F7C004ACC65 /* MSCFBError.h in Headers */ = {isa = PBXBuildFile; fileRef = BC57737117435F7C004ACC65 /* MSCFBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC59E43A182CCF2B006767A0 /* MSCFBFileAllocationTable.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59E438182CCF2B006767A0 /* MSCFBFileAllocationTable.h */; };
+		BC59E43B182CCF2B006767A0 /* MSCFBFileAllocationTable.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59E439182CCF2B006767A0 /* MSCFBFileAllocationTable.m */; };
 		BC638EFA1822287E004AA36D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC638EF8182227F9004AA36D /* XCTest.framework */; };
 		BC638F4318222B1A004AA36D /* Test_MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC638F4218222B1A004AA36D /* Test_MSCFBFile.m */; };
 		BC75409C176469AA00B07012 /* MSDRMMessageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = BC754098176469AA00B07012 /* MSDRMMessageAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -138,6 +140,8 @@
 		BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileInternal.h; sourceTree = "<group>"; };
 		BC57737117435F7C004ACC65 /* MSCFBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBError.h; sourceTree = "<group>"; };
 		BC57737217435F7C004ACC65 /* MSCFBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBError.m; sourceTree = "<group>"; };
+		BC59E438182CCF2B006767A0 /* MSCFBFileAllocationTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileAllocationTable.h; sourceTree = "<group>"; };
+		BC59E439182CCF2B006767A0 /* MSCFBFileAllocationTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFileAllocationTable.m; sourceTree = "<group>"; };
 		BC638EF8182227F9004AA36D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BC638F4218222B1A004AA36D /* Test_MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test_MSCFBFile.m; sourceTree = "<group>"; };
 		BC754098176469AA00B07012 /* MSDRMMessageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageAttachment.h; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 				BC57737217435F7C004ACC65 /* MSCFBError.m */,
 				BC268D171712A09100687A1D /* MSCFBFile.h */,
 				BC268D181712A09100687A1D /* MSCFBFile.m */,
+				BC59E438182CCF2B006767A0 /* MSCFBFileAllocationTable.h */,
+				BC59E439182CCF2B006767A0 /* MSCFBFileAllocationTable.m */,
 				BC268D1B1712A17200687A1D /* MSCFBFileInternal.h */,
 				BC268CE417129F4800687A1D /* MSCFBObject.h */,
 				BC268CE517129F4800687A1D /* MSCFBObject.m */,
@@ -348,6 +354,7 @@
 				BC268CB61712973300687A1D /* MSCFB.h in Headers */,
 				BC57737317435F7C004ACC65 /* MSCFBError.h in Headers */,
 				BC268CF117129F4800687A1D /* MSCFBObject.h in Headers */,
+				BC59E43A182CCF2B006767A0 /* MSCFBFileAllocationTable.h in Headers */,
 				BC268CF617129F4800687A1D /* MSCFBStream.h in Headers */,
 				BC268CF417129F4800687A1D /* MSCFBStorage.h in Headers */,
 				BC268D191712A09100687A1D /* MSCFBFile.h in Headers */,
@@ -547,6 +554,7 @@
 				BCCCA17B18237D2B008157BE /* MSDRMMessage.m in Sources */,
 				BCCCA17C18237D2B008157BE /* MSDRMMessageAttachment.m in Sources */,
 				BCCCA17D18237D2B008157BE /* MSDRMMessageContent.m in Sources */,
+				BC59E43B182CCF2B006767A0 /* MSCFBFileAllocationTable.m in Sources */,
 				BCCCA17E18237D2B008157BE /* NSData+MSCFB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

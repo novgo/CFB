@@ -1,5 +1,5 @@
 //
-//  MSCompoundFileInternal.h
+//  MSCFBFileInternal.h
 //
 //  Created by Hervey Wilson on 3/25/13.
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
@@ -9,6 +9,7 @@
 
 @interface MSCFBFile ( Internal )
 
+@property (readonly, nonatomic) MSCFB_HEADER *header;
 @property (readonly, nonatomic) u_int32_t miniStreamCutoffSize;
 
 
@@ -20,5 +21,9 @@
 
 - (NSData *)readStream:(u_int32_t)index range:(NSRange)range;
 - (NSData *)readMiniStream:(u_int32_t)index range:(NSRange)range;
+
+// Sector reading and writing
+- (NSData *)sectorRead:(NSUInteger)index;
+- (void)sectorWrite:(NSUInteger)index data:(NSData *)data;
 
 @end

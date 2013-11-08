@@ -35,6 +35,8 @@
 		BC57737017435C9D004ACC65 /* MSCFBError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57736E17435C9D004ACC65 /* MSCFBError.m */; };
 		BC57737717436080004ACC65 /* MSCFBSource.h in Headers */ = {isa = PBXBuildFile; fileRef = BC57737517436080004ACC65 /* MSCFBSource.h */; };
 		BC57737817436080004ACC65 /* MSCFBSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57737617436080004ACC65 /* MSCFBSource.m */; };
+		BC59E43E182CD87B006767A0 /* MSCFBFileAllocationTable.h in Headers */ = {isa = PBXBuildFile; fileRef = BC59E43C182CD87B006767A0 /* MSCFBFileAllocationTable.h */; };
+		BC59E43F182CD87B006767A0 /* MSCFBFileAllocationTable.m in Sources */ = {isa = PBXBuildFile; fileRef = BC59E43D182CD87B006767A0 /* MSCFBFileAllocationTable.m */; };
 		BC638EF51822258E004AA36D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC638EF41822258E004AA36D /* XCTest.framework */; };
 		BC638EF7182225F1004AA36D /* Test_MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC638EF6182225F1004AA36D /* Test_MSCFBFile.m */; };
 		BC915F461764E4C400DABD46 /* MSDRMMessageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,6 +105,8 @@
 		BC57736E17435C9D004ACC65 /* MSCFBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBError.m; sourceTree = "<group>"; };
 		BC57737517436080004ACC65 /* MSCFBSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBSource.h; sourceTree = "<group>"; };
 		BC57737617436080004ACC65 /* MSCFBSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBSource.m; sourceTree = "<group>"; };
+		BC59E43C182CD87B006767A0 /* MSCFBFileAllocationTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCFBFileAllocationTable.h; sourceTree = "<group>"; };
+		BC59E43D182CD87B006767A0 /* MSCFBFileAllocationTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCFBFileAllocationTable.m; sourceTree = "<group>"; };
 		BC638EF41822258E004AA36D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BC638EF6182225F1004AA36D /* Test_MSCFBFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test_MSCFBFile.m; sourceTree = "<group>"; };
 		BC915F401764E4C400DABD46 /* MSDRMMessageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessageAttachment.h; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 				BC57736E17435C9D004ACC65 /* MSCFBError.m */,
 				BC268D0617129F5800687A1D /* MSCFBFile.h */,
 				BC268D0717129F5800687A1D /* MSCFBFile.m */,
+				BC59E43C182CD87B006767A0 /* MSCFBFileAllocationTable.h */,
+				BC59E43D182CD87B006767A0 /* MSCFBFileAllocationTable.m */,
 				BC268D0817129F5800687A1D /* MSCFBFileInternal.h */,
 				BC268CFE17129F5800687A1D /* MSCFBObject.h */,
 				BC268CFF17129F5800687A1D /* MSCFBObject.m */,
@@ -312,6 +318,7 @@
 				BC268D1617129F9300687A1D /* MSCFB.h in Headers */,
 				BC57736F17435C9D004ACC65 /* MSCFBError.h in Headers */,
 				BC268D0B17129F5800687A1D /* MSCFBObject.h in Headers */,
+				BC59E43E182CD87B006767A0 /* MSCFBFileAllocationTable.h in Headers */,
 				BC268D0E17129F5800687A1D /* MSCFBStorage.h in Headers */,
 				BC268D1017129F5800687A1D /* MSCFBStream.h in Headers */,
 				BC268D1317129F5800687A1D /* MSCFBFile.h in Headers */,
@@ -460,6 +467,7 @@
 				BC57737817436080004ACC65 /* MSCFBSource.m in Sources */,
 				BC915F471764E4C400DABD46 /* MSDRMMessageAttachment.m in Sources */,
 				BC915F491764E4C400DABD46 /* MSDRMMessageContent.m in Sources */,
+				BC59E43F182CD87B006767A0 /* MSCFBFileAllocationTable.m in Sources */,
 				BC915F4B1764E4C400DABD46 /* NSData+MSCFB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

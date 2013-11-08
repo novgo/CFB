@@ -1,5 +1,5 @@
 //
-//  MSCompoundFile.m
+//  MSCFBFile.m
 //
 //  Created by Hervey Wilson on 3/6/13.
 //  Copyright (c) 2013 Hervey Wilson. All rights reserved.
@@ -9,6 +9,7 @@
 #import "MSCFBError.h"
 
 #import "MSCFBDirectoryEntry.h"
+#import "MSCFBFileAllocationTable.h"
 
 #import "MSCFBObject.h"
 #import "MSCFBObjectInternal.h"
@@ -25,16 +26,18 @@
 
 - (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error;
 
+- (BOOL)createFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)createDirectory:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)createHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+
 - (BOOL)loadDirectory:(NSError * __autoreleasing *)error;
 - (BOOL)loadFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)loadHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
 - (BOOL)loadMiniFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-
-- (MSCFBObject *)createObject:(MSCFBDirectoryEntry *)entry;
 - (MSCFBStorage *)loadRootStorage;
 
-// Sector reading and writing
-- (NSData *)sectorRead:(NSUInteger)index;
-- (void)sectorWrite:(NSUInteger)index data:(NSData *)data;
+- (MSCFBObject *)createObject:(MSCFBDirectoryEntry *)entry;
+
 
 @end
 
@@ -44,7 +47,9 @@
     
     NSMutableArray *_directory;
     
-    NSMutableData  *_fat;
+    //NSMutableData  *_fat;
+    MSCFBFileAllocationTable *_fat;
+    
     NSMutableData  *_miniFat;
     
     id<MSCFBSource> _source;
@@ -126,26 +131,36 @@
 
 - (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
 {
+    self = [super init];
+    
+    if ( !self )
+        return nil;
+    
     return [self initWithSource:[[MSCFBDataSource alloc] initWithData:data] error:error];
 }
 
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
 {
+    self = [super init];
+    
+    if ( !self )
+        return nil;
+
     return [self initWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
 }
 
 - (id)initForWritingWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    return [self initForWritingWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
-}
-
-- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
 {
     self = [super init];
     
     if ( !self )
         return nil;
     
+    return [self initForWritingWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
+}
+
+- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
+{
     // Initialize private fields
     _directory = nil;
     _fat       = nil;
@@ -156,178 +171,55 @@
     NSAssert( source != nil, @"Invalid source" );
     NSAssert( source.length % 512 == 0, @"Invalid source length" );
     
-    [source readBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
-    
-    // Verify header signatures
-    if ( !ASSERT( error, ( _header.signature[0] == MSCFB_SIGNATURE_1 || _header.signature[1] == MSCFB_SIGNATURE_2 ), @"Invalid signature" ) )
-        return nil;
-    
-    // Verify CLSID
-    for ( int i = 0; i < 3; i++ )
-    {
-        if ( !ASSERT(error, _header.dwClsid[i] == 0, @"Invalid CLSID" ) )
-            return nil;
-    }
-    
-    // Verify major version
-    if ( !ASSERT( error, _header.majorVersion == 3 || _header.majorVersion == 4, @"Invalid major version" ) )
-        return nil;
-    
-    // Minor Version
-    if ( !ASSERT( error, _header.minorVersion == 0x3E, @"Invalid minor version" ) )
-        return nil;
-    
-    // Byte order
-    if ( !ASSERT( error, _header.byteOrder == 0xFFFE, @"Invalid byte order" ) )
-        return nil;
-    
-    // Mini sector shift must be 0x0006, and mini sector size is 64
-    if ( !ASSERT( error, _header.miniSectorShift == 0x0006, @"Invalid mini sector shift" ) )
-        return nil;
-    
-    // Reserved bytes
-    for ( int i = 0; i < 3; i++ )
-    {
-        if ( !ASSERT( error, _header.reserved[i] == 0, @"Invalid reserved field" ) )
-            return nil;
-    }
-    
-    if ( _header.majorVersion == 3 )
-    {
-        // Sector shift must be 0x0009, and sector size is 512
-        if ( !ASSERT( error, _header.sectorShift == 0x0009, @"Invalid sector size for version 3" ) )
-            return nil;
-    }
-    else if ( _header.majorVersion == 4 )
-    {
-        if ( !ASSERT( error, _header.sectorShift == 0x000C, @"Invalid sector size for version 4" ) )
-            return nil;
-    }
-    
-    // Number of directory sectors
-    if ( !ASSERT( error, _header.directorySectors == 0, @"Invalid number of directory sectors" ) )
-        return nil;
-    
     // Save the source
     _source = source;
+    
+    // Load the header first
+    if ( ![self loadHeader:source error:error] )
+    {
+        self = nil; return self;
+    }
 
     // Load the FAT
-    if ( [self loadFileAllocationTable:source error:error] )
+    if ( ![self loadFileAllocationTable:source error:error] )
     {
-        // Load the mini FAT
-        if ( [self loadMiniFileAllocationTable:source error:error] )
-        {
-            // Load the directory
-            if ( [self loadDirectory:error] )
-            {
-                // NOTE: the root storages stream is actually the mini stream
-                _root = [self loadRootStorage];
-            }
-            else
-            {
-                // Cleanup
-                _miniFat = nil;
-                _fat     = nil;
-                _source  = nil;
-                self     = nil;
-            }
-        }
-        else
-        {
-            // Cleanup
-            _fat    = nil;
-            _source = nil;
-            self    = nil;
-        }
+        self = nil; return self;
     }
-    else
+    
+    // Load the mini FAT
+    if ( ![self loadMiniFileAllocationTable:source error:error] )
     {
-        // Cleanup
-        _source = nil;
-        self    = nil;
+        self = nil; return self;
     }
+    
+    // Load the directory
+    if ( ![self loadDirectory:error] )
+    {
+        self = nil; return self;
+    }
+    
+    // NOTE: the root storages stream is actually the mini stream
+    _root = [self loadRootStorage];
 
     return self;
 }
 
 - (id)initForWritingWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
 {
-    // Initialize the header and write it
-    memset( &_header, 0, sizeof( MSCFB_HEADER ) );
-    
-    _header.byteOrder        = 0xFFFE;
-    
-    _header.signature[0]     = MSCFB_SIGNATURE_1;
-    _header.signature[1]     = MSCFB_SIGNATURE_2;
-    
-    _header.dwClsid[0]       = 0;
-    _header.dwClsid[1]       = 0;
-    _header.dwClsid[2]       = 0;
-    _header.dwClsid[3]       = 0;
-    
-    _header.majorVersion     = 3;
-    _header.minorVersion     = 0x3E;
-
-    _header.sectorShift      = 0x0009;
-    _header.miniSectorShift  = 0x0006;
-    
-    _header.reserved[0]      = 0;
-    _header.reserved[1]      = 0;
-    _header.reserved[2]      = 0;
-    
-    _header.fatSectors       = 1; // 1 for the Directory Sector
-    
-    _header.difatSectors     = 0;
-    
-    // Initialize DIFAT entries
-    for ( int i = 0; i < 109; i++ )
+    if ( ![self createHeader:source error:error] )
     {
-        _header.difat[i] = FAT_SECTOR_FREE;
+        self = nil; return self;
     }
     
-    // We must have one FAT sector, locate this in sector 0.
-    _header.difat[0] = 0;
+    if ( ![self createFileAllocationTable:source error:error] )
+    {
+        self = nil; return self;
+    }
     
-    _header.miniFatSectors   = 0;
-    
-    _header.directorySectors     = 0; // Version 3 is zero, Version 4 is a count
-    _header.firstDirectorySector = 1; // The first directory sector is 1
-    
-    // Write the header
-    NSData *data = [[NSData alloc] initWithBytesNoCopy:&_header length:sizeof(MSCFB_HEADER) freeWhenDone:NO];
-    [source writeData:data location:0];
-
-    // Write the first FAT sector
-    u_int32_t fatSector[SECTOR_SIZE >> 2];
-    
-    for ( int i = 0; i < SECTOR_SIZE >> 2; i++ )
-        fatSector[i] = FAT_SECTOR_END_OF_CHAIN;
-    
-    data = [[NSData alloc] initWithBytesNoCopy:&fatSector length:SECTOR_SIZE freeWhenDone:NO];
-    [source writeData:data location:SECTOR_OFFSET(_header.difat[0])];
-
-    // Bootstrap the Directory and the Root Entry storage
-    MSCFB_DIRECTORY_ENTRY directorySector[4];
-    MSCFBDirectoryEntry  *directoryEntry      = [[MSCFBDirectoryEntry alloc] init];
-    
-    // First, clear the entire sector
-    memset( &directorySector, 0, SECTOR_SIZE );
-    
-    // Now create an entry for the Root Storage
-    directoryEntry.child        = NOSTREAM;
-    directoryEntry.left         = NOSTREAM;
-    directoryEntry.name         = @"Root Entry";
-    directoryEntry.objectType   = CFB_ROOT_OBJECT;
-    directoryEntry.right        = NOSTREAM;
-    directoryEntry.streamLength = 0;
-    directoryEntry.streamStart  = 0;
-    
-    [directoryEntry getDirectoryEntry:&directorySector[0]];
-    
-    data = [[NSData alloc] initWithBytesNoCopy:&directorySector[0] length:(sizeof(MSCFB_DIRECTORY_ENTRY) << 2) freeWhenDone:NO];
-    
-    // Write the header
-    [source writeData:data location:SECTOR_OFFSET(_header.firstDirectorySector)];
+    if ( ![self createDirectory:source error:error] )
+    {
+        self = nil; return self;
+    }
     
     return [self initWithSource:source error:error];
 }
@@ -382,14 +274,12 @@
     sectorRange.location = range.location >> _header.sectorShift;
     sectorRange.length   = ( range.length >> _header.sectorShift ) + 1;
     
-    const MSCFB_FAT_SECTOR *FAT = [_fat bytes];
-    
     // Follow the chain from the starting sector until we reach the
     // the first sector that must be read. At the end of the loop,
     // sector has the sector number for the start of the read.
     while ( sectorRange.location > 0 && sectorIndex != FAT_SECTOR_END_OF_CHAIN )
     {
-        sectorIndex = FAT->nextSector[sectorIndex];
+        sectorIndex = [_fat nextSectorInChain:sectorIndex];
         sectorRange.location--;
     }
     
@@ -418,7 +308,7 @@
             byteRange.length   = ( bytesRemaining < SECTOR_SIZE ) ? bytesRemaining : SECTOR_SIZE;
             
             // Point to next sector
-            sectorIndex = FAT->nextSector[sectorIndex];
+            sectorIndex = [_fat nextSectorInChain:sectorIndex];
         }
         while ( bytesRemaining > 0 );
     }
@@ -502,6 +392,101 @@
 
 #pragma mark - Private Methods
 
+// Create a new file allocation table
+- (BOOL)createFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+{
+    // Write the first FAT sector
+    u_int32_t fatSector[SECTOR_SIZE >> 2];
+    
+    for ( int i = 0; i < SECTOR_SIZE >> 2; i++ )
+        fatSector[i] = FAT_SECTOR_END_OF_CHAIN;
+    
+    NSData *data = [[NSData alloc] initWithBytesNoCopy:&fatSector length:SECTOR_SIZE freeWhenDone:NO];
+    [source writeData:data location:SECTOR_OFFSET( _header.difat[0] )];
+
+    return YES;
+}
+
+// Create a new directory with a root storage
+- (BOOL)createDirectory:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+{
+    // Bootstrap the Directory and the Root Entry storage
+    MSCFB_DIRECTORY_ENTRY directorySector[4];
+    MSCFBDirectoryEntry  *directoryEntry      = [[MSCFBDirectoryEntry alloc] init];
+    
+    // First, clear the entire sector
+    memset( &directorySector, 0, SECTOR_SIZE );
+    
+    // Now create an entry for the Root Storage
+    directoryEntry.child        = NOSTREAM;
+    directoryEntry.left         = NOSTREAM;
+    directoryEntry.name         = @"Root Entry";
+    directoryEntry.objectType   = CFB_ROOT_OBJECT;
+    directoryEntry.right        = NOSTREAM;
+    directoryEntry.streamLength = 0;
+    directoryEntry.streamStart  = 0;
+    
+    [directoryEntry getDirectoryEntry:&directorySector[0]];
+    
+    NSData *data = [[NSData alloc] initWithBytesNoCopy:&directorySector[0] length:(sizeof(MSCFB_DIRECTORY_ENTRY) << 2) freeWhenDone:NO];
+    
+    // Write the header
+    [source writeData:data location:SECTOR_OFFSET(_header.firstDirectorySector)];
+
+    return YES;
+}
+
+// Create a header for a new file
+- (BOOL)createHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+{
+    // Initialize the header and write it
+    memset( &_header, 0, sizeof( MSCFB_HEADER ) );
+    
+    _header.byteOrder        = 0xFFFE;
+    
+    _header.signature[0]     = MSCFB_SIGNATURE_1;
+    _header.signature[1]     = MSCFB_SIGNATURE_2;
+    
+    _header.dwClsid[0]       = 0;
+    _header.dwClsid[1]       = 0;
+    _header.dwClsid[2]       = 0;
+    _header.dwClsid[3]       = 0;
+    
+    _header.majorVersion     = 3;
+    _header.minorVersion     = 0x3E;
+    
+    _header.sectorShift      = 0x0009;
+    _header.miniSectorShift  = 0x0006;
+    
+    _header.reserved[0]      = 0;
+    _header.reserved[1]      = 0;
+    _header.reserved[2]      = 0;
+    
+    _header.fatSectors       = 1; // 1 for the Directory Sector
+    
+    _header.difatSectors     = 0;
+    
+    // Initialize DIFAT entries
+    for ( int i = 0; i < 109; i++ )
+    {
+        _header.difat[i] = FAT_SECTOR_FREE;
+    }
+    
+    // We must have one FAT sector, locate this in sector 0.
+    _header.difat[0] = 0;
+    
+    _header.miniFatSectors       = 0;
+    
+    _header.directorySectors     = 0; // Version 3 is zero, Version 4 is a count
+    _header.firstDirectorySector = 1; // The first directory sector is 1
+    
+    // Write the header
+    NSData *data = [[NSData alloc] initWithBytesNoCopy:&_header length:sizeof(MSCFB_HEADER) freeWhenDone:NO];
+    [source writeData:data location:0];
+    
+    return YES;
+}
+
 // Initialize the directory
 - (BOOL)loadDirectory:(NSError * __autoreleasing *)error
 {
@@ -511,7 +496,7 @@
     // sectors in the header, but version 3 files have that field
     // set to zero.
     u_int32_t sector        = _header.firstDirectorySector;
-    u_int32_t sectorCount   = [self sectorsInChain:sector];
+    u_int32_t sectorCount   = [_fat sectorsInChain:sector];
     NSRange   sectorRange   = { 0, sectorCount << _header.sectorShift };
     NSData   *directoryData = [self readStream:sector range:sectorRange];
     
@@ -533,75 +518,66 @@
 // Initialize the File Allocation Table
 - (BOOL)loadFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
 {
-    if ( !ASSERT( error, _header.fatSectors > 0, @"No FAT sectors in header" ) ) return NO;
-    
-    // The header tells us the number of FAT sectors and the DIFAT entries
-    // point to the individual FAT sectors in the source. If there are more than 109 FAT sectors
-    // then there is a DIFAT sector chain pointed to from the header.
-    NSMutableData *fat = [[NSMutableData alloc] initWithCapacity:( _header.fatSectors << _header.sectorShift )];
-    
-    int   i, j;
-    
-    // Use the DIFAT table in the header to load the first 109 FAT sectors
-    for ( i = 0; i < 109 && i < _header.fatSectors; ++i )
-    {
-        if ( _header.difat[i] == FAT_SECTOR_FREE )
-            break;
-        
-        [fat appendData:[self sectorRead:_header.difat[i]]];
-        
-        // TODO: The following condition only appears to be true of protected content
-        //if ( i == 0 && *((u_int32_t *)fatIndex) != FAT_SECTOR_SIGNATURE )
-        //{
-        //    NSAssert( false, @"No FAT_SECTOR_SIGNATURE" );
-        //}
-    }
-    
-    // Now load DIFAT sectors for additional DIFAT entries. Each DIFAT sector
-    // is an array of FAT sector indexes where the last entry in the array
-    // is the index of the next DIFAT sector.
-    if ( _header.difatSectors > 0 )
-    {
-        u_int32_t           sectorIndex = _header.firstDifatSector;
-        NSData             *sector      = nil;
-        MSCFB_DIFAT_SECTOR *difatSector = NULL;
-        u_int32_t          *difatNext   = NULL;
-        
-        for ( i = 0; i < _header.difatSectors; i++ )
-        {
-            // Last entry in DIFAT sector is the chain pointer
-            sector      = [self sectorRead:sectorIndex];
-            difatSector = (MSCFB_DIFAT_SECTOR *)[sector bytes];
-            difatNext   = &difatSector->sector[SECTOR_SIZE / sizeof( u_int32_t) - 1];
-            
-            // Read the FAT sectors that the DIFAT points to
-            for ( j = 0; j < ( SECTOR_SIZE / sizeof( u_int32_t) - 1 ); j++ )
-            {
-                if ( difatSector->sector[j] == FAT_SECTOR_FREE )
-                    break;
-                
-                // Read the FAT sector
-                [fat appendData:[self sectorRead:difatSector->sector[j]]];
-            }
-            
-            if ( i < _header.difatSectors - 1 )
-            {
-                if ( !ASSERT( error, *difatNext == FAT_SECTOR_DIFAT, @"Expected DIFAT sector" ) ) return NO;
-            }
-            else
-            {
-                if ( !ASSERT( error, *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
-            }
-            
-            sectorIndex = *difatNext;
-        }
-        
-        if ( !ASSERT( error, *difatNext == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
-        if ( !ASSERT( error, i == _header.difatSectors, @"Did not read enough DIFAT sectors" ) ) return NO;
-    }
-    
     // Save the FAT object
-    _fat = fat;
+    if ( ( _fat = [[MSCFBFileAllocationTable alloc] init:self error:error] ) == nil ) return NO;
+    
+    return YES;
+}
+
+- (BOOL)loadHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+{
+    [source readBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
+    
+    // Verify header signatures
+    if ( !ASSERT( error, ( _header.signature[0] == MSCFB_SIGNATURE_1 || _header.signature[1] == MSCFB_SIGNATURE_2 ), @"Invalid signature" ) )
+        return NO;
+    
+    // Verify CLSID
+    for ( int i = 0; i < 3; ++i )
+    {
+        if ( !ASSERT(error, _header.dwClsid[i] == 0, @"Invalid CLSID" ) )
+            return NO;
+    }
+    
+    // Verify major version
+    if ( !ASSERT( error, _header.majorVersion == 3 || _header.majorVersion == 4, @"Invalid major version" ) )
+        return NO;
+    
+    // Minor Version
+    if ( !ASSERT( error, _header.minorVersion == 0x3E, @"Invalid minor version" ) )
+        return NO;
+    
+    // Byte order
+    if ( !ASSERT( error, _header.byteOrder == 0xFFFE, @"Invalid byte order" ) )
+        return NO;
+    
+    // Mini sector shift must be 0x0006, and mini sector size is 64
+    if ( !ASSERT( error, _header.miniSectorShift == 0x0006, @"Invalid mini sector shift" ) )
+        return NO;
+    
+    // Reserved bytes
+    for ( int i = 0; i < 3; ++i )
+    {
+        if ( !ASSERT( error, _header.reserved[i] == 0, @"Invalid reserved field" ) )
+            return NO;
+    }
+    
+    if ( _header.majorVersion == 3 )
+    {
+        // Sector shift must be 0x0009, and sector size is 512
+        if ( !ASSERT( error, _header.sectorShift == 0x0009, @"Invalid sector size for version 3" ) )
+            return NO;
+    }
+    else if ( _header.majorVersion == 4 )
+    {
+        if ( !ASSERT( error, _header.sectorShift == 0x000C, @"Invalid sector size for version 4" ) )
+            return NO;
+    }
+    
+    // Number of directory sectors
+    // TODO: Version 4 files may contain a count here
+    if ( !ASSERT( error, _header.directorySectors == 0, @"Invalid number of directory sectors" ) )
+        return NO;
     
     return YES;
 }
@@ -621,16 +597,13 @@
         // stream.
         NSMutableData *miniFat = [[NSMutableData alloc] initWithCapacity:( _header.miniFatSectors << _header.sectorShift)];
         
-        // Local pointers and index using bytes
-        const MSCFB_FAT_SECTOR *fatTable = [_fat bytes];
-
         u_int32_t sectorIndex = _header.firstMiniFatSector;
         
         for ( int i = 0; i < _header.miniFatSectors; i++ )
         {
             [miniFat appendData:[self sectorRead:sectorIndex]];
             
-            sectorIndex = fatTable->nextSector[sectorIndex];
+            sectorIndex = [_fat nextSectorInChain:sectorIndex];
         }
         
         if ( !ASSERT( error, sectorIndex == FAT_SECTOR_END_OF_CHAIN, @"Expected END_OF_CHAIN sector" ) ) return NO;
@@ -713,20 +686,6 @@
 - (void)sectorWrite:(NSUInteger)index data:(NSData *)data
 {
     NSAssert( false, @"Not implemented" );
-}
-
-- (u_int32_t)sectorsInChain:(u_int32_t)startIndex
-{
-    const MSCFB_FAT_SECTOR *fatTable = [_fat bytes];
-    
-    u_int32_t count = 1;
-    
-    while ( ( startIndex = fatTable->nextSector[startIndex] ) != FAT_SECTOR_END_OF_CHAIN )
-    {
-        count++;
-    }
-    
-    return count;
 }
 
 - (void)walkTree:(MSCFBDirectoryEntry *)entry forStorage:(MSCFBStorage *)storage

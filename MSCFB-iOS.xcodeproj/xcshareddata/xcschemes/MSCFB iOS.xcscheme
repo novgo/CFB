@@ -37,17 +37,6 @@
                BlueprintName = "MSCFBTests"
                ReferencedContainer = "container:MSCFB-iOS.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "Test_MSDRMMessage">
-               </Test>
-               <Test
-                  Identifier = "Test_MSCFBFile/testCompoundFileForReadingDoc">
-               </Test>
-               <Test
-                  Identifier = "Test_MSCFBFile/testCompoundFileForReadingDocx">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
