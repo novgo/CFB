@@ -37,7 +37,7 @@
         
         if ( filePath )
         {
-            NSLog( @"Testing document-%d.doc", i );
+            NSLog( @"%s Testing document-%d.doc", __PRETTY_FUNCTION__, i );
             
             NSError      *error      = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
@@ -72,7 +72,7 @@
         
         if ( filePath )
         {
-            NSLog( @"Testing document-%d.docx", i );
+            NSLog( @"%s Testing document-%d.docx", __PRETTY_FUNCTION__, i );
             
             NSError      *error      = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];

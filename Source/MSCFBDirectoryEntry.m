@@ -101,12 +101,12 @@
     _entry.objectType = objectType;
 }
 
-- (u_int64_t)streamStart
+- (u_int32_t)streamStart
 {
     return _entry.streamStartSector;
 }
 
-- (void)setStreamStart:(u_int64_t)streamStart
+- (void)setStreamStart:(u_int32_t)streamStart
 {
     _entry.streamStartSector = streamStart;
 }

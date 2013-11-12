@@ -16,7 +16,7 @@
 
 @property (readwrite, nonatomic) Byte      objectType;
 
-@property (readwrite, nonatomic) u_int64_t streamStart;
+@property (readwrite, nonatomic) u_int32_t streamStart;
 @property (readwrite, nonatomic) u_int64_t streamLength;
 
 - (id)init;

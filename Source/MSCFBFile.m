@@ -100,7 +100,7 @@
     NSFileHandle  *fileHandle  = nil;
     
     // To write a file, we either create it or truncate it
-    if ( ![fileManager fileExistsAtPath:path] )
+    if ( [fileManager fileExistsAtPath:path] )
     {
         // Truncate the file
         fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
@@ -495,10 +495,9 @@
     // chain in the FAT sector. Version 4 files have a count of
     // sectors in the header, but version 3 files have that field
     // set to zero.
-    u_int32_t sector        = _header.firstDirectorySector;
-    u_int32_t sectorCount   = [_fat sectorsInChain:sector];
+    u_int32_t sectorCount   = [_fat sectorsInChain:_header.firstDirectorySector];
     NSRange   sectorRange   = { 0, sectorCount << _header.sectorShift };
-    NSData   *directoryData = [self readStream:sector range:sectorRange];
+    NSData   *directoryData = [self readStream:_header.firstDirectorySector range:sectorRange];
     
     _directory = [[NSMutableArray alloc] init];
 
