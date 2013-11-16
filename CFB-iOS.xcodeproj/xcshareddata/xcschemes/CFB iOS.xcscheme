@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BC268C4B1712886800687A1D"
-               BuildableName = "libMSCFB.a"
+               BuildableName = "libCFB.a"
                BlueprintName = "CFB"
                ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BC268C5C1712886800687A1D"
-               BuildableName = "MSCFBTests.xctest"
+               BuildableName = "CFBTests.xctest"
                BlueprintName = "CFBTests"
                ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>

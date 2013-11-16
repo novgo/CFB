@@ -117,11 +117,11 @@
 		BC268C4F1712886800687A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC268C531712886800687A1D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = iOS/Prefix.pch; sourceTree = "<group>"; };
 		BC268C541712886800687A1D /* MSCFB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFB.h; sourceTree = "<group>"; };
-		BC268C5D1712886800687A1D /* MSCFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSCFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268C5D1712886800687A1D /* MSCFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MSCFBTests.xctest; path = CFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C681712886800687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268C6A1712886800687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268C6D1712886800687A1D /* Test_MSDRMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test_MSDRMMessage.m; sourceTree = "<group>"; };
-		BC268CC31712983400687A1D /* MSCFBResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSCFBResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268CC31712983400687A1D /* MSCFBResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MSCFBResources.bundle; path = CFBResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268CC41712983400687A1D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BC268CC81712983400687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268CCA1712983400687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -220,11 +220,11 @@
 		BC268C431712886800687A1D = {
 			isa = PBXGroup;
 			children = (
-				BC268C511712886800687A1D /* Source */,
-				BC268C661712886800687A1D /* Test */,
-				BC268CC61712983400687A1D /* Resources */,
 				BC268C4E1712886800687A1D /* Frameworks */,
 				BC268C4D1712886800687A1D /* Products */,
+				BC268CC61712983400687A1D /* Resources */,
+				BC268C511712886800687A1D /* Source */,
+				BC268C661712886800687A1D /* Test */,
 			);
 			sourceTree = "<group>";
 		};
@@ -619,6 +619,7 @@
 		BC268C6F1712886800687A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -654,6 +655,7 @@
 		BC268C701712886800687A1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -667,11 +669,9 @@
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = c11;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"NDEBUG=1",
-					"NS_BLOCK_ASSERTIONS=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "NDEBUG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

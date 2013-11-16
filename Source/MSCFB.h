@@ -7,15 +7,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MSCFB/MSCFBError.h>
-#import <MSCFB/MSCFBObject.h>
-#import <MSCFB/MSCFBStream.h>
-#import <MSCFB/MSCFBStorage.h>
-#import <MSCFB/MSCFBFile.h>
+#import <CFB/MSCFBError.h>
+#import <CFB/MSCFBObject.h>
+#import <CFB/MSCFBStream.h>
+#import <CFB/MSCFBStorage.h>
+#import <CFB/MSCFBFile.h>
 
-#import <MSCFB/MSDRMFile.h>
-#import <MSCFB/MSDRMDocument.h>
-#import <MSCFB/MSDRMMessage.h>
+#import <CFB/MSDRMFile.h>
+#import <CFB/MSDRMDocument.h>
+#import <CFB/MSDRMMessage.h>
 
-#import <MSCFB/MSDRMMessageContent.h>
-#import <MSCFB/MSDRMMessageAttachment.h>
+#import <CFB/MSDRMMessageContent.h>
+#import <CFB/MSDRMMessageAttachment.h>
