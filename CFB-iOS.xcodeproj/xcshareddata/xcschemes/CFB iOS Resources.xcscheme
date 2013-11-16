@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268CD81712993800687A1D"
-               BuildableName = "MSCFBFramework"
-               BlueprintName = "MSCFBFramework"
-               ReferencedContainer = "container:MSCFB-iOS.xcodeproj">
+               BlueprintIdentifier = "BC268CC21712983400687A1D"
+               BuildableName = "CFBResources.bundle"
+               BlueprintName = "CFBResources"
+               ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

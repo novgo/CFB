@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268C8117128BAC00687A1D"
-               BuildableName = "MSCFB.framework"
-               BlueprintName = "MSCFB"
-               ReferencedContainer = "container:MSCFB-OSX.xcodeproj">
+               BlueprintIdentifier = "BC268C4B1712886800687A1D"
+               BuildableName = "libMSCFB.a"
+               BlueprintName = "CFB"
+               ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268C9917128BAC00687A1D"
+               BlueprintIdentifier = "BC268C5C1712886800687A1D"
                BuildableName = "MSCFBTests.xctest"
-               BlueprintName = "MSCFBTests"
-               ReferencedContainer = "container:MSCFB-OSX.xcodeproj">
+               BlueprintName = "CFBTests"
+               ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

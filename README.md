@@ -1,5 +1,5 @@
-MS-CFB
-======
+CFB
+====
 
 Microsoft Compound File Binary Library for iOS and OSX.
 

@@ -14,7 +14,7 @@
 		BC268C8617128BAC00687A1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8517128BAC00687A1D /* Cocoa.framework */; };
 		BC268C9017128BAC00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268C8E17128BAC00687A1D /* InfoPlist.strings */; };
 		BC268C9D17128BAC00687A1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8517128BAC00687A1D /* Cocoa.framework */; };
-		BC268CA017128BAC00687A1D /* MSCFB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8217128BAC00687A1D /* MSCFB.framework */; };
+		BC268CA017128BAC00687A1D /* CFB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC268C8217128BAC00687A1D /* CFB.framework */; };
 		BC268CA617128BAC00687A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC268CA417128BAC00687A1D /* InfoPlist.strings */; };
 		BC268CA917128BAC00687A1D /* Test_MSDRMMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CA817128BAC00687A1D /* Test_MSDRMMessage.m */; };
 		BC268D0917129F5800687A1D /* MSCFBDirectoryEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = BC268CFC17129F5800687A1D /* MSCFBDirectoryEntry.h */; };
@@ -77,14 +77,14 @@
 		BC1BCD551743D0C0000F4D85 /* message-2.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-2.rpmsg"; sourceTree = "<group>"; };
 		BC1BCD561743D0C0000F4D85 /* message-3.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-3.rpmsg"; sourceTree = "<group>"; };
 		BC1BCD571743D0C0000F4D85 /* message-4.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-4.rpmsg"; sourceTree = "<group>"; };
-		BC268C8217128BAC00687A1D /* MSCFB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MSCFB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268C8217128BAC00687A1D /* CFB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CFB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C8517128BAC00687A1D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BC268C8A17128BAC00687A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC268C8D17128BAC00687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268C8F17128BAC00687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268C9117128BAC00687A1D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = OSX/Prefix.pch; sourceTree = "<group>"; };
 		BC268C9217128BAC00687A1D /* MSCFB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFB.h; sourceTree = "<group>"; };
-		BC268C9A17128BAC00687A1D /* MSCFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MSCFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268C9A17128BAC00687A1D /* CFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268CA317128BAC00687A1D /* MSCFBTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MSCFBTests-Info.plist"; sourceTree = "<group>"; };
 		BC268CA517128BAC00687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268CA817128BAC00687A1D /* Test_MSDRMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test_MSDRMMessage.m; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 			files = (
 				BC638EF51822258E004AA36D /* XCTest.framework in Frameworks */,
 				BC268C9D17128BAC00687A1D /* Cocoa.framework in Frameworks */,
-				BC268CA017128BAC00687A1D /* MSCFB.framework in Frameworks */,
+				BC268CA017128BAC00687A1D /* CFB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +196,8 @@
 		BC268C8317128BAC00687A1D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BC268C8217128BAC00687A1D /* MSCFB.framework */,
-				BC268C9A17128BAC00687A1D /* MSCFBTests.xctest */,
+				BC268C8217128BAC00687A1D /* CFB.framework */,
+				BC268C9A17128BAC00687A1D /* CFBTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -339,9 +339,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BC268C8117128BAC00687A1D /* MSCFB */ = {
+		BC268C8117128BAC00687A1D /* CFB */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC268CAC17128BAC00687A1D /* Build configuration list for PBXNativeTarget "MSCFB" */;
+			buildConfigurationList = BC268CAC17128BAC00687A1D /* Build configuration list for PBXNativeTarget "CFB" */;
 			buildPhases = (
 				BC268C7D17128BAC00687A1D /* Sources */,
 				BC268C7E17128BAC00687A1D /* Frameworks */,
@@ -352,14 +352,14 @@
 			);
 			dependencies = (
 			);
-			name = MSCFB;
+			name = CFB;
 			productName = MSCFB;
-			productReference = BC268C8217128BAC00687A1D /* MSCFB.framework */;
+			productReference = BC268C8217128BAC00687A1D /* CFB.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BC268C9917128BAC00687A1D /* MSCFBTests */ = {
+		BC268C9917128BAC00687A1D /* CFBTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC268CAF17128BAC00687A1D /* Build configuration list for PBXNativeTarget "MSCFBTests" */;
+			buildConfigurationList = BC268CAF17128BAC00687A1D /* Build configuration list for PBXNativeTarget "CFBTests" */;
 			buildPhases = (
 				BC268C9517128BAC00687A1D /* Sources */,
 				BC268C9617128BAC00687A1D /* Frameworks */,
@@ -371,9 +371,9 @@
 			dependencies = (
 				BC268C9F17128BAC00687A1D /* PBXTargetDependency */,
 			);
-			name = MSCFBTests;
+			name = CFBTests;
 			productName = MSCFBTests;
-			productReference = BC268C9A17128BAC00687A1D /* MSCFBTests.xctest */;
+			productReference = BC268C9A17128BAC00687A1D /* CFBTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -384,8 +384,13 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Hervey Wilson";
+				TargetAttributes = {
+					BC268C9917128BAC00687A1D = {
+						TestTargetID = BC268C8117128BAC00687A1D;
+					};
+				};
 			};
-			buildConfigurationList = BC268C7C17128BAC00687A1D /* Build configuration list for PBXProject "MSCFB-OSX" */;
+			buildConfigurationList = BC268C7C17128BAC00687A1D /* Build configuration list for PBXProject "CFB-OSX" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -397,8 +402,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BC268C8117128BAC00687A1D /* MSCFB */,
-				BC268C9917128BAC00687A1D /* MSCFBTests */,
+				BC268C8117128BAC00687A1D /* CFB */,
+				BC268C9917128BAC00687A1D /* CFBTests */,
 			);
 		};
 /* End PBXProject section */
@@ -486,7 +491,7 @@
 /* Begin PBXTargetDependency section */
 		BC268C9F17128BAC00687A1D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BC268C8117128BAC00687A1D /* MSCFB */;
+			target = BC268C8117128BAC00687A1D /* CFB */;
 			targetProxy = BC268C9E17128BAC00687A1D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -640,7 +645,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC268C7C17128BAC00687A1D /* Build configuration list for PBXProject "MSCFB-OSX" */ = {
+		BC268C7C17128BAC00687A1D /* Build configuration list for PBXProject "CFB-OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC268CAA17128BAC00687A1D /* Debug */,
@@ -649,7 +654,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC268CAC17128BAC00687A1D /* Build configuration list for PBXNativeTarget "MSCFB" */ = {
+		BC268CAC17128BAC00687A1D /* Build configuration list for PBXNativeTarget "CFB" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC268CAD17128BAC00687A1D /* Debug */,
@@ -658,7 +663,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC268CAF17128BAC00687A1D /* Build configuration list for PBXNativeTarget "MSCFBTests" */ = {
+		BC268CAF17128BAC00687A1D /* Build configuration list for PBXNativeTarget "CFBTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC268CB017128BAC00687A1D /* Debug */,

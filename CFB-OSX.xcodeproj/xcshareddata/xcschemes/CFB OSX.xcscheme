@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268CC21712983400687A1D"
-               BuildableName = "MSCFBResources.bundle"
-               BlueprintName = "MSCFBResources"
-               ReferencedContainer = "container:MSCFB-iOS.xcodeproj">
+               BlueprintIdentifier = "BC268C8117128BAC00687A1D"
+               BuildableName = "CFB.framework"
+               BlueprintName = "CFB"
+               ReferencedContainer = "container:CFB-OSX.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BC268C9917128BAC00687A1D"
+               BuildableName = "CFBTests.xctest"
+               BlueprintName = "CFBTests"
+               ReferencedContainer = "container:CFB-OSX.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +42,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BC268C9917128BAC00687A1D"
+               BuildableName = "CFBTests.xctest"
+               BlueprintName = "CFBTests"
+               ReferencedContainer = "container:CFB-OSX.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

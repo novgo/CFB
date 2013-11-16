@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268C4B1712886800687A1D"
-               BuildableName = "libMSCFB.a"
-               BlueprintName = "MSCFB"
-               ReferencedContainer = "container:MSCFB-iOS.xcodeproj">
+               BlueprintIdentifier = "BC268CD81712993800687A1D"
+               BuildableName = "CFBFramework"
+               BlueprintName = "CFBFramework"
+               ReferencedContainer = "container:CFB-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC268C5C1712886800687A1D"
-               BuildableName = "MSCFBTests.xctest"
-               BlueprintName = "MSCFBTests"
-               ReferencedContainer = "container:MSCFB-iOS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
