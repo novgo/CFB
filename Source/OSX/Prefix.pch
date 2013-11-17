@@ -1,9 +1,11 @@
 //
-// Prefix header for all source files of the 'MSCFB' target in the 'MSCFB' project
+// Prefix header for all source files of the 'CFB' target in the 'CFB' project
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+    #import <Foundation/Foundation.h>
+    #import <MSProtection/MSProtection.h>
+    #import <MSProtection/MSCustomProtection.h>
 #endif
 
 // Simple Logging

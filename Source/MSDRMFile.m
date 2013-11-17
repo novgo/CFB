@@ -36,9 +36,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
 
 #pragma mark - Public Properties
 
-@synthesize license                = _license;
-@synthesize protectedContent       = _protectedContent;
-@synthesize protectedContentLength = _protectedContentLength;
+@synthesize encryptedContent          = _encryptedContent;
+@synthesize encryptedContentLength    = _encryptedContentLength;
+@synthesize encryptedProtectionPolicy = _encryptedProtectionPolicy;
 
 #pragma mark - Public Methods
 
@@ -47,9 +47,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( error )
         *error = nil;
     
-    _license                = nil;
-    _protectedContent       = nil;
-    _protectedContentLength = 0;
+    _encryptedContent          = nil;
+    _encryptedContentLength    = 0;
+    _encryptedProtectionPolicy = nil;
     
     if ( ( self = [super initWithData:data error:error] ) != nil )
     {
@@ -64,9 +64,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( error )
         *error = nil;
     
-    _license                = nil;
-    _protectedContent       = nil;
-    _protectedContentLength = 0;
+    _encryptedContent          = nil;
+    _encryptedContentLength    = 0;
+    _encryptedProtectionPolicy = nil;
     
     if ( ( self = [super initWithFileHandle:fileHandle error:error] ) != nil )
     {
@@ -114,8 +114,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         [[cfbStream read:NSMakeRange(0, 8)] getBytes:&contentLength length:8];
         //NSAssert( contentLength == cfbStream.length - 8, @"Incorrect EncryptedPackage length" );
         
-        _protectedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
-        _protectedContentLength = contentLength;
+        _encryptedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _encryptedContentLength = contentLength;
     }
     else
     {
@@ -132,8 +132,8 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         if ( !ASSERT( error, contentLength == cfbStream.length - 8, @"Incorrect DRMContent length" ) ) return NO;
         
         // TODO: What does contentLength mean in this case?
-        _protectedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
-        _protectedContentLength = contentLength;
+        _encryptedContent       = [cfbStream read:NSMakeRange( 8, cfbStream.length - 8 )];
+        _encryptedContentLength = contentLength;
     }
     
     // Back to root: must have a DataSpaces storage
@@ -263,7 +263,7 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     // Now the license should appear next in a UTF-8-LP-P4 structure (we already read the length)
     readRange.location += readRange.length;
     readRange.length    = transformVersion.cbLicense;
-    _license = [cfbStream read:readRange];
+    _encryptedProtectionPolicy = [cfbStream read:readRange];
     
     return YES;
 }

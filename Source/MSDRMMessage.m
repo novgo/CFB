@@ -17,6 +17,7 @@
 #import "MSDRMFile.h"
 #import "MSDRMDocument.h"
 #import "MSDRMMessage.h"
+#import "MSDRMMessageContent.h"
 
 typedef struct _BlockHeader
 {
@@ -36,6 +37,9 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
 #pragma mark - Public Properties
 
+@synthesize protectedData    = _protectedData;
+@synthesize protectedMessage = _protectedMessage;
+@synthesize protectionPolicy = _protectionPolicy;
 
 #pragma mark - Public Methods
 
@@ -188,5 +192,93 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     else
         return deflatedData;
 }
+
+- (void)getProtectedMessage:(void (^)(MSDRMMessage *, NSError *))completionBlock
+{
+    if ( _protectionPolicy )
+    {
+        // Now try to decrypt the content
+        [self unprotect:completionBlock];
+    }
+    else
+    {
+        [self getProtectionPolicy:^( MSDRMMessage *message, NSError *error ) {
+            
+            NSAssert( message == self, @"Illegal callback state" );
+            
+            if ( error )
+            {
+                completionBlock( self, error );
+            }
+            else
+            {
+                // Now try to decrypt the content
+                [self unprotect:completionBlock];
+            }
+        }];
+    }
+}
+
+- (void)getProtectionPolicy:(void (^)(MSDRMMessage *, NSError *))completionBlock
+{
+    if ( _protectionPolicy )
+    {
+        completionBlock( self, nil );
+    }
+    else
+    {
+        // TODO: The MSProtectionPolicy API expects either a UTF-8 BOM or it assumes the data is UTF16LE.
+        const Byte utf8bom[] = { 0xEF, 0xBB, 0xBF };
+        NSMutableData *licenseData = [[NSMutableData alloc] initWithCapacity:3 + self.encryptedProtectionPolicy.length];
+        [licenseData appendBytes:utf8bom length:3];
+        [licenseData appendData:self.encryptedProtectionPolicy];
+        
+        [MSProtectionPolicy protectionPolicyWithSerializedLicense:licenseData
+                                                  completionBlock:^(MSProtectionPolicy *protectionPolicy, NSError *error) {
+                                                      
+                                                      if ( error )
+                                                      {
+                                                          // Run completion with just the error
+                                                          completionBlock( self, error );
+                                                      }
+                                                      else
+                                                      {
+                                                          self->_protectionPolicy = protectionPolicy;
+                                                          
+                                                          completionBlock( self, error );
+                                                      }
+                                                  }];
+    }
+}
+
+
+#pragma mark - Private Methods
+
+- (void)unprotect:( void (^)( MSDRMMessage *, NSError * ) )completionBlock
+{
+    // Now try to decrypt the content
+    [MSCustomProtectedData customProtectedDataWithPolicy:_protectionPolicy
+                                           protectedData:self.encryptedContent
+                                    contentStartPosition:0
+                                             contentSize:self.encryptedContent.length
+                                         completionBlock:^(MSCustomProtectedData *protectedData, NSError *error) {
+                                             
+                                             if ( error )
+                                             {
+                                                 // Run completion with just the error
+                                                 completionBlock( self, error );
+                                             }
+                                             else
+                                             {
+                                                 NSError *contentError = nil;
+
+                                                 self->_protectedData    = protectedData;
+                                                 self->_protectedMessage = [[MSDRMMessageContent alloc] initWithData:[protectedData retrieveData] error:&contentError];
+                                                 
+                                                 completionBlock( self, error );
+                                             }
+                                         }];
+}
+
 
 @end

@@ -60,6 +60,12 @@
 		BC92AB751727AF7000A65134 /* MSDRMDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB711727AF7000A65134 /* MSDRMDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC92AB771727AF7000A65134 /* MSDRMMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = BC92AB731727AF7000A65134 /* MSDRMMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC92AB921727B6EB00A65134 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC92AB911727B6EB00A65134 /* libz.dylib */; };
+		BC94440E18389A2D00FEA8BB /* MSProtection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC94440D18389A2D00FEA8BB /* MSProtection.framework */; };
+		BC94440F18389A4A00FEA8BB /* MSProtection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC94440D18389A2D00FEA8BB /* MSProtection.framework */; };
+		BC94441118389A6400FEA8BB /* MSProtectionResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC94441018389A6400FEA8BB /* MSProtectionResources.bundle */; };
+		BC94441418389B1000FEA8BB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC94441218389B1000FEA8BB /* Security.framework */; };
+		BC94441518389B1000FEA8BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC94441318389B1000FEA8BB /* UIKit.framework */; };
+		BC94441718389B2900FEA8BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC94441618389B2900FEA8BB /* SystemConfiguration.framework */; };
 		BCCCA17218237D2B008157BE /* MSCFBDirectoryEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268CE317129F4800687A1D /* MSCFBDirectoryEntry.m */; };
 		BCCCA17318237D2B008157BE /* MSCFBError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57737217435F7C004ACC65 /* MSCFBError.m */; };
 		BCCCA17418237D2B008157BE /* MSCFBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC268D181712A09100687A1D /* MSCFBFile.m */; };
@@ -117,11 +123,11 @@
 		BC268C4F1712886800687A1D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC268C531712886800687A1D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = iOS/Prefix.pch; sourceTree = "<group>"; };
 		BC268C541712886800687A1D /* MSCFB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSCFB.h; sourceTree = "<group>"; };
-		BC268C5D1712886800687A1D /* MSCFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MSCFBTests.xctest; path = CFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268C5D1712886800687A1D /* CFBTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CFBTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268C681712886800687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268C6A1712886800687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC268C6D1712886800687A1D /* Test_MSDRMMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test_MSDRMMessage.m; sourceTree = "<group>"; };
-		BC268CC31712983400687A1D /* MSCFBResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MSCFBResources.bundle; path = CFBResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC268CC31712983400687A1D /* CFBResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CFBResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC268CC41712983400687A1D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BC268CC81712983400687A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC268CCA1712983400687A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -159,6 +165,11 @@
 		BC92AB731727AF7000A65134 /* MSDRMMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDRMMessage.h; sourceTree = "<group>"; };
 		BC92AB741727AF7000A65134 /* MSDRMMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDRMMessage.m; sourceTree = "<group>"; };
 		BC92AB911727B6EB00A65134 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		BC94440D18389A2D00FEA8BB /* MSProtection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MSProtection.framework; path = "External/iOS Microsoft RMS SDK v3.0/sdk/MSProtection.framework"; sourceTree = "<group>"; };
+		BC94441018389A6400FEA8BB /* MSProtectionResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MSProtectionResources.bundle; path = "External/iOS Microsoft RMS SDK v3.0/sdk/MSProtection.framework/Resources/MSProtectionResources.bundle"; sourceTree = "<group>"; };
+		BC94441218389B1000FEA8BB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BC94441318389B1000FEA8BB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BC94441618389B2900FEA8BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BCCEDCD7176A484700A41739 /* document-1.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-1.docx"; sourceTree = "<group>"; };
 		BCCEDCD8176A484700A41739 /* document-2.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "document-2.docx"; sourceTree = "<group>"; };
 		BCCEDCD9176A484700A41739 /* message-7.rpmsg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "message-7.rpmsg"; sourceTree = "<group>"; };
@@ -172,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC92AB921727B6EB00A65134 /* libz.dylib in Frameworks */,
+				BC94440E18389A2D00FEA8BB /* MSProtection.framework in Frameworks */,
 				BC268C501712886800687A1D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,10 +192,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC638EFA1822287E004AA36D /* XCTest.framework in Frameworks */,
 				BC1BCD6D1743D6D4000F4D85 /* libz.dylib in Frameworks */,
-				BC268C621712886800687A1D /* Foundation.framework in Frameworks */,
 				BC268C651712886800687A1D /* libCFB.a in Frameworks */,
+				BC94440F18389A4A00FEA8BB /* MSProtection.framework in Frameworks */,
+				BC268C621712886800687A1D /* Foundation.framework in Frameworks */,
+				BC94441418389B1000FEA8BB /* Security.framework in Frameworks */,
+				BC94441718389B2900FEA8BB /* SystemConfiguration.framework in Frameworks */,
+				BC94441518389B1000FEA8BB /* UIKit.framework in Frameworks */,
+				BC638EFA1822287E004AA36D /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +236,7 @@
 		BC268C431712886800687A1D = {
 			isa = PBXGroup;
 			children = (
+				BC94441018389A6400FEA8BB /* MSProtectionResources.bundle */,
 				BC268C4E1712886800687A1D /* Frameworks */,
 				BC268C4D1712886800687A1D /* Products */,
 				BC268CC61712983400687A1D /* Resources */,
@@ -232,8 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				BC268C4C1712886800687A1D /* libCFB.a */,
-				BC268C5D1712886800687A1D /* MSCFBTests.xctest */,
-				BC268CC31712983400687A1D /* MSCFBResources.bundle */,
+				BC268C5D1712886800687A1D /* CFBTests.xctest */,
+				BC268CC31712983400687A1D /* CFBResources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -241,6 +258,10 @@
 		BC268C4E1712886800687A1D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BC94441618389B2900FEA8BB /* SystemConfiguration.framework */,
+				BC94441218389B1000FEA8BB /* Security.framework */,
+				BC94441318389B1000FEA8BB /* UIKit.framework */,
+				BC94440D18389A2D00FEA8BB /* MSProtection.framework */,
 				BC268CC41712983400687A1D /* CoreFoundation.framework */,
 				BC268C4F1712886800687A1D /* Foundation.framework */,
 				BC92AB911727B6EB00A65134 /* libz.dylib */,
@@ -409,7 +430,7 @@
 			);
 			name = CFBTests;
 			productName = MSCFBTests;
-			productReference = BC268C5D1712886800687A1D /* MSCFBTests.xctest */;
+			productReference = BC268C5D1712886800687A1D /* CFBTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		BC268CC21712983400687A1D /* CFBResources */ = {
@@ -426,7 +447,7 @@
 			);
 			name = CFBResources;
 			productName = MSCFBResources;
-			productReference = BC268CC31712983400687A1D /* MSCFBResources.bundle */;
+			productReference = BC268CC31712983400687A1D /* CFBResources.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -468,6 +489,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC94441118389A6400FEA8BB /* MSProtectionResources.bundle in Resources */,
 				BC268C6B1712886800687A1D /* InfoPlist.strings in Resources */,
 				BC1BCD681743D69F000F4D85 /* document-1.doc in Resources */,
 				BC1BCD691743D69F000F4D85 /* message-1.rpmsg in Resources */,
@@ -688,6 +710,10 @@
 		BC268C721712886800687A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
@@ -698,6 +724,10 @@
 		BC268C731712886800687A1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
@@ -712,6 +742,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
@@ -727,6 +758,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;

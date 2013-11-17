@@ -4,6 +4,8 @@
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
+    #import <MSProtection/MSProtection.h>
+    #import <MSProtection/MSCustomProtection.h>
 #endif
 
 // Simple Logging

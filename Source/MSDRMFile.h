@@ -7,9 +7,9 @@
 
 @interface MSDRMFile : MSCFBFile
 
-@property (readonly, nonatomic) NSData   *license;
-@property (readonly, nonatomic) NSData   *protectedContent;
-@property (readonly, nonatomic) u_int64_t protectedContentLength;
+@property (readonly, nonatomic) NSData   *encryptedContent;
+@property (readonly, nonatomic) u_int64_t encryptedContentLength;
+@property (readonly, nonatomic) NSData   *encryptedProtectionPolicy;
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
