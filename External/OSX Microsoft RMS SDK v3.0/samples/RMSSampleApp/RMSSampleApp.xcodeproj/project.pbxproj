@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		360B050017676FD100BA4437 /* PleaseWaitWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 360B04FE17676FD100BA4437 /* PleaseWaitWindowController.m */; };
+		36592B61175E438A00841586 /* icon_72.png in Resources */ = {isa = PBXBuildFile; fileRef = 36592B60175E438A00841586 /* icon_72.png */; };
+		366B1337175E0F7000512E46 /* AppDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = 36C0FD33175CF9F8000CB66C /* AppDelegate.h */; };
+		366B1338175E0F7000512E46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C0FD34175CF9F8000CB66C /* AppDelegate.m */; };
+		366B1339175E0F7000512E46 /* FileProtectionMode.h in Resources */ = {isa = PBXBuildFile; fileRef = 36C0FD35175CF9F8000CB66C /* FileProtectionMode.h */; };
+		366B133A175E0F7000512E46 /* FileProtectionMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C0FD36175CF9F8000CB66C /* FileProtectionMode.m */; };
+		366B133B175E0F7000512E46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C0FD37175CF9F8000CB66C /* main.m */; };
+		366B133C175E0F7000512E46 /* MainWindowController.h in Resources */ = {isa = PBXBuildFile; fileRef = 36C0FD38175CF9F8000CB66C /* MainWindowController.h */; };
+		366B133D175E0F7000512E46 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C0FD39175CF9F8000CB66C /* MainWindowController.m */; };
+		366B133E175E0F7000512E46 /* SaveFileFormatController.h in Resources */ = {isa = PBXBuildFile; fileRef = 36C0FD3B175CF9F8000CB66C /* SaveFileFormatController.h */; };
+		366B133F175E0F7000512E46 /* SaveFileFormatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C0FD3C175CF9F8000CB66C /* SaveFileFormatController.m */; };
+		36ABE4671770B78900E9BA96 /* ExtendedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36ABE4661770B78900E9BA96 /* ExtendedTextView.m */; };
+		F525271A174E2EFD00DFF7A8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5252719174E2EFD00DFF7A8 /* Cocoa.framework */; };
+		F533F48417AFE1C6000F3315 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F533F48617AFE1C6000F3315 /* Localizable.strings */; };
+		F533F55917AFF264000F3315 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533F55B17AFF264000F3315 /* MainMenu.xib */; };
+		F533F55C17AFF270000F3315 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533F55E17AFF270000F3315 /* MainWindowController.xib */; };
+		F533F55F17AFF276000F3315 /* SaveFileFormatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533F56117AFF276000F3315 /* SaveFileFormatController.xib */; };
+		F533F56217AFF2E6000F3315 /* PleaseWaitWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F533F56417AFF2E6000F3315 /* PleaseWaitWindowController.xib */; };
+		F5657202177C673800A425B7 /* MSProtection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5657201177C673800A425B7 /* MSProtection.framework */; };
+		F5657203177C675000A425B7 /* MSProtection.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F5657201177C673800A425B7 /* MSProtection.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3694224917705D360028B185 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F5657203177C675000A425B7 /* MSProtection.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		360B04FD17676FD100BA4437 /* PleaseWaitWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PleaseWaitWindowController.h; sourceTree = "<group>"; };
+		360B04FE17676FD100BA4437 /* PleaseWaitWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PleaseWaitWindowController.m; sourceTree = "<group>"; };
+		36592B60175E438A00841586 /* icon_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_72.png; sourceTree = "<group>"; };
+		36ABE4651770B78900E9BA96 /* ExtendedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedTextView.h; sourceTree = "<group>"; };
+		36ABE4661770B78900E9BA96 /* ExtendedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedTextView.m; sourceTree = "<group>"; };
+		36C0FD33175CF9F8000CB66C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		36C0FD34175CF9F8000CB66C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		36C0FD35175CF9F8000CB66C /* FileProtectionMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileProtectionMode.h; sourceTree = SOURCE_ROOT; };
+		36C0FD36175CF9F8000CB66C /* FileProtectionMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileProtectionMode.m; sourceTree = SOURCE_ROOT; };
+		36C0FD37175CF9F8000CB66C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		36C0FD38175CF9F8000CB66C /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = SOURCE_ROOT; };
+		36C0FD39175CF9F8000CB66C /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = SOURCE_ROOT; };
+		36C0FD3B175CF9F8000CB66C /* SaveFileFormatController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveFileFormatController.h; sourceTree = SOURCE_ROOT; };
+		36C0FD3C175CF9F8000CB66C /* SaveFileFormatController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveFileFormatController.m; sourceTree = SOURCE_ROOT; };
+		F5252716174E2EFD00DFF7A8 /* RMS sample app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RMS sample app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5252719174E2EFD00DFF7A8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		F525271C174E2EFD00DFF7A8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F525271D174E2EFD00DFF7A8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F525271E174E2EFD00DFF7A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F5252721174E2EFD00DFF7A8 /* RMSSampleApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RMSSampleApp-Info.plist"; sourceTree = "<group>"; };
+		F5252727174E2EFD00DFF7A8 /* RMSSampleApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RMSSampleApp-Prefix.pch"; sourceTree = "<group>"; };
+		F533F48517AFE1C6000F3315 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F48717AFE2C8000F3315 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F49B17AFE624000F3315 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F49F17AFE652000F3315 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4AF17AFE6C1000F3315 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4CB17AFE764000F3315 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4CF17AFE776000F3315 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4D317AFE7A9000F3315 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4D717AFE7C9000F3315 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4DB17AFE7DF000F3315 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4DF17AFE7EB000F3315 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4E317AFE7FA000F3315 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4E717AFE805000F3315 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4EB17AFE810000F3315 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4EF17AFE81C000F3315 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4F317AFE82A000F3315 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F4F717AFE83B000F3315 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F533F4FB17AFE840000F3315 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F533F4FF17AFE849000F3315 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F50317AFE866000F3315 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F50717AFE875000F3315 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F50B17AFE887000F3315 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F50F17AFE89B000F3315 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F51317AFE8AC000F3315 /* ms */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F51717AFE8BC000F3315 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F51F17AFE8DB000F3315 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F533F52317AFE9AC000F3315 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F52717AFE9B7000F3315 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F52B17AFE9C2000F3315 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F52F17AFE9C9000F3315 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F53317AFE9D0000F3315 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F53717AFE9D6000F3315 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F53B17AFE9DB000F3315 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F53F17AFE9E3000F3315 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F54317AFE9ED000F3315 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F54B17AFEB9E000F3315 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F54F17AFEC25000F3315 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F533F55A17AFF264000F3315 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F533F55D17AFF270000F3315 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindowController.xib; sourceTree = "<group>"; };
+		F533F56017AFF276000F3315 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SaveFileFormatController.xib; sourceTree = "<group>"; };
+		F533F56317AFF2E6000F3315 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PleaseWaitWindowController.xib; sourceTree = "<group>"; };
+		F533F58717B3D17E000F3315 /* sr-Latn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sr-Latn"; path = "sr-Latn.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F5657201177C673800A425B7 /* MSProtection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MSProtection.framework; path = ../../sdk/MSProtection.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F5252713174E2EFD00DFF7A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F525271A174E2EFD00DFF7A8 /* Cocoa.framework in Frameworks */,
+				F5657202177C673800A425B7 /* MSProtection.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F525270D174E2EFD00DFF7A8 = {
+			isa = PBXGroup;
+			children = (
+				F5252749174E481D00DFF7A8 /* Source */,
+				F5252748174E481400DFF7A8 /* Resources */,
+				F5252720174E2EFD00DFF7A8 /* Supporting Files */,
+				F5252718174E2EFD00DFF7A8 /* Frameworks */,
+				F5252717174E2EFD00DFF7A8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5252717174E2EFD00DFF7A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5252716174E2EFD00DFF7A8 /* RMS sample app.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5252718174E2EFD00DFF7A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5657201177C673800A425B7 /* MSProtection.framework */,
+				F5252719174E2EFD00DFF7A8 /* Cocoa.framework */,
+				F525271B174E2EFD00DFF7A8 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F525271B174E2EFD00DFF7A8 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F525271C174E2EFD00DFF7A8 /* AppKit.framework */,
+				F525271D174E2EFD00DFF7A8 /* CoreData.framework */,
+				F525271E174E2EFD00DFF7A8 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		F5252720174E2EFD00DFF7A8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				36592B60175E438A00841586 /* icon_72.png */,
+				F5252721174E2EFD00DFF7A8 /* RMSSampleApp-Info.plist */,
+				F5252727174E2EFD00DFF7A8 /* RMSSampleApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F5252748174E481400DFF7A8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F533F55B17AFF264000F3315 /* MainMenu.xib */,
+				F533F55E17AFF270000F3315 /* MainWindowController.xib */,
+				F533F56117AFF276000F3315 /* SaveFileFormatController.xib */,
+				F533F48617AFE1C6000F3315 /* Localizable.strings */,
+				F533F56417AFF2E6000F3315 /* PleaseWaitWindowController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F5252749174E481D00DFF7A8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				36C0FD33175CF9F8000CB66C /* AppDelegate.h */,
+				36C0FD34175CF9F8000CB66C /* AppDelegate.m */,
+				36C0FD35175CF9F8000CB66C /* FileProtectionMode.h */,
+				36C0FD36175CF9F8000CB66C /* FileProtectionMode.m */,
+				36C0FD37175CF9F8000CB66C /* main.m */,
+				36C0FD38175CF9F8000CB66C /* MainWindowController.h */,
+				36C0FD39175CF9F8000CB66C /* MainWindowController.m */,
+				36C0FD3B175CF9F8000CB66C /* SaveFileFormatController.h */,
+				36C0FD3C175CF9F8000CB66C /* SaveFileFormatController.m */,
+				360B04FD17676FD100BA4437 /* PleaseWaitWindowController.h */,
+				360B04FE17676FD100BA4437 /* PleaseWaitWindowController.m */,
+				36ABE4651770B78900E9BA96 /* ExtendedTextView.h */,
+				36ABE4661770B78900E9BA96 /* ExtendedTextView.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F5252715174E2EFD00DFF7A8 /* RMSSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5252733174E2EFD00DFF7A8 /* Build configuration list for PBXNativeTarget "RMSSampleApp" */;
+			buildPhases = (
+				F5252712174E2EFD00DFF7A8 /* Sources */,
+				F5252713174E2EFD00DFF7A8 /* Frameworks */,
+				F5252714174E2EFD00DFF7A8 /* Resources */,
+				3694224917705D360028B185 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RMSSampleApp;
+			productName = IPApp;
+			productReference = F5252716174E2EFD00DFF7A8 /* RMS sample app.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F525270E174E2EFD00DFF7A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Microsoft;
+			};
+			buildConfigurationList = F5252711174E2EFD00DFF7A8 /* Build configuration list for PBXProject "RMSSampleApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				bg,
+				el,
+				es,
+				fr,
+				et,
+				cs,
+				fi,
+				hi,
+				id,
+				it,
+				de,
+				da,
+				ja,
+				hu,
+				hr,
+				"zh-Hans",
+				"zh-Hant",
+				nl,
+				kk,
+				ko,
+				lv,
+				lt,
+				ms,
+				nb,
+				pt,
+				"pt-PT",
+				pl,
+				ro,
+				ru,
+				sk,
+				sv,
+				th,
+				tr,
+				uk,
+				vi,
+				sl,
+				"sr-Latn",
+			);
+			mainGroup = F525270D174E2EFD00DFF7A8;
+			productRefGroup = F5252717174E2EFD00DFF7A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F5252715174E2EFD00DFF7A8 /* RMSSampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F5252714174E2EFD00DFF7A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				366B1337175E0F7000512E46 /* AppDelegate.h in Resources */,
+				366B1339175E0F7000512E46 /* FileProtectionMode.h in Resources */,
+				366B133C175E0F7000512E46 /* MainWindowController.h in Resources */,
+				366B133E175E0F7000512E46 /* SaveFileFormatController.h in Resources */,
+				36592B61175E438A00841586 /* icon_72.png in Resources */,
+				F533F56217AFF2E6000F3315 /* PleaseWaitWindowController.xib in Resources */,
+				F533F48417AFE1C6000F3315 /* Localizable.strings in Resources */,
+				F533F55917AFF264000F3315 /* MainMenu.xib in Resources */,
+				F533F55C17AFF270000F3315 /* MainWindowController.xib in Resources */,
+				F533F55F17AFF276000F3315 /* SaveFileFormatController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F5252712174E2EFD00DFF7A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				366B1338175E0F7000512E46 /* AppDelegate.m in Sources */,
+				366B133A175E0F7000512E46 /* FileProtectionMode.m in Sources */,
+				366B133B175E0F7000512E46 /* main.m in Sources */,
+				366B133D175E0F7000512E46 /* MainWindowController.m in Sources */,
+				366B133F175E0F7000512E46 /* SaveFileFormatController.m in Sources */,
+				360B050017676FD100BA4437 /* PleaseWaitWindowController.m in Sources */,
+				36ABE4671770B78900E9BA96 /* ExtendedTextView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F533F48617AFE1C6000F3315 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F533F48517AFE1C6000F3315 /* en */,
+				F533F48717AFE2C8000F3315 /* bg */,
+				F533F49B17AFE624000F3315 /* el */,
+				F533F49F17AFE652000F3315 /* es */,
+				F533F4AF17AFE6C1000F3315 /* fr */,
+				F533F4CB17AFE764000F3315 /* et */,
+				F533F4CF17AFE776000F3315 /* cs */,
+				F533F4D317AFE7A9000F3315 /* fi */,
+				F533F4D717AFE7C9000F3315 /* hi */,
+				F533F4DB17AFE7DF000F3315 /* id */,
+				F533F4DF17AFE7EB000F3315 /* it */,
+				F533F4E317AFE7FA000F3315 /* de */,
+				F533F4E717AFE805000F3315 /* da */,
+				F533F4EB17AFE810000F3315 /* ja */,
+				F533F4EF17AFE81C000F3315 /* hu */,
+				F533F4F317AFE82A000F3315 /* hr */,
+				F533F4F717AFE83B000F3315 /* zh-Hans */,
+				F533F4FB17AFE840000F3315 /* zh-Hant */,
+				F533F4FF17AFE849000F3315 /* nl */,
+				F533F50317AFE866000F3315 /* kk */,
+				F533F50717AFE875000F3315 /* ko */,
+				F533F50B17AFE887000F3315 /* lv */,
+				F533F50F17AFE89B000F3315 /* lt */,
+				F533F51317AFE8AC000F3315 /* ms */,
+				F533F51717AFE8BC000F3315 /* nb */,
+				F533F51F17AFE8DB000F3315 /* pt-PT */,
+				F533F52317AFE9AC000F3315 /* pl */,
+				F533F52717AFE9B7000F3315 /* ro */,
+				F533F52B17AFE9C2000F3315 /* ru */,
+				F533F52F17AFE9C9000F3315 /* sk */,
+				F533F53317AFE9D0000F3315 /* sv */,
+				F533F53717AFE9D6000F3315 /* th */,
+				F533F53B17AFE9DB000F3315 /* tr */,
+				F533F53F17AFE9E3000F3315 /* uk */,
+				F533F54317AFE9ED000F3315 /* vi */,
+				F533F54B17AFEB9E000F3315 /* pt */,
+				F533F54F17AFEC25000F3315 /* sl */,
+				F533F58717B3D17E000F3315 /* sr-Latn */,
+			);
+			name = Localizable.strings;
+			path = loc_resources;
+			sourceTree = "<group>";
+		};
+		F533F55B17AFF264000F3315 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F533F55A17AFF264000F3315 /* en */,
+			);
+			name = MainMenu.xib;
+			path = loc_resources;
+			sourceTree = "<group>";
+		};
+		F533F55E17AFF270000F3315 /* MainWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F533F55D17AFF270000F3315 /* en */,
+			);
+			name = MainWindowController.xib;
+			path = loc_resources;
+			sourceTree = "<group>";
+		};
+		F533F56117AFF276000F3315 /* SaveFileFormatController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F533F56017AFF276000F3315 /* en */,
+			);
+			name = SaveFileFormatController.xib;
+			path = loc_resources;
+			sourceTree = "<group>";
+		};
+		F533F56417AFF2E6000F3315 /* PleaseWaitWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F533F56317AFF2E6000F3315 /* en */,
+			);
+			name = PleaseWaitWindowController.xib;
+			path = loc_resources;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F5252731174E2EFD00DFF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
+			};
+			name = Debug;
+		};
+		F5252732174E2EFD00DFF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(PRODUCT_NAME)";
+			};
+			name = Release;
+		};
+		F5252734174E2EFD00DFF7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../sdk\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RMSSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "RMSSampleApp-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				PRODUCT_NAME = "RMS sample app";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F5252735174E2EFD00DFF7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../sdk\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RMSSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "RMSSampleApp-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				PRODUCT_NAME = "RMS sample app";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F5252711174E2EFD00DFF7A8 /* Build configuration list for PBXProject "RMSSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5252731174E2EFD00DFF7A8 /* Debug */,
+				F5252732174E2EFD00DFF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5252733174E2EFD00DFF7A8 /* Build configuration list for PBXNativeTarget "RMSSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5252734174E2EFD00DFF7A8 /* Debug */,
+				F5252735174E2EFD00DFF7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F525270E174E2EFD00DFF7A8 /* Project object */;
+}
