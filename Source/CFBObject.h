@@ -16,17 +16,19 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+#pragma once
 
-#import <CFB/MSCFBError.h>
-#import <CFB/MSCFBObject.h>
-#import <CFB/MSCFBStream.h>
-#import <CFB/MSCFBStorage.h>
-#import <CFB/MSCFBFile.h>
+@class CFBDirectoryEntry;
+@class CFBFile;
 
-#import <CFB/MSDRMFile.h>
-#import <CFB/MSDRMDocument.h>
-#import <CFB/MSDRMMessage.h>
+@interface CFBObject : NSObject
 
-#import <CFB/MSDRMMessageContent.h>
-#import <CFB/MSDRMMessageAttachment.h>
+@property (readonly, nonatomic) NSString *name;
+@property (readonly, nonatomic) Byte      objectType;
+
+- (id)init __attribute__( ( unavailable("init not available") ) );
+
+- (NSData *)read:(NSRange)range;
+- (NSData *)readAll;
+
+@end

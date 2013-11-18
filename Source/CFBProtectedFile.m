@@ -16,17 +16,17 @@
 // limitations under the License.
 //
 
-#import "MSCFBError.h"
-#import "MSCFBTypes.h"
+#import "CFBError.h"
+#import "CFBTypes.h"
 
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBStorage.h"
-#import "MSCFBStream.h"
+#import "CFBObject.h"
+#import "CFBStorage.h"
+#import "CFBStream.h"
 
-#import "MSDRMFile.h"
+#import "CFBProtectedFile.h"
 
 #pragma mark - Implementation constants
 
@@ -37,13 +37,13 @@ static const unichar _DataSpaces[]       = { '\x6', 'D', 'a', 't', 'a', 'S', 'p'
 static const unichar _EncryptedPackage[] = { 'E', 'n', 'c', 'r', 'y', 'p', 't', 'e', 'd', 'P', 'a', 'c', 'k', 'a', 'g', 'e' };
 static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r', 'y' };
 
-@interface MSDRMFile ()
+@interface CFBProtectedFile ()
 
 - (BOOL)validate:(NSError *__autoreleasing *)error;
 
 @end
 
-@implementation MSDRMFile
+@implementation CFBProtectedFile
 
 #pragma mark - Public Properties
 
@@ -106,9 +106,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     NSString *DRMEncryptedTransform = @"DRMEncryptedTransform";
     
     // Validate the structure of the file.
-    MSCFBObject    *cfbObject;
-    MSCFBStorage   *cfbStorage;
-    MSCFBStream    *cfbStream;
+    CFBObject    *cfbObject;
+    CFBStorage   *cfbStorage;
+    CFBStream    *cfbStream;
     
     // ECMA content has an EncryptedPackage stream; otherwise a DRMContent stream
     cfbObject = [self objectForKey:EncryptedPackage];
@@ -116,9 +116,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     if ( cfbObject != nil )
     {
         // ECMA Content
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"EncryptedPackage object is not a stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"EncryptedPackage object is not a stream" ) ) return NO;
         
-        cfbStream = (MSCFBStream *)cfbObject;
+        cfbStream = (CFBStream *)cfbObject;
         
         // The first 8 bytes of the EncryptedPackage stream are the length of the *plaintext* data, not the encrypted data
         u_int64_t contentLength = 0;
@@ -133,9 +133,9 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
         // DRM Content
         cfbObject = [self objectForKey:DRMContent];
         if ( !ASSERT( error, cfbObject != nil, @"Missing DRMContent stream" ) ) return NO;
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"DRMContent object is not a stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"DRMContent object is not a stream" ) ) return NO;
 
-        cfbStream = (MSCFBStream *)cfbObject;
+        cfbStream = (CFBStream *)cfbObject;
         
         // The first 8 bytes of the DRMContent stream are the length
         u_int64_t contentLength = 0;
@@ -150,65 +150,65 @@ static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r'
     // Back to root: must have a DataSpaces storage
     cfbObject = [self objectForKey:DataSpaces];
     if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaces storage" ) ) return NO;
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpace object is not a storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"DataSpace object is not a storage" ) ) return NO;
     
-    cfbStorage = (MSCFBStorage *)cfbObject;
+    cfbStorage = (CFBStorage *)cfbObject;
     
     // DataSpaces must have a Version stream
     cfbObject = [cfbStorage objectForKey:Version];
     if ( !ASSERT( error, cfbObject != nil, @"Missing Version stream" ) ) return NO;
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Version object is not a stream" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"Version object is not a stream" ) ) return NO;
     
     // DataSpaces must have a DataSpaceMap stream
     cfbObject = [cfbStorage objectForKey:DataSpaceMap];
     
     if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaceMap stream" ) ) return NO;
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"DataSpaceMap object is not a stream" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"DataSpaceMap object is not a stream" ) ) return NO;
     
     // DataSpaces must have a DataSpaceInfo storage
     cfbObject = [cfbStorage objectForKey:DataSpaceInfo];
 
     if ( !ASSERT( error, cfbObject != nil, @"Missing DataSpaceInfo storage" ) ) return NO;
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DataSpaceInfo object is not a storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"DataSpaceInfo object is not a storage" ) ) return NO;
     
     // DataSpaces must have a TranformInfo storage
     cfbObject = [cfbStorage objectForKey:TransformInfo];
     if ( !ASSERT( error, cfbObject != nil, @"Missing TransformInfo storage" ) ) return NO;
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"TransformInfo object is not a storage" ) ) return NO;
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"TransformInfo object is not a storage" ) ) return NO;
     
-    cfbStorage = (MSCFBStorage *)cfbObject;
+    cfbStorage = (CFBStorage *)cfbObject;
     
     // TranformInfo must have a DRMEncryptedTransform storage for ECMA content or a DRMTransform for binary
     if ( [self objectForKey:EncryptedPackage] != nil )
     {
         cfbObject = [cfbStorage objectForKey:DRMEncryptedTransform];
         if ( !ASSERT( error, cfbObject != nil, @"Missing DRMEncryptedTransform storage" ) ) return NO;
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMEncryptedTransform object is not a storage" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"DRMEncryptedTransform object is not a storage" ) ) return NO;
         
-        cfbStorage = (MSCFBStorage *)cfbObject;
+        cfbStorage = (CFBStorage *)cfbObject;
         
         // DRMEncryptedTransform must have a Primary stream
         cfbObject = [cfbStorage objectForKey:Primary];
         if ( !ASSERT( error, cfbObject != nil, @"Missing Primary stream" ) ) return NO;
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"Primary object is not a stream" ) ) return NO;
         
-        cfbStream = (MSCFBStream *)cfbObject;
+        cfbStream = (CFBStream *)cfbObject;
     }
     else
     {
         // TranformInfo must have a DRMTransform storage
         cfbObject = [cfbStorage objectForKey:DRMTransform];
         if ( !ASSERT( error, cfbObject != nil, @"Missing DRMTransform storage" ) ) return NO;
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"DRMTransform object is not a storage" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"DRMTransform object is not a storage" ) ) return NO;
         
-        cfbStorage = (MSCFBStorage *)cfbObject;
+        cfbStorage = (CFBStorage *)cfbObject;
         
         // DRMTransform must have a Primary stream
         cfbObject = [cfbStorage objectForKey:Primary];
         if ( !ASSERT( error, cfbObject != nil, @"Missing Primary stream" ) ) return NO;
-        if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"Primary object is not a stream" ) ) return NO;
+        if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"Primary object is not a stream" ) ) return NO;
         
-        cfbStream = (MSCFBStream *)cfbObject;
+        cfbStream = (CFBStream *)cfbObject;
     }
     
     // TODO: Consider just grabbing all the primary into memory and walking through it

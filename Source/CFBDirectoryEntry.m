@@ -16,14 +16,14 @@
 // limitations under the License.
 //
 
-#import "MSCFBTypes.h"
+#import "CFBTypes.h"
 
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
-#import "MSCFBDirectoryEntry.h"
+#import "CFBDirectoryEntry.h"
 
-@implementation MSCFBDirectoryEntry
+@implementation CFBDirectoryEntry
 {
     MSCFB_DIRECTORY_ENTRY _entry;
 }

@@ -16,13 +16,37 @@
 // limitations under the License.
 //
 
-@class MSCFBDirectoryEntry;
-@class MSCFBObject;
+#import "CFBTypes.h"
 
-@interface MSCFBStream : MSCFBObject
+#import "CFBDirectoryEntry.h"
 
-@property (readonly, nonatomic) u_int64_t length;
+#import "CFBObject.h"
+#import "CFBObjectInternal.h"
 
-- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
+#import "CFBStream.h"
+
+@implementation CFBStream
+{
+}
+
+#pragma mark Public Properties
+
+- (u_int64_t)length
+{
+    return self.directoryEntry.streamLength;
+}
+
+#pragma mark Public Methods
+
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
+{
+    self = [super init:entry container:container];
+    
+    if ( self )
+    {
+    }
+    
+    return self;
+}
 
 @end

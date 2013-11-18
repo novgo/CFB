@@ -16,14 +16,14 @@
 // limitations under the License.
 //
 
-#import "MSCFB.h"
+#import "CFB.h"
 
 #import <XCTest/XCTest.h>
 
-@interface Test_MSDRMMessage : XCTestCase
+@interface Test_CFBProtectedMessage : XCTestCase
 @end
 
-@implementation Test_MSDRMMessage
+@implementation Test_CFBProtectedMessage
 
 - (void)setUp
 {
@@ -54,14 +54,14 @@
             NSError      *error      = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
             NSData       *fileData   = [fileHandle readDataToEndOfFile];
-            MSDRMMessage *file       = nil;
+            CFBProtectedMessage *file       = nil;
             
             [fileHandle seekToFileOffset:0];
-            file = [[MSDRMMessage alloc] initWithFileHandle:fileHandle error:&error];
+            file = [[CFBProtectedMessage alloc] initWithFileHandle:fileHandle error:&error];
             
             XCTAssertTrue( file != nil, @"%s Failed to load message-%d as file: %@", __PRETTY_FUNCTION__, i, error.localizedDescription );
             
-            file = [[MSDRMMessage alloc] initWithData:fileData error:&error];
+            file = [[CFBProtectedMessage alloc] initWithData:fileData error:&error];
             
             XCTAssertTrue( file != nil, @"%s Failed to load message-%d as data: %@", __PRETTY_FUNCTION__, i, error.localizedDescription );
             

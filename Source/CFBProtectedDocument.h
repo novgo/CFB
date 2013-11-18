@@ -16,21 +16,18 @@
 // limitations under the License.
 //
 
-@class MSDRMMessageContent;
+@interface CFBProtectedDocument : CFBProtectedFile
 
-@interface MSDRMMessage : MSDRMFile
-
-// protectedData is only valid after getProtectedMessage
+// protectedData is only valid after getContent
 @property (readonly, nonatomic) MSCustomProtectedData *protectedData;
-// protectedMessage is only valid after getProtectedMessage
-@property (readonly, nonatomic) MSDRMMessageContent   *protectedMessage;
-// protectionPolicy is only valid after getProtectionPolicy or getProtectedMessage
+// protectionPolicy is only valid after getProtectionPolicy or getContent
 @property (readonly, nonatomic) MSProtectionPolicy    *protectionPolicy;
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error;
+
+- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)outError;
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error;
 
-- (void)getProtectedMessage:( void (^)( MSDRMMessage *, NSError * ) )completionBlock;
-- (void)getProtectionPolicy:( void (^)( MSDRMMessage *, NSError *) )completionBlock;
+- (void)getProtectedData:( void (^)( CFBProtectedDocument *document, NSError *error ) )completionBlock;
+- (void)getProtectionPolicy:( void (^)( CFBProtectedDocument *document, NSError *error) )completionBlock;
 
 @end

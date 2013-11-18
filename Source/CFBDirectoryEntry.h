@@ -16,19 +16,23 @@
 // limitations under the License.
 //
 
-#pragma once
+#import "CFBTypes.h"
 
-@class MSCFBDirectoryEntry;
-@class MSCFBFile;
+@interface CFBDirectoryEntry : NSObject
 
-@interface MSCFBObject : NSObject
+@property (readwrite, nonatomic) NSString *name;
+@property (readwrite, nonatomic) u_int32_t left;
+@property (readwrite, nonatomic) u_int32_t right;
+@property (readwrite, nonatomic) u_int32_t child;
 
-@property (readonly, nonatomic) NSString *name;
-@property (readonly, nonatomic) Byte      objectType;
+@property (readwrite, nonatomic) Byte      objectType;
 
-- (id)init __attribute__( ( unavailable("init not available") ) );
+@property (readwrite, nonatomic) u_int32_t streamStart;
+@property (readwrite, nonatomic) u_int64_t streamLength;
 
-- (NSData *)read:(NSRange)range;
-- (NSData *)readAll;
+- (id)init;
+- (id)init:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
+
+- (void)getDirectoryEntry:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
 
 @end

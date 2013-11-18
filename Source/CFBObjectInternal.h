@@ -16,16 +16,14 @@
 // limitations under the License.
 //
 
-@class MSCFBObject;
-@class MSCFBFile;
+#pragma once
 
-@interface MSCFBStorage : MSCFBObject //MSCFBDirectoryEntry
+@class CFBDirectoryEntry;
 
-- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
+@interface CFBObject ( Internal )
 
-- (void)addObject:(MSCFBObject *)object;
-- (NSArray *)allKeys;
-- (NSArray *)allValues;
-- (MSCFBObject *)objectForKey:(NSString *)key;
+@property (readonly, nonatomic) CFBDirectoryEntry *directoryEntry;
+
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container;
 
 @end

@@ -16,14 +16,13 @@
 // limitations under the License.
 //
 
-#pragma once
+@class CFBDirectoryEntry;
+@class CFBObject;
 
-@class MSCFBDirectoryEntry;
+@interface CFBStream : CFBObject
 
-@interface MSCFBObject ( Internal )
+@property (readonly, nonatomic) u_int64_t length;
 
-@property (readonly, nonatomic) MSCFBDirectoryEntry *directoryEntry;
-
-- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container;
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container;
 
 @end

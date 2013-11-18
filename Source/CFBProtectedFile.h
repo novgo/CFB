@@ -16,25 +16,13 @@
 // limitations under the License.
 //
 
-#pragma once
+@interface CFBProtectedFile : CFBFile
 
-@interface MSCFBFile ( Internal )
-
-@property (readonly, nonatomic) MSCFB_HEADER *header;
-@property (readonly, nonatomic) u_int32_t miniStreamCutoffSize;
-
+@property (readonly, nonatomic) NSData   *encryptedContent;
+@property (readonly, nonatomic) u_int64_t encryptedContentLength;
+@property (readonly, nonatomic) NSData   *encryptedProtectionPolicy;
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
-
-- (id)initForWritingWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
-
-
-- (NSData *)readStream:(u_int32_t)index range:(NSRange)range;
-- (NSData *)readMiniStream:(u_int32_t)index range:(NSRange)range;
-
-// Sector reading and writing
-- (NSData *)sectorRead:(NSUInteger)index;
-- (void)sectorWrite:(NSUInteger)index data:(NSData *)data;
 
 @end

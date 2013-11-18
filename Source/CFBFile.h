@@ -16,23 +16,22 @@
 // limitations under the License.
 //
 
-#import "MSCFBTypes.h"
+#pragma once
 
-@interface MSCFBDirectoryEntry : NSObject
+@class CFBObject;
 
-@property (readwrite, nonatomic) NSString *name;
-@property (readwrite, nonatomic) u_int32_t left;
-@property (readwrite, nonatomic) u_int32_t right;
-@property (readwrite, nonatomic) u_int32_t child;
+@interface CFBFile : NSObject
 
-@property (readwrite, nonatomic) Byte      objectType;
++ (CFBFile *)compoundFileForReadingAtPath:(NSString *)path;
++ (CFBFile *)compoundFileForReadingWithData:(NSData *)data;
 
-@property (readwrite, nonatomic) u_int32_t streamStart;
-@property (readwrite, nonatomic) u_int64_t streamLength;
++ (CFBFile *)compoundFileForUpdatingAtPath:(NSString *)path;
++ (CFBFile *)compoundFileForWritingAtPath:(NSString *)path;
 
-- (id)init;
-- (id)init:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
+- (void)close;
 
-- (void)getDirectoryEntry:(MSCFB_DIRECTORY_ENTRY *)directoryEntry;
+- (NSArray *)allKeys;
+- (NSArray *)allValues;
+- (CFBObject *)objectForKey:(NSString *)key;
 
 @end

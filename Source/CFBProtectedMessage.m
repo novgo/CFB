@@ -18,18 +18,18 @@
 
 #include <zlib.h>
 
-#import "MSCFBError.h"
+#import "CFBError.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBStorage.h"
-#import "MSCFBStream.h"
-#import "MSCFBFile.h"
-#import "MSCFBSource.h"
+#import "CFBObject.h"
+#import "CFBStorage.h"
+#import "CFBStream.h"
+#import "CFBFile.h"
+#import "CFBSource.h"
 
-#import "MSDRMFile.h"
-#import "MSDRMDocument.h"
-#import "MSDRMMessage.h"
-#import "MSDRMMessageContent.h"
+#import "CFBProtectedFile.h"
+#import "CFBProtectedDocument.h"
+#import "CFBProtectedMessage.h"
+#import "CFBProtectedMessageContent.h"
 
 typedef struct _BlockHeader
 {
@@ -43,7 +43,7 @@ typedef struct _BlockHeader
 
 static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x04', '\x60', '\xC4', '\x11', '\xE3', '\x86' };
 
-@implementation MSDRMMessage
+@implementation CFBProtectedMessage
 {
 }
 
@@ -60,7 +60,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     if ( error )
         *error = nil;
 
-    MSCFBDataSource *source = [[MSCFBDataSource alloc] initWithData:data];
+    CFBDataSource *source = [[CFBDataSource alloc] initWithData:data];
     
     NSError *internalError = nil;
     NSData  *deflatedData  = [self decompress:source error:&internalError];
@@ -92,7 +92,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     if ( !ASSERT( error, fileHandle != 0, @"Invalid file handle" ) )
         return nil;
 
-    MSCFBFileSource *source = [[MSCFBFileSource alloc] initWithFileHandle:fileHandle];
+    CFBFileSource *source = [[CFBFileSource alloc] initWithFileHandle:fileHandle];
     
     NSError *internalError = nil;
     NSData  *deflatedData  = [self decompress:source error:&internalError];
@@ -118,7 +118,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
 #pragma mark - Private Methods
 
-- (NSData *)decompress:(id<MSCFBSource>)compressedData error:(NSError * __autoreleasing *)error
+- (NSData *)decompress:(id<CFBSource>)compressedData error:(NSError * __autoreleasing *)error
 {
     if ( error ) *error = nil;
     
@@ -205,7 +205,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
         return deflatedData;
 }
 
-- (void)getProtectedMessage:(void (^)(MSDRMMessage *, NSError *))completionBlock
+- (void)getProtectedMessage:(void (^)(CFBProtectedMessage *, NSError *))completionBlock
 {
     if ( _protectionPolicy )
     {
@@ -214,7 +214,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     }
     else
     {
-        [self getProtectionPolicy:^( MSDRMMessage *message, NSError *error ) {
+        [self getProtectionPolicy:^( CFBProtectedMessage *message, NSError *error ) {
             
             NSAssert( message == self, @"Illegal callback state" );
             
@@ -231,7 +231,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     }
 }
 
-- (void)getProtectionPolicy:(void (^)(MSDRMMessage *, NSError *))completionBlock
+- (void)getProtectionPolicy:(void (^)(CFBProtectedMessage *, NSError *))completionBlock
 {
     if ( _protectionPolicy )
     {
@@ -266,7 +266,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 
 #pragma mark - Private Methods
 
-- (void)unprotect:( void (^)( MSDRMMessage *, NSError * ) )completionBlock
+- (void)unprotect:( void (^)( CFBProtectedMessage *, NSError * ) )completionBlock
 {
     // Now try to decrypt the content
     [MSCustomProtectedData customProtectedDataWithPolicy:_protectionPolicy
@@ -285,7 +285,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
                                                  NSError *contentError = nil;
 
                                                  self->_protectedData    = protectedData;
-                                                 self->_protectedMessage = [[MSDRMMessageContent alloc] initWithData:[protectedData retrieveData] error:&contentError];
+                                                 self->_protectedMessage = [[CFBProtectedMessageContent alloc] initWithData:[protectedData retrieveData] error:&contentError];
                                                  
                                                  completionBlock( self, error );
                                              }

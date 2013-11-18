@@ -16,16 +16,16 @@
 // limitations under the License.
 //
 
-#pragma mark - NSError Constants
+#pragma once
 
-extern NSString * const MSCFBErrorDomain;
+@class CFBFile;
 
-enum MSCFBErrorCode
-{
-    MSCFBBadHeader = 1
-};
+@interface CFBFileAllocationTable : NSObject
+
+- (id)init:(CFBFile __weak *)header error:(NSError * __autoreleasing *)error;
+
+- (u_int32_t)nextSectorInChain:(u_int32_t)index;
+- (u_int32_t)sectorsInChain:(u_int32_t)startIndex;
 
 
-#define ASSERT( error, condition, fmt, ... ) Assert( __PRETTY_FUNCTION__, __LINE__, error, condition, fmt, ##__VA_ARGS__ )
-
-extern BOOL Assert( const char *function, int line, NSError * __autoreleasing *error, bool condition, NSString *fmt, ...);
+@end

@@ -16,19 +16,19 @@
 // limitations under the License.
 //
 
-#import "MSCFBTypes.h"
+#import "CFBTypes.h"
 
-#import "MSCFBDirectoryEntry.h"
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBDirectoryEntry.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBObjectInternal.h"
+#import "CFBObject.h"
+#import "CFBObjectInternal.h"
 
-@implementation MSCFBObject
+@implementation CFBObject
 {
-    MSCFBDirectoryEntry *_entry;
-    MSCFBFile * __weak   _container;
+    CFBDirectoryEntry *_entry;
+    CFBFile * __weak   _container;
 }
 
 #pragma mark - Public Properties
@@ -88,14 +88,14 @@
 
 #pragma mark - Internal Properties
 
-- (MSCFBDirectoryEntry *)directoryEntry
+- (CFBDirectoryEntry *)directoryEntry
 {
     return _entry;
 }
 
 #pragma mark - Internal Methods
 
-- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
 {
     self = [super init];
     

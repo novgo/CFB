@@ -18,16 +18,16 @@
 
 #include <zlib.h>
 
-#import "MSCFBObject.h"
-#import "MSCFBSource.h"
-#import "MSCFBStorage.h"
-#import "MSCFBStream.h"
-#import "MSCFBFile.h"
+#import "CFBObject.h"
+#import "CFBSource.h"
+#import "CFBStorage.h"
+#import "CFBStream.h"
+#import "CFBFile.h"
 
-#import "MSDRMFile.h"
-#import "MSDRMDocument.h"
+#import "CFBProtectedFile.h"
+#import "CFBProtectedDocument.h"
 
-@implementation MSDRMDocument
+@implementation CFBProtectedDocument
 {
 }
 
@@ -66,7 +66,7 @@
     return self;
 }
 
-- (void)getProtectedData:(void (^)(MSDRMDocument *, NSError *))completionBlock
+- (void)getProtectedData:(void (^)(CFBProtectedDocument *, NSError *))completionBlock
 {
     if ( _protectionPolicy )
     {
@@ -74,7 +74,7 @@
     }
     else
     {
-        [self getProtectionPolicy:^( MSDRMDocument *document, NSError *error ) {
+        [self getProtectionPolicy:^( CFBProtectedDocument *document, NSError *error ) {
             if ( error )
             {
                 completionBlock( document, error );
@@ -88,7 +88,7 @@
     }
 }
 
-- (void)getProtectionPolicy:(void (^)(MSDRMDocument *, NSError *))completionBlock
+- (void)getProtectionPolicy:(void (^)(CFBProtectedDocument *, NSError *))completionBlock
 {
     if ( _protectionPolicy )
     {
@@ -122,7 +122,7 @@
 
 #pragma mark - Private Methods
 
-- (void)unprotect:( void (^)( MSDRMDocument *, NSError * ) )completionBlock
+- (void)unprotect:( void (^)( CFBProtectedDocument *, NSError * ) )completionBlock
 {
     // Now try to decrypt the content
     [MSCustomProtectedData customProtectedDataWithPolicy:_protectionPolicy

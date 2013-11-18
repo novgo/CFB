@@ -16,19 +16,19 @@
 // limitations under the License.
 //
 
-#import "MSCFBError.h"
+#import "CFBError.h"
 
 #import "NSData+MSCFB.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBStream.h"
-#import "MSCFBStorage.h"
+#import "CFBObject.h"
+#import "CFBStream.h"
+#import "CFBStorage.h"
 
-#import "MSDRMMessageAttachment.h"
+#import "CFBProtectedAttachment.h"
 
-@implementation MSDRMMessageAttachment
+@implementation CFBProtectedAttachment
 {
-    MSCFBStream *_content;
+    CFBStream *_content;
     NSString    *_contentID;
 }
 
@@ -42,7 +42,7 @@
     return _contentID;
 }
 
-- (id)initWithStorage:(MSCFBStorage *)storage
+- (id)initWithStorage:(CFBStorage *)storage
 {
     if ( storage == nil )
         return nil;
@@ -51,7 +51,7 @@
     
     _attachMethod = afNone;
 
-    MSCFBObject *cfbObject = nil;
+    CFBObject *cfbObject = nil;
     
     for ( NSString *key in [storage allKeys] )
     {
@@ -59,31 +59,31 @@
         {
             // Attachment Description
             cfbObject = [storage objectForKey:key];
-            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachDesc is not a stream" ) )
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[CFBStream class]], @"AttachDesc is not a stream" ) )
             {
                 self = nil;
                 return self;
             }
             
-            [self loadAttachmentDescription:(MSCFBStream *)cfbObject];
+            [self loadAttachmentDescription:(CFBStream *)cfbObject];
         }
         else if ( [key isEqualToString:@"AttachContents"] )
         {
             // Attachment Content
             cfbObject = [storage objectForKey:key];
-            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachContents object is not a stream" ) )
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[CFBStream class]], @"AttachContents object is not a stream" ) )
             {
                 self = nil;
                 return self;
             }
 
-            _content = (MSCFBStream *)cfbObject;
+            _content = (CFBStream *)cfbObject;
         }
         else if ( [key isEqualToString:@"AttachPres"] )
         {
             // Attachment Presentation
             cfbObject = [storage objectForKey:key];
-            if ( !ASSERT( nil, [cfbObject isKindOfClass:[MSCFBStream class]], @"AttachPres object is not a stream" ) )
+            if ( !ASSERT( nil, [cfbObject isKindOfClass:[CFBStream class]], @"AttachPres object is not a stream" ) )
             {
                 self = nil;
                 return self;
@@ -114,7 +114,7 @@
     return self;
 }
 
-- (void)loadAttachmentDescription:(MSCFBStream *)description
+- (void)loadAttachmentDescription:(CFBStream *)description
 {
     NSData *descriptionData  = [description readAll];
     NSRange readRange        = NSMakeRange( 0, 0 );

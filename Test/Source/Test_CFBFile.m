@@ -16,14 +16,14 @@
 // limitations under the License.
 //
 
-#import "MSCFB.h"
+#import "CFB.h"
 
 #import <XCTest/XCTest.h>
 
-@interface Test_MSCFBFile : XCTestCase
+@interface Test_CFBFile : XCTestCase
 @end
 
-@implementation Test_MSCFBFile
+@implementation Test_CFBFile
 
 - (void)setUp
 {
@@ -55,13 +55,13 @@
             
             [fileHandle closeFile];
             
-            MSCFBFile    *file       = nil;
+            CFBFile    *file       = nil;
             
-            file = [MSCFBFile compoundFileForReadingAtPath:filePath];
+            file = [CFBFile compoundFileForReadingAtPath:filePath];
             
             XCTAssertTrue( file != nil, @"Failed to load document-%d as file: %@", i, error.localizedDescription );
             
-            file = [MSCFBFile compoundFileForReadingWithData:fileData];
+            file = [CFBFile compoundFileForReadingWithData:fileData];
             
             XCTAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );
         }
@@ -90,13 +90,13 @@
             
             [fileHandle closeFile];
             
-            MSCFBFile    *file       = nil;
+            CFBFile    *file       = nil;
             
-            file = [MSCFBFile compoundFileForReadingAtPath:filePath];
+            file = [CFBFile compoundFileForReadingAtPath:filePath];
             
             XCTAssertTrue( file != nil, @"Failed to load document-%d as file: %@", i, error.localizedDescription );
             
-            file = [MSCFBFile compoundFileForReadingWithData:fileData];
+            file = [CFBFile compoundFileForReadingWithData:fileData];
             
             XCTAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );
         }
@@ -110,7 +110,7 @@
 - (void)testCompoundFileForWriting
 {
     NSString  *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"writable.mscfb"];
-    MSCFBFile *file    = [MSCFBFile compoundFileForWritingAtPath:tmpPath];
+    CFBFile *file    = [CFBFile compoundFileForWritingAtPath:tmpPath];
     
     XCTAssertTrue( file, @"Failed to create file" );
     

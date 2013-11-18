@@ -16,9 +16,9 @@
 // limitations under the License.
 //
 
-#import "MSCFBError.h"
+#import "CFBError.h"
 
-NSString * const MSCFBErrorDomain = @"MSCFB";
+NSString * const CFBErrorDomain = @"CFB";
 
 BOOL Assert( const char *function, int line, NSError * __autoreleasing *error, bool condition, NSString *fmt, ...)
 {
@@ -36,7 +36,7 @@ BOOL Assert( const char *function, int line, NSError * __autoreleasing *error, b
         
         // Generate an NSError if supplied
         if ( error )
-            *error = [NSError errorWithDomain:MSCFBErrorDomain code:-1 userInfo:[[NSMutableDictionary alloc] initWithObjectsAndKeys:description, NSLocalizedDescriptionKey, nil]];
+            *error = [NSError errorWithDomain:CFBErrorDomain code:-1 userInfo:[[NSMutableDictionary alloc] initWithObjectsAndKeys:description, NSLocalizedDescriptionKey, nil]];
         
         va_end(args);
         

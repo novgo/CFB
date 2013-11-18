@@ -16,9 +16,9 @@
 // limitations under the License.
 //
 
-#import "MSCFBSource.h"
+#import "CFBSource.h"
 
-@implementation MSCFBDataSource
+@implementation CFBDataSource
 {
     NSData *_data;
 }
@@ -88,7 +88,7 @@
 
 @end
 
-@implementation MSCFBFileSource
+@implementation CFBFileSource
 {
     NSFileHandle *_handle;
     u_int64_t     _length;

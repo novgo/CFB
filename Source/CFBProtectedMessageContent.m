@@ -16,26 +16,26 @@
 // limitations under the License.
 //
 
-#import "MSCFBError.h"
-#import "MSCFBTypes.h"
+#import "CFBError.h"
+#import "CFBTypes.h"
 
-#import "MSCFBObject.h"
+#import "CFBObject.h"
 
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
-#import "MSCFBStream.h"
-#import "MSCFBStorage.h"
+#import "CFBStream.h"
+#import "CFBStorage.h"
 
-#import "MSDRMMessageAttachment.h"
-#import "MSDRMMessageContent.h"
+#import "CFBProtectedAttachment.h"
+#import "CFBProtectedMessageContent.h"
 
-@implementation MSDRMMessageContent
+@implementation CFBProtectedMessageContent
 {
-    MSCFBFile      *_file;
+    CFBFile      *_file;
     NSMutableArray *_attachments;
     
-    MSCFBStream    *_bodyHTML;
+    CFBStream    *_bodyHTML;
 }
 
 #pragma mark - Public Properties
@@ -53,7 +53,7 @@
     
     if ( self )
     {
-        _file = [[MSCFBFile alloc] initWithData:data error:error];
+        _file = [[CFBFile alloc] initWithData:data error:error];
         
         if ( !_file )
             self = nil;
@@ -70,7 +70,7 @@
     
     if ( self )
     {
-        _file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:error];
+        _file = [[CFBFile alloc] initWithFileHandle:fileHandle error:error];
         
         if ( !_file )
             self = nil;
@@ -85,15 +85,15 @@
 
 - (BOOL)initialize:(NSError *__autoreleasing *)error
 {
-    MSCFBObject    *cfbObject;
+    CFBObject    *cfbObject;
     
     // We must load the OutlookBodyStreamInfo first before we can process other streams
     cfbObject = [_file objectForKey:@"OutlookBodyStreamInfo"];
     
-    if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"OutlookBodyStreamInfo is not a stream" ) )
+    if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"OutlookBodyStreamInfo is not a stream" ) )
         return NO;
     
-    [self loadOutlookBodyStream:(MSCFBStream *)cfbObject];
+    [self loadOutlookBodyStream:(CFBStream *)cfbObject];
     
     for ( NSString *key in [_file allKeys] )
     {
@@ -104,30 +104,30 @@
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
             
-            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment List object is not a storage" ) )
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStorage class]], @"Attachment List object is not a storage" ) )
                 return NO;
             
-            [self loadAttachmentList:(MSCFBStorage *)cfbObject];
+            [self loadAttachmentList:(CFBStorage *)cfbObject];
         }
         else if ( [key isEqualToString:@"BodyPT-HTML"] )
         {
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
             
-            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyPT-HTML object is not a stream" ) )
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"BodyPT-HTML object is not a stream" ) )
                 return NO;
             
-            _bodyHTML = (MSCFBStream *)cfbObject;
+            _bodyHTML = (CFBStream *)cfbObject;
         }
         else if ( [key isEqualToString:@"BodyRTF"] )
         {
             // Try to access the attachment contents stream
             cfbObject = [_file objectForKey:key];
             
-            if ( !ASSERT( error, [cfbObject isKindOfClass:[MSCFBStream class]], @"BodyRTF object is not a stream" ) )
+            if ( !ASSERT( error, [cfbObject isKindOfClass:[CFBStream class]], @"BodyRTF object is not a stream" ) )
                 return NO;
             
-            _bodyRTF = (MSCFBStream *)cfbObject;
+            _bodyRTF = (CFBStream *)cfbObject;
         }
         
     }
@@ -135,16 +135,16 @@
     return YES;
 }
 
-- (void)loadAttachmentList:(MSCFBStorage *)storage
+- (void)loadAttachmentList:(CFBStorage *)storage
 {
-    MSCFBObject *cfbObject = nil;
-    MSCFBStream *cfbStream = nil;
+    CFBObject *cfbObject = nil;
+    CFBStream *cfbStream = nil;
     
     // The attachment list must have an Attachment Info stream
     cfbObject = [storage objectForKey:@"Attachment Info"];
     NSAssert( cfbObject != nil, @"Missing Attachment Info stream" );
-    NSAssert( [cfbObject isKindOfClass:[MSCFBStream class]], @"Attachment Info object is not a stream" );
-    cfbStream = (MSCFBStream *)cfbObject;
+    NSAssert( [cfbObject isKindOfClass:[CFBStream class]], @"Attachment Info object is not a stream" );
+    cfbStream = (CFBStream *)cfbObject;
     
     NSRange   readRange = NSMakeRange( 0 , sizeof( u_int32_t) );
     
@@ -205,9 +205,9 @@
             {
                 cfbObject = [storage objectForKey:name];
                 NSAssert( cfbObject != nil, @"Attachment not found!" );
-                NSAssert( [cfbObject isKindOfClass:[MSCFBStorage class]], @"Attachment object is not a storage" );
+                NSAssert( [cfbObject isKindOfClass:[CFBStorage class]], @"Attachment object is not a storage" );
                 
-                MSDRMMessageAttachment *attachment = [[MSDRMMessageAttachment alloc] initWithStorage:(MSCFBStorage *)cfbObject];
+                CFBProtectedAttachment *attachment = [[CFBProtectedAttachment alloc] initWithStorage:(CFBStorage *)cfbObject];
                 
                 [_attachments addObject:attachment];
             }
@@ -217,7 +217,7 @@
     }
 }
 
-- (void)loadOutlookBodyStream:(MSCFBStream *)stream
+- (void)loadOutlookBodyStream:(CFBStream *)stream
 {
     // The first 2 bytes of the OutlookBodyStreamInfo stream are the content type
     u_int16_t contentType = 0;

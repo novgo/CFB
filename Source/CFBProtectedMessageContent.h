@@ -23,12 +23,12 @@ enum MessageContentType
     MessageContentTypeRTF   = 3
 };
 
-@interface MSDRMMessageContent : NSObject
+@interface CFBProtectedMessageContent : NSObject
 
 @property (readonly, nonatomic) u_int32_t               codePage;
 @property (readonly, nonatomic) enum MessageContentType contentType;
-@property (readonly, nonatomic) MSCFBStream            *bodyHTML;
-@property (readonly, nonatomic) MSCFBStream            *bodyRTF;
+@property (readonly, nonatomic) CFBStream            *bodyHTML;
+@property (readonly, nonatomic) CFBStream            *bodyRTF;
 
 @property (readonly, nonatomic) NSUInteger              attachmentCount;
 @property (readonly, nonatomic) NSArray                *attachments;

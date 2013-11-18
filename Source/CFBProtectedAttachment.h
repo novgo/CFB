@@ -26,7 +26,7 @@ enum MSAttachMethod
     afStorage         = 0x00000006
 };
 
-@interface MSDRMMessageAttachment : NSObject
+@interface CFBProtectedAttachment : NSObject
 
 @property (readonly, nonatomic) enum MSAttachMethod attachMethod;
 
@@ -42,6 +42,6 @@ enum MSAttachMethod
 @property (readonly, nonatomic) NSString *pathName;
 
 
-- (id)initWithStorage:(MSCFBStorage *)storage;
+- (id)initWithStorage:(CFBStorage *)storage;
 
 @end

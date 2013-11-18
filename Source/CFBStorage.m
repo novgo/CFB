@@ -16,17 +16,17 @@
 // limitations under the License.
 //
 
-#import "MSCFBTypes.h"
+#import "CFBTypes.h"
 
-#import "MSCFBDirectoryEntry.h"
+#import "CFBDirectoryEntry.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBObjectInternal.h"
+#import "CFBObject.h"
+#import "CFBObjectInternal.h"
 
-#import "MSCFBStream.h"
-#import "MSCFBStorage.h"
+#import "CFBStream.h"
+#import "CFBStorage.h"
 
-@implementation MSCFBStorage
+@implementation CFBStorage
 {
     NSMutableDictionary *_contents;
 }
@@ -38,7 +38,7 @@
     return nil;
 }
 
-- (id)init:(MSCFBDirectoryEntry *)entry container:(MSCFBFile *)container
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
 {
     self = [super init:entry container:container];
     
@@ -50,7 +50,7 @@
     return self;
 }
 
-- (void)addObject:(MSCFBObject *)child
+- (void)addObject:(CFBObject *)child
 {
     NSAssert( child != nil, @"Child is nil" );
 
@@ -68,7 +68,7 @@
     return [_contents allValues];
 }
 
-- (MSCFBObject *)objectForKey:(NSString *)key
+- (CFBObject *)objectForKey:(NSString *)key
 {
     NSAssert( _contents != nil, @"Contents is nil" );
 

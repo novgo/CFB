@@ -16,28 +16,16 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
+@class CFBObject;
+@class CFBFile;
 
-@protocol MSCFBSource <NSObject>
+@interface CFBStorage : CFBObject //MSCFBDirectoryEntry
 
-@property (readonly, nonatomic) u_int64_t length;
+- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container;
 
-- (void)readBytes:(void *)bytes range:(NSRange)range;
-
-// Read a range of bytes from the source.
-- (NSData *)readRange:(NSRange)range;
-- (void)writeData:(NSData *)data location:(NSUInteger)location;
-
-@end
-
-@interface MSCFBDataSource : NSObject <MSCFBSource>
-
-- (id)initWithData:(NSData *)data;
-
-@end
-
-@interface MSCFBFileSource : NSObject <MSCFBSource>
-
-- (id)initWithFileHandle:(NSFileHandle *)handle;
+- (void)addObject:(CFBObject *)object;
+- (NSArray *)allKeys;
+- (NSArray *)allValues;
+- (CFBObject *)objectForKey:(NSString *)key;
 
 @end

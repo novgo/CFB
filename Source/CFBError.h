@@ -16,22 +16,16 @@
 // limitations under the License.
 //
 
-#pragma once
+#pragma mark - NSError Constants
 
-@class MSCFBObject;
+extern NSString * const CFBErrorDomain;
 
-@interface MSCFBFile : NSObject
+enum MSCFBErrorCode
+{
+    MSCFBBadHeader = 1
+};
 
-+ (MSCFBFile *)compoundFileForReadingAtPath:(NSString *)path;
-+ (MSCFBFile *)compoundFileForReadingWithData:(NSData *)data;
 
-+ (MSCFBFile *)compoundFileForUpdatingAtPath:(NSString *)path;
-+ (MSCFBFile *)compoundFileForWritingAtPath:(NSString *)path;
+#define ASSERT( error, condition, fmt, ... ) Assert( __PRETTY_FUNCTION__, __LINE__, error, condition, fmt, ##__VA_ARGS__ )
 
-- (void)close;
-
-- (NSArray *)allKeys;
-- (NSArray *)allValues;
-- (MSCFBObject *)objectForKey:(NSString *)key;
-
-@end
+extern BOOL Assert( const char *function, int line, NSError * __autoreleasing *error, bool condition, NSString *fmt, ...);

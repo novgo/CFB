@@ -16,13 +16,17 @@
 // limitations under the License.
 //
 
-@interface MSDRMFile : MSCFBFile
+#import <Foundation/Foundation.h>
 
-@property (readonly, nonatomic) NSData   *encryptedContent;
-@property (readonly, nonatomic) u_int64_t encryptedContentLength;
-@property (readonly, nonatomic) NSData   *encryptedProtectionPolicy;
+#import <CFB/CFBError.h>
+#import <CFB/CFBObject.h>
+#import <CFB/CFBStream.h>
+#import <CFB/CFBStorage.h>
+#import <CFB/CFBFile.h>
 
-- (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
+#import <CFB/CFBProtectedFile.h>
+#import <CFB/CFBProtectedDocument.h>
+#import <CFB/CFBProtectedMessage.h>
 
-@end
+#import <CFB/CFBProtectedMessageContent.h>
+#import <CFB/CFBProtectedAttachment.h>

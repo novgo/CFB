@@ -16,81 +16,81 @@
 // limitations under the License.
 //
 
-#import "MSCFBTypes.h"
-#import "MSCFBError.h"
+#import "CFBTypes.h"
+#import "CFBError.h"
 
-#import "MSCFBDirectoryEntry.h"
-#import "MSCFBFileAllocationTable.h"
+#import "CFBDirectoryEntry.h"
+#import "CFBFileAllocationTable.h"
 
-#import "MSCFBObject.h"
-#import "MSCFBObjectInternal.h"
-#import "MSCFBStorage.h"
-#import "MSCFBStream.h"
+#import "CFBObject.h"
+#import "CFBObjectInternal.h"
+#import "CFBStorage.h"
+#import "CFBStream.h"
 
-#import "MSCFBSource.h"
+#import "CFBSource.h"
 
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
 // Private Interface
-@interface MSCFBFile ()
+@interface CFBFile ()
 
-- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error;
+- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error;
 
-- (BOOL)createFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-- (BOOL)createDirectory:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-- (BOOL)createHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)createFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)createDirectory:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)createHeader:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
 
 - (BOOL)loadDirectory:(NSError * __autoreleasing *)error;
-- (BOOL)loadFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-- (BOOL)loadHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-- (BOOL)loadMiniFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error;
-- (MSCFBStorage *)loadRootStorage;
+- (BOOL)loadFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)loadHeader:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
+- (BOOL)loadMiniFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
+- (CFBStorage *)loadRootStorage;
 
-- (MSCFBObject *)createObject:(MSCFBDirectoryEntry *)entry;
+- (CFBObject *)createObject:(CFBDirectoryEntry *)entry;
 
 
 @end
 
-@implementation MSCFBFile
+@implementation CFBFile
 {
     MSCFB_HEADER    _header;
     
     NSMutableArray *_directory;
     
     //NSMutableData  *_fat;
-    MSCFBFileAllocationTable *_fat;
+    CFBFileAllocationTable *_fat;
     
     NSMutableData  *_miniFat;
     
-    id<MSCFBSource> _source;
+    id<CFBSource> _source;
     
-    MSCFBStorage   *_root;
+    CFBStorage   *_root;
 }
 
 #pragma mark - Class Methods
 
-+ (MSCFBFile *)compoundFileForReadingAtPath:(NSString *)path
++ (CFBFile *)compoundFileForReadingAtPath:(NSString *)path
 {
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
-    MSCFBFile    *file       = nil;
+    CFBFile    *file       = nil;
     
     if ( fileHandle )
-        file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:nil];
+        file = [[CFBFile alloc] initWithFileHandle:fileHandle error:nil];
     
     return file;
 }
 
-+ (MSCFBFile *)compoundFileForReadingWithData:(NSData *)data
++ (CFBFile *)compoundFileForReadingWithData:(NSData *)data
 {
-    MSCFBFile *file = [[MSCFBFile alloc] initWithData:data error:nil];
+    CFBFile *file = [[CFBFile alloc] initWithData:data error:nil];
     
     return file;
 }
 
-+ (MSCFBFile *)compoundFileForUpdatingAtPath:(NSString *)path
++ (CFBFile *)compoundFileForUpdatingAtPath:(NSString *)path
 {
-    MSCFBFile *file = nil;
+    CFBFile *file = nil;
     
     // To update a file, it must already exist.
     if ( [[NSFileManager defaultManager] fileExistsAtPath:path] )
@@ -98,15 +98,15 @@
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
         
         if ( fileHandle )
-            file = [[MSCFBFile alloc] initWithFileHandle:fileHandle error:nil];
+            file = [[CFBFile alloc] initWithFileHandle:fileHandle error:nil];
     }
     
     return file;
 }
 
-+ (MSCFBFile *)compoundFileForWritingAtPath:(NSString *)path
++ (CFBFile *)compoundFileForWritingAtPath:(NSString *)path
 {
-    MSCFBFile     *file        = nil;
+    CFBFile     *file        = nil;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSFileHandle  *fileHandle  = nil;
     
@@ -126,7 +126,7 @@
     }
     
     if ( fileHandle )
-        file = [[MSCFBFile alloc] initForWritingWithFileHandle:fileHandle error:nil];
+        file = [[CFBFile alloc] initForWritingWithFileHandle:fileHandle error:nil];
     
     return file;
 }
@@ -147,7 +147,7 @@
     if ( !self )
         return nil;
     
-    return [self initWithSource:[[MSCFBDataSource alloc] initWithData:data] error:error];
+    return [self initWithSource:[[CFBDataSource alloc] initWithData:data] error:error];
 }
 
 - (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
@@ -157,7 +157,7 @@
     if ( !self )
         return nil;
 
-    return [self initWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
+    return [self initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
 }
 
 - (id)initForWritingWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
@@ -167,10 +167,10 @@
     if ( !self )
         return nil;
     
-    return [self initForWritingWithSource:[[MSCFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
+    return [self initForWritingWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
 }
 
-- (id)initWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
+- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
 {
     // Initialize private fields
     _directory = nil;
@@ -215,7 +215,7 @@
     return self;
 }
 
-- (id)initForWritingWithSource:(id<MSCFBSource>)source error:(NSError *__autoreleasing *)error
+- (id)initForWritingWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
 {
     if ( ![self createHeader:source error:error] )
     {
@@ -250,7 +250,7 @@
     return [_root allValues];
 }
 
-- (MSCFBObject *)objectForKey:(NSString *)key
+- (CFBObject *)objectForKey:(NSString *)key
 {
     return [_root objectForKey:key];
 }
@@ -404,7 +404,7 @@
 #pragma mark - Private Methods
 
 // Create a new file allocation table
-- (BOOL)createFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)createFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     // Write the first FAT sector
     u_int32_t fatSector[SECTOR_SIZE >> 2];
@@ -419,11 +419,11 @@
 }
 
 // Create a new directory with a root storage
-- (BOOL)createDirectory:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)createDirectory:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     // Bootstrap the Directory and the Root Entry storage
     MSCFB_DIRECTORY_ENTRY directorySector[4];
-    MSCFBDirectoryEntry  *directoryEntry      = [[MSCFBDirectoryEntry alloc] init];
+    CFBDirectoryEntry  *directoryEntry      = [[CFBDirectoryEntry alloc] init];
     
     // First, clear the entire sector
     memset( &directorySector, 0, SECTOR_SIZE );
@@ -448,7 +448,7 @@
 }
 
 // Create a header for a new file
-- (BOOL)createHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)createHeader:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     // Initialize the header and write it
     memset( &_header, 0, sizeof( MSCFB_HEADER ) );
@@ -518,7 +518,7 @@
     {
         if ( directoryEntry[i].cbEntryName != 0 )
         {
-            [_directory addObject:[[MSCFBDirectoryEntry alloc] init:&directoryEntry[i]]];
+            [_directory addObject:[[CFBDirectoryEntry alloc] init:&directoryEntry[i]]];
         }
     }
     
@@ -526,15 +526,15 @@
 }
 
 // Initialize the File Allocation Table
-- (BOOL)loadFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)loadFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     // Save the FAT object
-    if ( ( _fat = [[MSCFBFileAllocationTable alloc] init:self error:error] ) == nil ) return NO;
+    if ( ( _fat = [[CFBFileAllocationTable alloc] init:self error:error] ) == nil ) return NO;
     
     return YES;
 }
 
-- (BOOL)loadHeader:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)loadHeader:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     [source readBytes:&_header range:NSMakeRange(0, sizeof(MSCFB_HEADER))];
     
@@ -592,7 +592,7 @@
     return YES;
 }
 
-- (BOOL)loadMiniFileAllocationTable:(id<MSCFBSource>)source error:(NSError * __autoreleasing *)error
+- (BOOL)loadMiniFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
     if ( !ASSERT( error, _fat != nil, @"FAT should be initialized first" ) ) return NO;
     
@@ -626,16 +626,16 @@
 }
 
 // Initializes the root object
-- (MSCFBStorage *)loadRootStorage
+- (CFBStorage *)loadRootStorage
 {
     // Get the root directory entry and verify it before loading it
-    MSCFBDirectoryEntry *rootEntry = [self directoryEntryAtIndex:0];
+    CFBDirectoryEntry *rootEntry = [self directoryEntryAtIndex:0];
     
     NSAssert( rootEntry.objectType == CFB_ROOT_OBJECT, @"Root must be a storage" );
     NSAssert( [rootEntry.name isEqualToString:@"Root Entry"], @"Root must be named Root Entry" );
     
     // Use the child to find the subtree for the root storage and load all its content
-    MSCFBStorage *root = (MSCFBStorage *)[self createObject:rootEntry];
+    CFBStorage *root = (CFBStorage *)[self createObject:rootEntry];
     
     [self walkTree:[self directoryEntryAtIndex:rootEntry.child] forStorage:root];
     
@@ -643,31 +643,31 @@
 }
 
 // Initializes an object from a directory entry
-- (MSCFBObject *)createObject:(MSCFBDirectoryEntry *)directoryEntry
+- (CFBObject *)createObject:(CFBDirectoryEntry *)directoryEntry
 {
-    MSCFBObject *object = nil;
+    CFBObject *object = nil;
     
     if ( directoryEntry.objectType == 0x01 )
     {
-        object = [[MSCFBStorage alloc] init:directoryEntry container:self];
+        object = [[CFBStorage alloc] init:directoryEntry container:self];
     }
     else if ( directoryEntry.objectType == 0x02 )
     {
         NSAssert( directoryEntry.child == NOSTREAM, @"Unexpected: stream has a child" );
         
-        object = [[MSCFBStream alloc] init:directoryEntry container:self];
+        object = [[CFBStream alloc] init:directoryEntry container:self];
     }
     else if ( directoryEntry.objectType == 0x05 )
     {
         //NSAssert( directoryEntry.child != NOSTREAM, @"Unexpected: storage has no child" );
         
-        object = [[MSCFBStorage alloc] init:directoryEntry container:self];
+        object = [[CFBStorage alloc] init:directoryEntry container:self];
     }
     
     return object;
 }
 
-- (MSCFBDirectoryEntry *)directoryEntryAtIndex:(NSInteger)index
+- (CFBDirectoryEntry *)directoryEntryAtIndex:(NSInteger)index
 {
     if ( index == NOSTREAM )
         return nil;
@@ -698,19 +698,19 @@
     NSAssert( false, @"Not implemented" );
 }
 
-- (void)walkTree:(MSCFBDirectoryEntry *)entry forStorage:(MSCFBStorage *)storage
+- (void)walkTree:(CFBDirectoryEntry *)entry forStorage:(CFBStorage *)storage
 {
     if ( entry == nil ) return;
     
-    MSCFBObject *object = [self createObject:entry];
+    CFBObject *object = [self createObject:entry];
     [storage addObject:object];
     
     [self walkTree:[self directoryEntryAtIndex:entry.left] forStorage:storage];
     [self walkTree:[self directoryEntryAtIndex:entry.right] forStorage:storage];
     
-    if ( [object isKindOfClass:[MSCFBStorage class]] )
+    if ( [object isKindOfClass:[CFBStorage class]] )
     {
-        [self walkTree:[self directoryEntryAtIndex:entry.child] forStorage:(MSCFBStorage *)object];
+        [self walkTree:[self directoryEntryAtIndex:entry.child] forStorage:(CFBStorage *)object];
     }
 }
 

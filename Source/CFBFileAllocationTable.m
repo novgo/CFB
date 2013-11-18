@@ -16,13 +16,13 @@
 // limitations under the License.
 //
 
-#import "MSCFBError.h"
-#import "MSCFBTypes.h"
+#import "CFBError.h"
+#import "CFBTypes.h"
 
-#import "MSCFBFile.h"
-#import "MSCFBFileInternal.h"
+#import "CFBFile.h"
+#import "CFBFileInternal.h"
 
-#import "MSCFBFileAllocationTable.h"
+#import "CFBFileAllocationTable.h"
 
 #undef SECTOR_SIZE
 #undef SECTOR_OFFSET
@@ -30,13 +30,13 @@
 #define SECTOR_SIZE           ( 1 << header->sectorShift )
 #define SECTOR_OFFSET(x)      ( ( x + 1 ) << header->sectorShift )
 
-@implementation MSCFBFileAllocationTable
+@implementation CFBFileAllocationTable
 {
-    MSCFBFile __weak *_file;
+    CFBFile __weak *_file;
     NSMutableData    *_fat;
 }
 
-- (id)init:(MSCFBFile __weak *)file error:(NSError * __autoreleasing *)error
+- (id)init:(CFBFile __weak *)file error:(NSError * __autoreleasing *)error
 {
     self = [super init];
     
