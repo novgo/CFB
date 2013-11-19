@@ -710,12 +710,13 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
+					"$(SRCROOT)/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk";
 			};
 			name = Debug;
 		};
@@ -724,12 +725,13 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Shared/Source/git/cfb/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
+					"$(SRCROOT)/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/iOS/Prefix.pch;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/External/iOS\\ Microsoft\\ RMS\\ SDK\\ v3.0/sdk";
 			};
 			name = Release;
 		};
