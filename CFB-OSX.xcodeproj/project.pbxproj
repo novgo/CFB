@@ -62,6 +62,7 @@
 		BCE2C2C4181E303D004A9C00 /* message-8.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCE2C2BC181E303C004A9C00 /* message-8.rpmsg */; };
 		BCE2C2C5181E303D004A9C00 /* message-9.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCE2C2BD181E303C004A9C00 /* message-9.rpmsg */; };
 		BCE2C2C6181E303D004A9C00 /* message-10.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BCE2C2BE181E303D004A9C00 /* message-10.rpmsg */; };
+		BCF1FA591845D72C00161EA5 /* document-1.doc in Resources */ = {isa = PBXBuildFile; fileRef = BCE2C2B2181E303C004A9C00 /* document-1.doc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -430,6 +431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCF1FA591845D72C00161EA5 /* document-1.doc in Resources */,
 				BCE2C2BF181E303D004A9C00 /* document-1.docx in Resources */,
 				BCE2C2C0181E303D004A9C00 /* document-2.docx in Resources */,
 				BC1BCD5C1743D0CF000F4D85 /* message-1.rpmsg in Resources */,
@@ -603,6 +605,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/OSX/Prefix.pch;
 				INFOPLIST_FILE = Resources/OSX/Info.plist;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -622,6 +625,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/OSX/Prefix.pch;
 				INFOPLIST_FILE = Resources/OSX/Info.plist;
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};

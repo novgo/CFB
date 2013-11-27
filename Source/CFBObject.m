@@ -70,10 +70,10 @@
     }
     else
     {
-        if ( _entry.streamLength > _container.miniStreamCutoffSize )
-            return [_container readStream:_entry.streamStart range:range];
-        else
+        if ( _entry.streamLength < _container.miniStreamCutoffSize )
             return [_container readMiniStream:_entry.streamStart range:range];
+        else
+            return [_container readStream:_entry.streamStart range:range];
     }
 }
 
