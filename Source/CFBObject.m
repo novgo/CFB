@@ -38,9 +38,22 @@
     return _entry.name;
 }
 
-- (Byte)objectType
+- (enum CFBObjectType)type
 {
-    return _entry.objectType;
+    switch ( _entry.objectType )
+    {
+        case CFB_STREAM:
+            return Stream;
+            
+        case CFB_STORAGE:
+            return Storage;
+            
+        case CFB_ROOT_OBJECT:
+            return Root;
+            
+        default:
+            return Unknown;
+    }
 }
 
 #pragma mark - Public Methods
@@ -97,6 +110,9 @@
 
 - (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
 {
+    NSParameterAssert( entry != nil );
+    NSParameterAssert( container != nil );
+    
     self = [super init];
     
     if ( self )

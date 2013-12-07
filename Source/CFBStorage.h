@@ -19,11 +19,22 @@
 @class CFBObject;
 @class CFBFile;
 
-@interface CFBStorage : CFBObject //MSCFBDirectoryEntry
+/**
+ A Compound File Binary Storage. A CFBStorage object acts like a file system
+ directory object and can contain further CFBStorage and CFBStream objects.
+ */
+@interface CFBStorage : CFBObject
 
-- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container;
+- (id)init __attribute__( ( unavailable("init not available") ) );
 
+/**
+ Adds a CFBObject to the CFBStorage. Only CFBStorage and CFBStream may be
+ added to a CFBStorage and on if the CFBStorage is not read only.
+ 
+ @param object The object to be added.
+ */
 - (void)addObject:(CFBObject *)object;
+
 - (NSArray *)allKeys;
 - (NSArray *)allValues;
 - (CFBObject *)objectForKey:(NSString *)key;

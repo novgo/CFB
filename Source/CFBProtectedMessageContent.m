@@ -19,6 +19,8 @@
 #import "CFBError.h"
 #import "CFBTypes.h"
 
+#import "CFBSource.h"
+
 #import "CFBObject.h"
 
 #import "CFBFile.h"
@@ -53,7 +55,7 @@
     
     if ( self )
     {
-        _file = [[CFBFile alloc] initWithData:data error:error];
+        _file = [[CFBFile alloc] initWithSource:[[CFBDataSource alloc] initWithData:data] error:error];
         
         if ( !_file )
             self = nil;
@@ -70,7 +72,7 @@
     
     if ( self )
     {
-        _file = [[CFBFile alloc] initWithFileHandle:fileHandle error:error];
+        _file = [[CFBFile alloc] initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
         
         if ( !_file )
             self = nil;

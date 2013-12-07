@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBFile.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBFile</TokenIdentifier>
+			<Abstract type="html">A Compound File Binary object.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+            
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBFile/compoundFileForReadingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a compound file for reading from the specified path.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBFile *)compoundFileForReadingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/compoundFileForReadingAtPath:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBFile/compoundFileForReadingWithData:</TokenIdentifier>
+			<Abstract type="html">Load a compound file for reading from the specified NSData object.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBFile *)compoundFileForReadingWithData:(NSData *)data</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The data for the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/compoundFileForReadingWithData:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBFile/compoundFileForUpdatingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a compound file for updating from the specified path.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBFile *)compoundFileForUpdatingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/compoundFileForUpdatingAtPath:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBFile/compoundFileForWritingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a compound file for writing from the specified path.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBFile *)compoundFileForWritingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/compoundFileForWritingAtPath:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBFile/close</TokenIdentifier>
+			<Abstract type="html">Closes the CFB file.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>- (void)close</Declaration>
+			
+			
+			<Anchor>//api/name/close</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBFile/isReadOnly</TokenIdentifier>
+			<Abstract type="html">Tests whether the CFB file can be updated.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)isReadOnly</Declaration>
+			
+			
+			<Anchor>//api/name/isReadOnly</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBFile/allKeys</TokenIdentifier>
+			<Abstract type="html">The names of the CFBStorage and CFBStream objects stored within the Root storage
+of the CFBFile.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>- (NSArray *)allKeys</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array of strings containing the names of the top level storages and streams.</Abstract></ReturnValue>
+			<Anchor>//api/name/allKeys</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBFile/allValues</TokenIdentifier>
+			<Abstract type="html">The CFBStorage and CFBStream objects stored within the Root storage
+of the CFBFile.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>- (NSArray *)allValues</Declaration>
+			
+			<ReturnValue><Abstract type="html">An array of CFBObject (either CFBStorage or CFBStream within the Root storage of the CFBFile.</Abstract></ReturnValue>
+			<Anchor>//api/name/allValues</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBFile/objectForKey:</TokenIdentifier>
+			<Abstract type="html">Retrieves the CFBObject (either CFBStorage or CFBStream within the Root storage with the specified name.</Abstract>
+			<DeclaredIn>CFBFile.h</DeclaredIn>
+			
+			<Declaration>- (CFBObject *)objectForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The name of the object to retrieve.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBStorage or CFBStream with the specified name, or nil if the name does not exist.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectForKey:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

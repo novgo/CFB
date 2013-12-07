@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBObject.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBObject</TokenIdentifier>
+			<Abstract type="html">A Compound File Binary object. This is an abstract class, concrete implementations include
+CFBStorage and CFBStream.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+            
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/setName:</TokenIdentifier>
+			<Abstract type="html">The name of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/name</TokenIdentifier>
+			<Abstract type="html">The name of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBObject/name</TokenIdentifier>
+			<Abstract type="html">The name of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/setType:</TokenIdentifier>
+			<Abstract type="html">The type of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) enum CFBObjectType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/type</TokenIdentifier>
+			<Abstract type="html">The type of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) enum CFBObjectType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBObject/type</TokenIdentifier>
+			<Abstract type="html">The type of the object.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) enum CFBObjectType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/read:</TokenIdentifier>
+			<Abstract type="html">Reads data from the object using the specified range. Note that objects of type Root
+cannot be read as these contain the mini stream for the CFBFile.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>- (NSData *)read:(NSRange)range</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>range</Name>
+					<Abstract type="html">The location and length of data to read.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The data.</Abstract></ReturnValue>
+			<Anchor>//api/name/read:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBObject/readAll</TokenIdentifier>
+			<Abstract type="html">Reads all the data from the object. Note that objects of type Root cannot be read
+as these contain the mini stream for the CFBFile.</Abstract>
+			<DeclaredIn>CFBObject.h</DeclaredIn>
+			
+			<Declaration>- (NSData *)readAll</Declaration>
+			
+			<ReturnValue><Abstract type="html">The data.</Abstract></ReturnValue>
+			<Anchor>//api/name/readAll</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

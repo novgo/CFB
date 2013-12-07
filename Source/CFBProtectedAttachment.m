@@ -29,18 +29,9 @@
 @implementation CFBProtectedAttachment
 {
     CFBStream *_content;
-    NSString    *_contentID;
 }
 
-- (NSData *)content
-{
-    return [_content readAll];
-}
-
-- (NSString *)contentID
-{
-    return _contentID;
-}
+#pragma mark - Initialization
 
 - (id)initWithStorage:(CFBStorage *)storage
 {
@@ -113,6 +104,25 @@
     
     return self;
 }
+
+#pragma mark - Public Properties
+
+- (NSData *)content
+{
+    return [_content readAll];
+}
+
+@synthesize attachMethod    = _attachMethod;
+
+@synthesize contentID       = _contentID;
+@synthesize contentLocation = _contentLocation;
+@synthesize displayName     = _displayName;
+@synthesize extension       = _extension;
+@synthesize fileName        = _fileName;
+@synthesize longFileName    = _longFileName;
+@synthesize longPathName    = _longPathName;
+@synthesize pathName        = _pathName;
+
 
 - (void)loadAttachmentDescription:(CFBStream *)description
 {

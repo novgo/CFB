@@ -22,10 +22,14 @@
 
 @property (readonly, nonatomic) u_int64_t length;
 
-- (void)readBytes:(void *)bytes range:(NSRange)range;
+- (void)close;
 
-// Read a range of bytes from the source.
-- (NSData *)readRange:(NSRange)range;
+- (BOOL)isReadOnly;
+
+- (void)readBytes:(void *)bytes range:(NSRange)range;
+- (NSData *)readData:(NSRange)range;
+
+- (void)writeBytes:(void *)bytes range:(NSRange)range;
 - (void)writeData:(NSData *)data location:(NSUInteger)location;
 
 @end
@@ -39,5 +43,9 @@
 @interface CFBFileSource : NSObject <CFBSource>
 
 - (id)initWithFileHandle:(NSFileHandle *)handle;
+
+@end
+
+@interface CFBMutableFileSource : CFBFileSource
 
 @end

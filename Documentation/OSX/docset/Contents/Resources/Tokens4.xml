@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBProtectedFile.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBProtectedFile</TokenIdentifier>
+			<Abstract type="html">A CFB file that contains protected content.</Abstract>
+			<DeclaredIn>CFBProtectedFile.h</DeclaredIn>
+            
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedFile/protectedFileForReadingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a protected file for reading from the specified path.</Abstract>
+			<DeclaredIn>CFBProtectedFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedFile *)protectedFileForReadingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedFileForReadingAtPath:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedFile/protectedFileForReadingWithData:</TokenIdentifier>
+			<Abstract type="html">Load a protected file for reading from the specified NSData object.</Abstract>
+			<DeclaredIn>CFBProtectedFile.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedFile *)protectedFileForReadingWithData:(NSData *)data</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The data for the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBFile instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedFileForReadingWithData:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedFile/init</TokenIdentifier>
+			<Abstract type="html">init is not available, use a class method to create an instance</Abstract>
+			<DeclaredIn>CFBProtectedFile.h</DeclaredIn>
+			
+			<Declaration>- (id)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

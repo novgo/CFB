@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBProtectedDocument.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBProtectedDocument</TokenIdentifier>
+			<Abstract type="html">A Microsoft Rights Protected Office Document</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+            
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedDocument/protectedDocumentForReadingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a protected document for reading from the specified path.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedDocument *)protectedDocumentForReadingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBProtectedDocument instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedDocumentForReadingAtPath:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedDocument/protectedDocumentForReadingWithData:</TokenIdentifier>
+			<Abstract type="html">Load a protected document for reading from the specified NSData object.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedDocument *)protectedDocumentForReadingWithData:(NSData *)data</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The data for the compound file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBProtectedDocument instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedDocumentForReadingWithData:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/init</TokenIdentifier>
+			<Abstract type="html">init is not available, use a class method to create an instance</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>- (id)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/setProtectedData:</TokenIdentifier>
+			<Abstract type="html">protectedData provides access to the data in the protected document. It is only
+valid after getProtectedData has been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/protectedData</TokenIdentifier>
+			<Abstract type="html">protectedData provides access to the data in the protected document. It is only
+valid after getProtectedData has been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBProtectedDocument/protectedData</TokenIdentifier>
+			<Abstract type="html">protectedData provides access to the data in the protected document. It is only
+valid after getProtectedData has been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/setProtectionPolicy:</TokenIdentifier>
+			<Abstract type="html">protectionPolicy provides access to the protection policy of the protected document. It is only
+valid after one of getProtectinPolicy or getProtectedData have been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/protectionPolicy</TokenIdentifier>
+			<Abstract type="html">protectionPolicy provides access to the protection policy of the protected document. It is only
+valid after one of getProtectinPolicy or getProtectedData have been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBProtectedDocument/protectionPolicy</TokenIdentifier>
+			<Abstract type="html">protectionPolicy provides access to the protection policy of the protected document. It is only
+valid after one of getProtectinPolicy or getProtectedData have been called.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/getProtectedData:</TokenIdentifier>
+			<Abstract type="html">Extracts the protected data in the document.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>- (void)getProtectedData:(void ( ^ ) ( CFBProtectedDocument *document , NSError *error ))completionBlock</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>completionBlock</Name>
+					<Abstract type="html">The block to be called when the protected data has been extracted.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getProtectedData:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedDocument/getProtectionPolicy:</TokenIdentifier>
+			<Abstract type="html">Extracts the protection policy for the message.</Abstract>
+			<DeclaredIn>CFBProtectedDocument.h</DeclaredIn>
+			
+			<Declaration>- (void)getProtectionPolicy:(void ( ^ ) ( CFBProtectedDocument *document , NSError *error ))completionBlock</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>completionBlock</Name>
+					<Abstract type="html">The block to be called when the protection policy has been extracted.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getProtectionPolicy:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

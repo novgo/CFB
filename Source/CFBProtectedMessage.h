@@ -16,21 +16,80 @@
 // limitations under the License.
 //
 
+#pragma once
+
 @class CFBProtectedMessageContent;
 
+/**
+ A Microsoft Rights Protected E-mail Message (.rpmsg)
+ */
 @interface CFBProtectedMessage : CFBProtectedFile
 
-// protectedData is only valid after getProtectedMessage
-@property (readonly, nonatomic) MSCustomProtectedData *protectedData;
-// protectedMessage is only valid after getProtectedMessage
-@property (readonly, nonatomic) CFBProtectedMessageContent   *protectedMessage;
-// protectionPolicy is only valid after getProtectionPolicy or getProtectedMessage
-@property (readonly, nonatomic) MSProtectionPolicy    *protectionPolicy;
+/**
+ Load a protected message for reading from the specified path.
+ 
+ The file must already exist when using this method.
+ 
+ @param path The path to the message file that is to be loaded.
+ @return A CFBProtectedMessage instance representing the file.
+ */
++ (CFBProtectedMessage *)protectedMessageForReadingAtPath:(NSString *)path;
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error;
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error;
+/**
+ Load a protected message for reading from the specified NSData object.
+ 
+ @param data The data for the message file that is to be loaded.
+ @return A CFBProtectedMessage instance representing the file.
+ */
++ (CFBProtectedMessage *)protectedMessageForReadingWithData:(NSData *)data;
 
+/**
+ The raw protected data of the message.
+ 
+ This data requires additional processing to extract meaningful content and
+ thus is not generally useful. Only valid after getProtectedMessage: has been
+ called.
+ */
+@property (readonly, nonatomic) MSCustomProtectedData      *protectedData;
+
+/**
+ The protected message content.
+ 
+ Provides access to the message body and attachments. Only valid after 
+ getProtectedMessage: has been called.
+ */
+@property (readonly, nonatomic) CFBProtectedMessageContent *protectedMessage;
+
+/**
+ The protection policy for the message.
+ 
+ Only valid after one of getProtectionPolicy: or getProtectedMessage: has been called.
+ */
+@property (readonly, nonatomic) MSProtectionPolicy         *protectionPolicy;
+
+/**
+ init is not available, use a class method to create an instance
+ */
+- (id)init __attribute__( ( unavailable("init not available") ) );
+
+/**
+ Extracts and decrypts the protected message.
+ 
+ This method uses the Microsoft RMS 3.0 SDK to unprotect the message content and
+ may require the user to authenticate to complete the operation.
+ 
+ @param completionBlock The block to be called when the message content has be extracted.
+ */
 - (void)getProtectedMessage:( void (^)( CFBProtectedMessage *, NSError * ) )completionBlock;
+
+/**
+ Extracts the protection policy for the message.
+ 
+ This method uses the Microsoft RMS 3.0 SDK to extract the protection policy and may
+ require the user to authenticate to complete the operation.
+ 
+ @param completionBlock The block to be called when the protection policy has been extracted.
+ */
 - (void)getProtectionPolicy:( void (^)( CFBProtectedMessage *, NSError *) )completionBlock;
 
 @end

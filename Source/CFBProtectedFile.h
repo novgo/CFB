@@ -16,13 +16,43 @@
 // limitations under the License.
 //
 
+#pragma once
+
+@protocol CFBSource;
+
+/**
+ A CFB file that contains protected content.
+ */
 @interface CFBProtectedFile : CFBFile
+
+/**
+ Load a protected file for reading from the specified path.
+ 
+ The file must already exist when using this method.
+ 
+ @param path The path to the compound file that is to be loaded.
+ @return A CFBFile instance representing the file.
+ */
++ (CFBProtectedFile *)protectedFileForReadingAtPath:(NSString *)path;
+
+/**
+ Load a protected file for reading from the specified NSData object.
+ 
+ @param data The data for the compound file that is to be loaded.
+ @return A CFBFile instance representing the file.
+ */
++ (CFBProtectedFile *)protectedFileForReadingWithData:(NSData *)data;
 
 @property (readonly, nonatomic) NSData   *encryptedContent;
 @property (readonly, nonatomic) u_int64_t encryptedContentLength;
 @property (readonly, nonatomic) NSData   *encryptedProtectionPolicy;
 
-- (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
+/**
+ init is not available, use a class method to create an instance
+ */
+- (id)init __attribute__( ( unavailable("init not available") ) );
+
+- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error;
+- (BOOL)validate:(NSError *__autoreleasing *)error;
 
 @end

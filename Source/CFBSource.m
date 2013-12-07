@@ -23,13 +23,6 @@
     NSData *_data;
 }
 
-#pragma mark - Properties
-
-- (u_int64_t)length
-{
-    return [_data length];
-}
-
 #pragma mark - Initialization
 
 - (id)initWithData:(NSData *)data
@@ -44,40 +37,47 @@
     return self;
 }
 
-#pragma mark - Data Access
+#pragma mark - Public Properties
+
+- (u_int64_t)length
+{
+    return [_data length];
+}
+
+#pragma mark - Public Methods
+
+- (void)close
+{
+    // Intentionally empty
+}
+
+- (BOOL)isReadOnly
+{
+    return YES;
+}
 
 - (void)readBytes:(void *)bytes range:(NSRange)range
 {
+    NSParameterAssert( bytes != NULL );
+    NSParameterAssert( range.location <= self.length );
+    NSParameterAssert( range.location + range.length <= self.length );
+    
     if ( !bytes )
         return;
     
-    if ( range.location > self.length )
-        return;
-    
-    if ( range.location + range.length > self.length )
+    if ( range.location > self.length || range.location + range.length > self.length )
         return;
     
     [_data getBytes:bytes range:range];
 }
 
-- (void)writeData:(NSData *)data location:(NSUInteger)location
+- (NSData *)readData:(NSRange)range
 {
-    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
-}
-
-- (NSData *)readRange:(NSRange)range
-{
-    if ( range.location > self.length )
-    {
-        NSAssert( false, @"Range.location is out of bounds" );
-        return nil;
-    }
+    NSParameterAssert( range.location <= self.length );
+    NSParameterAssert( range.location + range.length <= self.length );
     
-    if ( range.location + range.length > self.length )
-    {
-        NSAssert( false, @"Range is out of bounds" );
+    if ( range.location > self.length || range.location + range.length > self.length )
         return nil;
-    }
     
     NSData *data = [[NSData alloc] initWithBytesNoCopy:( (void *)([_data bytes] + range.location) ) length:range.length freeWhenDone:NO];
     
@@ -86,19 +86,25 @@
     return data;
 }
 
+- (void)writeBytes:(void *)bytes range:(NSRange)range
+{
+#pragma unused( bytes, range )
+    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+}
+
+- (void)writeData:(NSData *)data location:(NSUInteger)location
+{
+#pragma unused( data, location )
+    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+}
+
 @end
 
 @implementation CFBFileSource
 {
+    
+@protected
     NSFileHandle *_handle;
-    u_int64_t     _length;
-}
-
-#pragma mark - Properties
-
-- (u_int64_t)length
-{
-    return _length;
 }
 
 #pragma mark - Initialization
@@ -110,7 +116,6 @@
     if ( self )
     {
         _handle = handle;
-        _length = [_handle seekToEndOfFile];
     }
     
     return self;
@@ -121,48 +126,92 @@
     [_handle closeFile];
 }
 
-#pragma mark - Data Access
+#pragma mark - Public Properties
+
+- (u_int64_t)length
+{
+    return [_handle seekToEndOfFile];
+}
+
+#pragma mark - Public Methods
+
+- (void)close
+{
+    [_handle closeFile];
+}
+
+- (BOOL)isReadOnly
+{
+    return YES;
+}
 
 - (void)readBytes:(void *)bytes range:(NSRange)range
 {
+    NSParameterAssert( bytes != NULL );
+    
     if ( !bytes )
         return;
     
-    if ( range.location > self.length )
-        return;
+    NSData *result = nil;
     
-    if ( range.location + range.length > self.length )
-        return;
-    
-    [_handle seekToFileOffset:range.location];
-    
-    NSData *result = [_handle readDataOfLength:range.length];
-    
-    [result getBytes:bytes range:NSMakeRange( 0, range.length )];
+    if ( ( result = [self readData:range] ) != nil )
+        [result getBytes:bytes range:NSMakeRange( 0, range.length )];
 }
 
-
-- (void)writeData:(NSData *)data location:(NSUInteger)location
+- (NSData *)readData:(NSRange)range
 {
-    [_handle seekToFileOffset:location];
-    [_handle writeData:data];
-    [_handle synchronizeFile];
+    NSParameterAssert( range.location <= self.length );
+    NSParameterAssert( range.location + range.length <= self.length );
     
-    _length = [_handle seekToEndOfFile];
-}
-
-
-- (NSData *)readRange:(NSRange)range
-{
-    if ( range.location > self.length )
-        return nil;
-    
-    if ( range.location + range.length > self.length )
+    if ( range.location > self.length || range.location + range.length > self.length )
         return nil;
     
     [_handle seekToFileOffset:range.location];
     
     return [_handle readDataOfLength:range.length];
+}
+
+- (void)writeBytes:(void *)bytes range:(NSRange)range
+{
+#pragma unused( bytes, range )
+    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+}
+
+- (void)writeData:(NSData *)data location:(NSUInteger)location
+{
+#pragma unused( data, location )
+    @throw [NSException exceptionWithName:@"NotSupported" reason:@"Not Supported" userInfo:nil];
+}
+
+@end
+
+@implementation CFBMutableFileSource
+{
+}
+
+#pragma mark - Public Properties
+
+#pragma mark - Public Methods
+
+- (BOOL)isReadOnly
+{
+    return NO;
+}
+
+- (void)writeBytes:(void *)bytes range:(NSRange)range
+{
+    NSParameterAssert( bytes != NULL );
+    
+    [self writeData:[NSData dataWithBytesNoCopy:bytes length:range.length freeWhenDone:NO] location:range.location];
+}
+
+- (void)writeData:(NSData *)data location:(NSUInteger)location
+{
+    NSParameterAssert( data != nil );
+    
+    [_handle seekToFileOffset:location];
+    [_handle writeData:data];
+    [_handle synchronizeFile];
 }
 
 @end

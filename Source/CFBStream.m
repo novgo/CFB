@@ -29,14 +29,23 @@
 {
 }
 
-#pragma mark Public Properties
+#pragma mark - Public Properties
 
 - (u_int64_t)length
 {
     return self.directoryEntry.streamLength;
 }
 
-#pragma mark Public Methods
+#pragma mark - Public Methods
+
+- (id)init
+{
+    NSAssert( false, @"Cannot call simple initializer" );
+    
+    return nil;
+}
+
+#pragma mark - Internal Methods
 
 - (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
 {

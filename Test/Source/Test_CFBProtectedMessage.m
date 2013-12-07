@@ -52,16 +52,16 @@
             NSLog( @"%s Testing message-%d.rpmsg", __PRETTY_FUNCTION__, i );
             
             NSError      *error      = nil;
-            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
-            NSData       *fileData   = [fileHandle readDataToEndOfFile];
             CFBProtectedMessage *file       = nil;
             
-            [fileHandle seekToFileOffset:0];
-            file = [[CFBProtectedMessage alloc] initWithFileHandle:fileHandle error:&error];
+            file = [CFBProtectedMessage protectedMessageForReadingAtPath:filePath];
             
             XCTAssertTrue( file != nil, @"%s Failed to load message-%d as file: %@", __PRETTY_FUNCTION__, i, error.localizedDescription );
             
-            file = [[CFBProtectedMessage alloc] initWithData:fileData error:&error];
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+            NSData       *fileData   = [fileHandle readDataToEndOfFile];
+            
+            file = [CFBProtectedMessage protectedMessageForReadingWithData:fileData];
             
             XCTAssertTrue( file != nil, @"%s Failed to load message-%d as data: %@", __PRETTY_FUNCTION__, i, error.localizedDescription );
             

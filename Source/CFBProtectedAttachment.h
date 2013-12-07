@@ -16,6 +16,8 @@
 // limitations under the License.
 //
 
+#pragma once
+
 enum MSAttachMethod
 {
     afNone            = 0x00000000,

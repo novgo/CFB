@@ -31,12 +31,46 @@
     NSMutableDictionary *_contents;
 }
 
+#pragma mark - Public Properties
+
+#pragma mark - Public Methods
+
 - (id)init
 {
     NSAssert( false, @"Cannot call simple initializer" );
     
     return nil;
 }
+
+- (void)addObject:(CFBObject *)child
+{
+    NSParameterAssert( child != nil );
+
+    NSAssert( _contents != nil, @"Contents is nil" );
+    [_contents setObject:child forKey:[child name]];
+}
+
+- (NSArray *)allKeys
+{
+    NSAssert( _contents != nil, @"Contents is nil" );
+    return [_contents allKeys];
+}
+
+- (NSArray *)allValues
+{
+    NSAssert( _contents != nil, @"Contents is nil" );
+    return [_contents allValues];
+}
+
+- (CFBObject *)objectForKey:(NSString *)key
+{
+    NSParameterAssert( key != nil );
+    
+    NSAssert( _contents != nil, @"Contents is nil" );
+    return [_contents objectForKey:key];
+}
+
+#pragma mark - Internal Methods
 
 - (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container
 {
@@ -48,31 +82,6 @@
     }
     
     return self;
-}
-
-- (void)addObject:(CFBObject *)child
-{
-    NSAssert( child != nil, @"Child is nil" );
-
-    NSAssert( _contents != nil, @"Contents is nil" );
-    [_contents setObject:child forKey:[child name]];
-}
-
-- (NSArray *)allKeys
-{
-    return [_contents allKeys];
-}
-
-- (NSArray *)allValues
-{
-    return [_contents allValues];
-}
-
-- (CFBObject *)objectForKey:(NSString *)key
-{
-    NSAssert( _contents != nil, @"Contents is nil" );
-
-    return [_contents objectForKey:key];
 }
 
 @end

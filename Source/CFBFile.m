@@ -24,8 +24,9 @@
 
 #import "CFBObject.h"
 #import "CFBObjectInternal.h"
-#import "CFBStorage.h"
+
 #import "CFBStream.h"
+#import "CFBStorage.h"
 
 #import "CFBSource.h"
 
@@ -34,8 +35,6 @@
 
 // Private Interface
 @interface CFBFile ()
-
-- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error;
 
 - (BOOL)createFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
 - (BOOL)createDirectory:(id<CFBSource>)source error:(NSError * __autoreleasing *)error;
@@ -54,18 +53,15 @@
 
 @implementation CFBFile
 {
+    id<CFBSource>   _source;
     MSCFB_HEADER    _header;
+
+    CFBFileAllocationTable *_fat;
+    NSMutableData          *_miniFat;
     
     NSMutableArray *_directory;
     
-    //NSMutableData  *_fat;
-    CFBFileAllocationTable *_fat;
-    
-    NSMutableData  *_miniFat;
-    
-    id<CFBSource> _source;
-    
-    CFBStorage   *_root;
+    CFBStorage     *_root;
 }
 
 #pragma mark - Class Methods
@@ -76,14 +72,14 @@
     CFBFile    *file       = nil;
     
     if ( fileHandle )
-        file = [[CFBFile alloc] initWithFileHandle:fileHandle error:nil];
+        file = [[CFBFile alloc] initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:nil];
     
     return file;
 }
 
 + (CFBFile *)compoundFileForReadingWithData:(NSData *)data
 {
-    CFBFile *file = [[CFBFile alloc] initWithData:data error:nil];
+    CFBFile *file = [[CFBFile alloc] initWithSource:[[CFBDataSource alloc] initWithData:data] error:nil];
     
     return file;
 }
@@ -98,7 +94,7 @@
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
         
         if ( fileHandle )
-            file = [[CFBFile alloc] initWithFileHandle:fileHandle error:nil];
+            file = [[CFBFile alloc] initWithSource:[[CFBMutableFileSource alloc] initWithFileHandle:fileHandle] error:nil];
     }
     
     return file;
@@ -106,7 +102,7 @@
 
 + (CFBFile *)compoundFileForWritingAtPath:(NSString *)path
 {
-    CFBFile     *file        = nil;
+    CFBFile       *file        = nil;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSFileHandle  *fileHandle  = nil;
     
@@ -126,7 +122,7 @@
     }
     
     if ( fileHandle )
-        file = [[CFBFile alloc] initForWritingWithFileHandle:fileHandle error:nil];
+        file = [[CFBFile alloc] initForWritingWithSource:[[CFBMutableFileSource alloc] initWithFileHandle:fileHandle] error:nil];
     
     return file;
 }
@@ -140,38 +136,10 @@
     return nil;
 }
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
-{
-    self = [super init];
-    
-    if ( !self )
-        return nil;
-    
-    return [self initWithSource:[[CFBDataSource alloc] initWithData:data] error:error];
-}
-
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    self = [super init];
-    
-    if ( !self )
-        return nil;
-
-    return [self initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
-}
-
-- (id)initForWritingWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    self = [super init];
-    
-    if ( !self )
-        return nil;
-    
-    return [self initForWritingWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:error];
-}
-
 - (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
 {
+    NSParameterAssert( source != nil );
+    
     // Initialize private fields
     _directory = nil;
     _fat       = nil;
@@ -217,6 +185,9 @@
 
 - (id)initForWritingWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
 {
+    NSParameterAssert( source != nil );
+    NSParameterAssert( [source isReadOnly] == NO );
+    
     if ( ![self createHeader:source error:error] )
     {
         self = nil; return self;
@@ -237,7 +208,12 @@
 
 - (void)close
 {
-    
+    [_source close];
+}
+
+- (BOOL)isReadOnly
+{
+    return [_source isReadOnly];
 }
 
 - (NSArray *)allKeys
@@ -278,12 +254,9 @@
     NSUInteger     bytesRemaining = range.length;
     NSMutableData *bytes          = [[NSMutableData alloc] initWithCapacity:range.length];
     
+    // Calculate the range of sectors that must be read:
     u_int32_t      sectorIndex    = index;
-    NSRange        sectorRange    = { 0, 0 };
-    
-    // Calculate the range of sectors that must be read
-    sectorRange.location = range.location >> _header.sectorShift;
-    sectorRange.length   = ( range.length >> _header.sectorShift ) + 1;
+    NSRange        sectorRange    = { range.location >> _header.sectorShift, ( range.length >> _header.sectorShift ) + 1 };
     
     // Follow the chain from the starting sector until we reach the
     // the first sector that must be read. At the end of the loop,
@@ -360,7 +333,6 @@
         NSRange  byteRange = { 0, 0 };
         
         // Location is offset into first sector. Length is bytes to read.
-        // TODO: Check for off-by-one errors
         byteRange.location = range.location % MINI_SECTOR_SIZE;
         byteRange.length   = ( bytesRemaining < ( MINI_SECTOR_SIZE - byteRange.location ) ) ? bytesRemaining : ( MINI_SECTOR_SIZE - byteRange.location );
         
@@ -406,14 +378,17 @@
 // Create a new file allocation table
 - (BOOL)createFileAllocationTable:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
+    NSParameterAssert( source != nil );
+    NSParameterAssert( [source isReadOnly] == NO );
+    
     // Write the first FAT sector
     u_int32_t fatSector[SECTOR_SIZE >> 2];
     
     for ( int i = 0; i < SECTOR_SIZE >> 2; i++ )
         fatSector[i] = FAT_SECTOR_END_OF_CHAIN;
     
-    NSData *data = [[NSData alloc] initWithBytesNoCopy:&fatSector length:SECTOR_SIZE freeWhenDone:NO];
-    [source writeData:data location:SECTOR_OFFSET( _header.difat[0] )];
+    // Write the sector: note that we cannot do a sectorWrite here because _source is not initialized.
+    [source writeBytes:&fatSector range:NSMakeRange( SECTOR_OFFSET(_header.difat[0]), SECTOR_SIZE)];
 
     return YES;
 }
@@ -421,6 +396,9 @@
 // Create a new directory with a root storage
 - (BOOL)createDirectory:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
+    NSParameterAssert( source != nil );
+    NSParameterAssert( [source isReadOnly] == NO );
+    
     // Bootstrap the Directory and the Root Entry storage
     MSCFB_DIRECTORY_ENTRY directorySector[4];
     CFBDirectoryEntry  *directoryEntry      = [[CFBDirectoryEntry alloc] init];
@@ -439,10 +417,8 @@
     
     [directoryEntry getDirectoryEntry:&directorySector[0]];
     
-    NSData *data = [[NSData alloc] initWithBytesNoCopy:&directorySector[0] length:(sizeof(MSCFB_DIRECTORY_ENTRY) << 2) freeWhenDone:NO];
-    
-    // Write the header
-    [source writeData:data location:SECTOR_OFFSET(_header.firstDirectorySector)];
+    // Write the directory entry: note that we cannot do a sectorWrite here because _source is not initialized.
+    [source writeBytes:&directorySector range:NSMakeRange( SECTOR_OFFSET( _header.firstDirectorySector ), SECTOR_SIZE )];
 
     return YES;
 }
@@ -450,6 +426,9 @@
 // Create a header for a new file
 - (BOOL)createHeader:(id<CFBSource>)source error:(NSError * __autoreleasing *)error
 {
+    NSParameterAssert( source != nil );
+    NSParameterAssert( [source isReadOnly] == NO );
+    
     // Initialize the header and write it
     memset( &_header, 0, sizeof( MSCFB_HEADER ) );
     
@@ -491,9 +470,8 @@
     _header.directorySectors     = 0; // Version 3 is zero, Version 4 is a count
     _header.firstDirectorySector = 1; // The first directory sector is 1
     
-    // Write the header
-    NSData *data = [[NSData alloc] initWithBytesNoCopy:&_header length:sizeof(MSCFB_HEADER) freeWhenDone:NO];
-    [source writeData:data location:0];
+    // Write the header: note that we cannot do a sectorWrite here because _source is not initialized.
+    [source writeBytes:&_header range:NSMakeRange( 0, sizeof(MSCFB_HEADER) )];
     
     return YES;
 }
@@ -677,15 +655,17 @@
 
 - (NSData *)sectorRead:(NSUInteger)index
 {
-    // Current sector must be within the FAT range. The number of entires in the FAT
-    // is given by _header.fatSectors << _header.sectorShift >> 2. It must also not be a free sector or a DIFAT sector,
-    // and definitely not end of chain.
-    NSAssert( index < _header.fatSectors << _header.sectorShift >> 2, @"Sector outside FAT bounds" );
-    NSAssert( index != FAT_SECTOR_FREE, @"Sector is a free sector" );
-    NSAssert( index != FAT_SECTOR_DIFAT, @"Sector is a DIFAT sector" );
-    NSAssert( index != FAT_SECTOR_END_OF_CHAIN, @"Sector is End of Chain" );
+    // Current sector must be within the FAT range. The number of entries in the FAT
+    // is given by _header.fatSectors << _header.sectorShift >> 2. It must also not
+    // be a free sector or a DIFAT sector, and definitely not end of chain.
+    NSParameterAssert( index < _header.fatSectors << _header.sectorShift >> 2 );
+    NSParameterAssert( index != FAT_SECTOR_FREE );
+    NSParameterAssert( index != FAT_SECTOR_DIFAT );
+    NSParameterAssert( index != FAT_SECTOR_END_OF_CHAIN );
     
-    NSData *data = [_source readRange:NSMakeRange( SECTOR_OFFSET( index ), SECTOR_SIZE )];
+    NSAssert( _source, @"No valid source" );
+    
+    NSData *data = [_source readData:NSMakeRange( SECTOR_OFFSET( index ), SECTOR_SIZE )];
     
     NSAssert( data != nil, @"Did not read any data" );
     NSAssert( data.length == SECTOR_SIZE, @"Did not read a complete sector" );
@@ -695,7 +675,13 @@
 
 - (void)sectorWrite:(NSUInteger)index data:(NSData *)data
 {
-    NSAssert( false, @"Not implemented" );
+    NSParameterAssert( data != nil );
+    NSParameterAssert( data.length == SECTOR_SIZE );
+
+    NSAssert( _source, @"No valid source" );
+    NSAssert( [_source isReadOnly] == NO, @"Source is read-only" );
+    
+    [_source writeData:data location:SECTOR_OFFSET( index )];
 }
 
 - (void)walkTree:(CFBDirectoryEntry *)entry forStorage:(CFBStorage *)storage

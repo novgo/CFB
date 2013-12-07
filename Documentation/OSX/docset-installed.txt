@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/herveyw/Library/Developer/Shared/Documentation/DocSets/com.dynamic-cast.CFB-OSX.docset
+Time: 2013-12-07 08:58:56 +0000

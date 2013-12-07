@@ -34,6 +34,6 @@ enum MessageContentType
 @property (readonly, nonatomic) NSArray                *attachments;
 
 - (id)initWithData:(NSData *)data error:(NSError * __autoreleasing *)error;
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
+//- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError * __autoreleasing *)error;
 
 @end

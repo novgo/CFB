@@ -33,7 +33,7 @@
 @implementation CFBFileAllocationTable
 {
     CFBFile __weak *_file;
-    NSMutableData    *_fat;
+    NSMutableData  *_fat;
 }
 
 - (id)init:(CFBFile __weak *)file error:(NSError * __autoreleasing *)error

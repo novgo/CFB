@@ -19,10 +19,13 @@
 @class CFBDirectoryEntry;
 @class CFBObject;
 
+/**
+ A Compound File Binary stream.
+ */
 @interface CFBStream : CFBObject
 
 @property (readonly, nonatomic) u_int64_t length;
 
-- (id)init:(CFBDirectoryEntry *)entry container:(CFBFile *)container;
+- (id)init __attribute__( ( unavailable("init not available") ) );
 
 @end

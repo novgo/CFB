@@ -31,40 +31,32 @@
 {
 }
 
+#pragma mark - Class Methods
+
++ (CFBProtectedDocument *)protectedDocumentForReadingAtPath:(NSString *)path
+{
+    NSFileHandle         *fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
+    CFBProtectedDocument *file       = nil;
+    
+    if ( fileHandle )
+        file = [[CFBProtectedDocument alloc] initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:nil];
+    
+    return file;
+}
+
++ (CFBProtectedDocument *)protectedDocumentForReadingWithData:(NSData *)data
+{
+    CFBProtectedDocument *file = [[CFBProtectedDocument alloc] initWithSource:[[CFBDataSource alloc] initWithData:data] error:nil];
+    
+    return file;
+}
+
 #pragma mark - Public Properties
 
 @synthesize protectedData    = _protectedData;
 @synthesize protectionPolicy = _protectionPolicy;
 
 #pragma mark - Public Methods
-
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    self = [super initWithData:data error:error];
-    
-    if ( self )
-    {
-    }
-
-    return self;
-}
-
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    self = [super initWithFileHandle:fileHandle error:error];
-    
-    if ( self )
-    {
-    }
-    
-    return self;
-}
 
 - (void)getProtectedData:(void (^)(CFBProtectedDocument *, NSError *))completionBlock
 {

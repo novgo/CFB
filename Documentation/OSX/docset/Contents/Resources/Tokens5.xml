@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBProtectedMessage.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBProtectedMessage</TokenIdentifier>
+			<Abstract type="html">A Microsoft Rights Protected E-mail Message (.rpmsg)</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+            
+			
+			<NodeRef refid="5"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedMessage/protectedMessageForReadingAtPath:</TokenIdentifier>
+			<Abstract type="html">Load a protected message for reading from the specified path.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedMessage *)protectedMessageForReadingAtPath:(NSString *)path</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>path</Name>
+					<Abstract type="html">The path to the message file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBProtectedMessage instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedMessageForReadingAtPath:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/CFBProtectedMessage/protectedMessageForReadingWithData:</TokenIdentifier>
+			<Abstract type="html">Load a protected message for reading from the specified NSData object.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>+ (CFBProtectedMessage *)protectedMessageForReadingWithData:(NSData *)data</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>data</Name>
+					<Abstract type="html">The data for the message file that is to be loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">A CFBProtectedMessage instance representing the file.</Abstract></ReturnValue>
+			<Anchor>//api/name/protectedMessageForReadingWithData:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/setProtectedData:</TokenIdentifier>
+			<Abstract type="html">The raw protected data of the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/protectedData</TokenIdentifier>
+			<Abstract type="html">The raw protected data of the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBProtectedMessage/protectedData</TokenIdentifier>
+			<Abstract type="html">The raw protected data of the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSCustomProtectedData *protectedData</Declaration>
+			
+			
+			<Anchor>//api/name/protectedData</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/setProtectedMessage:</TokenIdentifier>
+			<Abstract type="html">The protected message content.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) CFBProtectedMessageContent *protectedMessage</Declaration>
+			
+			
+			<Anchor>//api/name/protectedMessage</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/protectedMessage</TokenIdentifier>
+			<Abstract type="html">The protected message content.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) CFBProtectedMessageContent *protectedMessage</Declaration>
+			
+			
+			<Anchor>//api/name/protectedMessage</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBProtectedMessage/protectedMessage</TokenIdentifier>
+			<Abstract type="html">The protected message content.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) CFBProtectedMessageContent *protectedMessage</Declaration>
+			
+			
+			<Anchor>//api/name/protectedMessage</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/setProtectionPolicy:</TokenIdentifier>
+			<Abstract type="html">The protection policy for the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/protectionPolicy</TokenIdentifier>
+			<Abstract type="html">The protection policy for the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/CFBProtectedMessage/protectionPolicy</TokenIdentifier>
+			<Abstract type="html">The protection policy for the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>@property (readonly, nonatomic) MSProtectionPolicy *protectionPolicy</Declaration>
+			
+			
+			<Anchor>//api/name/protectionPolicy</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/init</TokenIdentifier>
+			<Abstract type="html">init is not available, use a class method to create an instance</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>- (id)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/getProtectedMessage:</TokenIdentifier>
+			<Abstract type="html">Extracts and decrypts the protected message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>- (void)getProtectedMessage:(void ( ^ ) ( CFBProtectedMessage *, NSError *))completionBlock</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>completionBlock</Name>
+					<Abstract type="html">The block to be called when the message content has be extracted.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getProtectedMessage:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBProtectedMessage/getProtectionPolicy:</TokenIdentifier>
+			<Abstract type="html">Extracts the protection policy for the message.</Abstract>
+			<DeclaredIn>CFBProtectedMessage.h</DeclaredIn>
+			
+			<Declaration>- (void)getProtectionPolicy:(void ( ^ ) ( CFBProtectedMessage *, NSError *))completionBlock</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>completionBlock</Name>
+					<Abstract type="html">The block to be called when the protection policy has been extracted.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/getProtectionPolicy:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

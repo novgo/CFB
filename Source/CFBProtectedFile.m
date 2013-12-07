@@ -19,6 +19,8 @@
 #import "CFBError.h"
 #import "CFBTypes.h"
 
+#import "CFBSource.h"
+
 #import "CFBFile.h"
 #import "CFBFileInternal.h"
 
@@ -38,54 +40,54 @@ static const unichar _EncryptedPackage[] = { 'E', 'n', 'c', 'r', 'y', 'p', 't', 
 static const unichar _Primary[]          = { '\x6', 'P', 'r', 'i', 'm', 'a', 'r', 'y' };
 
 @interface CFBProtectedFile ()
-
-- (BOOL)validate:(NSError *__autoreleasing *)error;
-
 @end
 
 @implementation CFBProtectedFile
+
+#pragma mark - Class Methods
+
++ (CFBProtectedFile *)protectedFileForReadingAtPath:(NSString *)path
+{
+    NSFileHandle     *fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
+    CFBProtectedFile *file       = nil;
+    
+    if ( fileHandle )
+        file = [[CFBProtectedFile alloc] initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:nil];
+    
+    return file;
+}
+
++ (CFBProtectedFile *)protectedFileForReadingWithData:(NSData *)data
+{
+    CFBProtectedFile *file = [[CFBProtectedFile alloc] initWithSource:[[CFBDataSource alloc] initWithData:data] error:nil];
+    
+    return file;
+}
+
+#pragma mark - Initialization
+
+- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
+{
+    if ( error )
+        *error = nil;
+    
+    _encryptedContent          = nil;
+    _encryptedContentLength    = 0;
+    _encryptedProtectionPolicy = nil;
+    
+    if ( ( self = [super initWithSource:source error:error] ) != nil )
+    {
+        self = [self validate:error] ? self : nil;
+    }
+    
+    return self;
+}
 
 #pragma mark - Public Properties
 
 @synthesize encryptedContent          = _encryptedContent;
 @synthesize encryptedContentLength    = _encryptedContentLength;
 @synthesize encryptedProtectionPolicy = _encryptedProtectionPolicy;
-
-#pragma mark - Public Methods
-
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    _encryptedContent          = nil;
-    _encryptedContentLength    = 0;
-    _encryptedProtectionPolicy = nil;
-    
-    if ( ( self = [super initWithData:data error:error] ) != nil )
-    {
-        self = [self validate:error] ? self : nil;
-    }
-    
-    return self;
-}
-
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    _encryptedContent          = nil;
-    _encryptedContentLength    = 0;
-    _encryptedProtectionPolicy = nil;
-    
-    if ( ( self = [super initWithFileHandle:fileHandle error:error] ) != nil )
-    {
-        self = [self validate:error] ? self : nil;
-    }
-    
-    return self;
-}
 
 #pragma mark - Private Methods
 

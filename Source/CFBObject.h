@@ -21,14 +21,47 @@
 @class CFBDirectoryEntry;
 @class CFBFile;
 
+enum CFBObjectType
+{
+    Unknown = 0,
+    Storage = 1,
+    Stream  = 2,
+    Root    = 5
+};
+
+/**
+ A Compound File Binary object. This is an abstract class, concrete implementations include
+ CFBStorage and CFBStream.
+ */
 @interface CFBObject : NSObject
 
-@property (readonly, nonatomic) NSString *name;
-@property (readonly, nonatomic) Byte      objectType;
+/**
+ The name of the object.
+ */
+@property (readonly, nonatomic) NSString           *name;
+
+/**
+ The type of the object.
+ */
+@property (readonly, nonatomic) enum CFBObjectType  type;
 
 - (id)init __attribute__( ( unavailable("init not available") ) );
 
+/**
+ Reads data from the object using the specified range. Note that objects of type Root
+ cannot be read as these contain the mini stream for the CFBFile.
+ 
+ @param range The location and length of data to read.
+ @return The data.
+ */
 - (NSData *)read:(NSRange)range;
+
+/**
+ Reads all the data from the object. Note that objects of type Root cannot be read
+ as these contain the mini stream for the CFBFile.
+ 
+ @return The data.
+ */
 - (NSData *)readAll;
 
 @end

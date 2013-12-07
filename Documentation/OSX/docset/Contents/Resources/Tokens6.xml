@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBStorage.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBStorage</TokenIdentifier>
+			<Abstract type="html">A Compound File Binary Storage. A CFBStorage object acts like a file system
+directory object and can contain further CFBStorage and CFBStream objects.</Abstract>
+			<DeclaredIn>CFBStorage.h</DeclaredIn>
+            
+			
+			<NodeRef refid="6"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/CFBStorage/addObject:</TokenIdentifier>
+			<Abstract type="html">Adds a CFBObject to the CFBStorage. Only CFBStorage and CFBStream may be
+added to a CFBStorage and on if the CFBStorage is not read only.</Abstract>
+			<DeclaredIn>CFBStorage.h</DeclaredIn>
+			
+			<Declaration>- (void)addObject:(CFBObject *)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object to be added.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addObject:</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

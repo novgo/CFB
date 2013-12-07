@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/CFBStream.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/CFBStream</TokenIdentifier>
+			<Abstract type="html">A Compound File Binary stream.</Abstract>
+			<DeclaredIn>CFBStream.h</DeclaredIn>
+            
+			
+			<NodeRef refid="7"/>
+		</Token>
+		
+		
+        
+	</File>
+</Tokens>

@@ -47,20 +47,38 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
 {
 }
 
+#pragma mark - Class Methods
+
++ (CFBProtectedMessage *)protectedMessageForReadingAtPath:(NSString *)path
+{
+    NSFileHandle        *fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
+    CFBProtectedMessage *file       = nil;
+    
+    if ( fileHandle )
+        file = [[CFBProtectedMessage alloc] initWithSource:[[CFBFileSource alloc] initWithFileHandle:fileHandle] error:nil];
+    
+    return file;
+}
+
++ (CFBProtectedMessage *)protectedMessageForReadingWithData:(NSData *)data
+{
+    CFBProtectedMessage *file = [[CFBProtectedMessage alloc] initWithSource:[[CFBDataSource alloc] initWithData:data] error:nil];
+    
+    return file;
+}
+
 #pragma mark - Public Properties
 
 @synthesize protectedData    = _protectedData;
 @synthesize protectedMessage = _protectedMessage;
 @synthesize protectionPolicy = _protectionPolicy;
 
-#pragma mark - Public Methods
+#pragma mark - Initialization
 
-- (id)initWithData:(NSData *)data error:(NSError *__autoreleasing *)error
+- (id)initWithSource:(id<CFBSource>)source error:(NSError *__autoreleasing *)error
 {
     if ( error )
         *error = nil;
-
-    CFBDataSource *source = [[CFBDataSource alloc] initWithData:data];
     
     NSError *internalError = nil;
     NSData  *deflatedData  = [self decompress:source error:&internalError];
@@ -72,39 +90,7 @@ static const unsigned char compressedDrmMessageHeader[] = { '\x76', '\xE8', '\x0
     }
     else
     {
-        self = [super initWithData:deflatedData error:&internalError];
-        
-        if ( internalError )
-        {
-            if ( error ) *error = internalError;
-            self = nil;
-        }
-    }
-    
-    return self;
-}
-
-- (id)initWithFileHandle:(NSFileHandle *)fileHandle error:(NSError *__autoreleasing *)error
-{
-    if ( error )
-        *error = nil;
-    
-    if ( !ASSERT( error, fileHandle != 0, @"Invalid file handle" ) )
-        return nil;
-
-    CFBFileSource *source = [[CFBFileSource alloc] initWithFileHandle:fileHandle];
-    
-    NSError *internalError = nil;
-    NSData  *deflatedData  = [self decompress:source error:&internalError];
-    
-    if ( internalError )
-    {
-        if ( error ) *error = internalError;
-        self = nil;
-    }
-    else
-    {
-        self = [super initWithData:deflatedData error:&internalError];
+        self = [super initWithSource:[[CFBDataSource alloc] initWithData:deflatedData] error:&internalError];
         
         if ( internalError )
         {

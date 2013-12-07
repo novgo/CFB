@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		BC813A0A184DB2130012C807 /* CFBDocumentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = BC813A0D184DB2130012C807 /* Build configuration list for PBXAggregateTarget "CFBDocumentation" */;
+			buildPhases = (
+				BC813A10184DB2F60012C807 /* ShellScript */,
+			);
+			dependencies = (
+				BC813A0F184DB2380012C807 /* PBXTargetDependency */,
+			);
+			name = CFBDocumentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		BC1BCD5C1743D0CF000F4D85 /* message-1.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD541743D0C0000F4D85 /* message-1.rpmsg */; };
 		BC1BCD5D1743D0CF000F4D85 /* message-2.rpmsg in Resources */ = {isa = PBXBuildFile; fileRef = BC1BCD551743D0C0000F4D85 /* message-2.rpmsg */; };
@@ -72,6 +87,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = BC268C8117128BAC00687A1D;
 			remoteInfo = MSCFB;
+		};
+		BC813A0E184DB2380012C807 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC268C7917128BAC00687A1D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC268C8117128BAC00687A1D;
+			remoteInfo = CFB;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -414,6 +436,7 @@
 			targets = (
 				BC268C8117128BAC00687A1D /* CFB */,
 				BC268C9917128BAC00687A1D /* CFBTests */,
+				BC813A0A184DB2130012C807 /* CFBDocumentation */,
 			);
 		};
 /* End PBXProject section */
@@ -464,6 +487,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		BC813A10184DB2F60012C807 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"HerveyWilson\";\ncompanyID=\"com.dynamic-cast\";\ncompanyURL=\"http://dynamic-cast.com\";\n#target=\"iphoneos\";\ntarget=\"macosx\";\noutputPath=\"${PROJECT_DIR}/Documentation/OSX\";\n# End constants\n${PROJECT_DIR}/External/appledoc/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n\"${PROJECT_DIR}/Source\"";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -504,6 +540,11 @@
 			isa = PBXTargetDependency;
 			target = BC268C8117128BAC00687A1D /* CFB */;
 			targetProxy = BC268C9E17128BAC00687A1D /* PBXContainerItemProxy */;
+		};
+		BC813A0F184DB2380012C807 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC268C8117128BAC00687A1D /* CFB */;
+			targetProxy = BC813A0E184DB2380012C807 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -634,6 +675,7 @@
 		BC268CB017128BAC00687A1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CFB.framework/Versions/A/CFB";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -646,12 +688,14 @@
 				INFOPLIST_FILE = "Test/Resources/OSX/MSCFBTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
 		};
 		BC268CB117128BAC00687A1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CFB.framework/Versions/A/CFB";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -663,6 +707,21 @@
 				GCC_PREFIX_HEADER = Source/OSX/Prefix.pch;
 				INFOPLIST_FILE = "Test/Resources/OSX/MSCFBTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
+		BC813A0B184DB2130012C807 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BC813A0C184DB2130012C807 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -693,6 +752,15 @@
 			buildConfigurations = (
 				BC268CB017128BAC00687A1D /* Debug */,
 				BC268CB117128BAC00687A1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC813A0D184DB2130012C807 /* Build configuration list for PBXAggregateTarget "CFBDocumentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC813A0B184DB2130012C807 /* Debug */,
+				BC813A0C184DB2130012C807 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

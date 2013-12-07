@@ -3,7 +3,8 @@ CFB
 
 Microsoft Compound File Binary Library for iOS and OSX.
 
-These libraries implement support for the Microsoft Compound File Binary file format, commonly known as OLE2 Structured Storage.
+These libraries implement support for the Microsoft Compound File Binary file format, commonly known as OLE2 Structured Storage, and
+additionally provide support for Microsoft Office documents and e-mail messages protected with Microsoft Rights Management Server.
 
 Refer to the Microsoft Open Specification [MS-CFB] at http://msdn.microsoft.com/en-us/library/dd942138.aspx for details of the
 specification.
