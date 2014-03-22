@@ -105,6 +105,30 @@
             break;
         }
     }
+    /*
+    filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"18838" ofType:@"docx"];
+    
+    if ( filePath )
+    {
+        //NSLog( @"%s Testing document-%d.docx", __PRETTY_FUNCTION__, i );
+        
+        NSError      *error      = nil;
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
+        //NSData       *fileData   = [fileHandle readDataToEndOfFile];
+        
+        [fileHandle closeFile];
+        
+        CFBFile    *file       = nil;
+        
+        file = [CFBProtectedFile protectedFileForReadingAtPath:filePath];
+        
+        XCTAssertTrue( file != nil, @"Failed to load document-%d as file: %@", 0, error.localizedDescription );
+        
+        //file = [CFBFile compoundFileForReadingWithData:fileData];
+        
+        //XCTAssertTrue( file != nil, @"Failed to load document-%d as data: %@", i, error.localizedDescription );
+    }
+    */
 }
 
 - (void)testCompoundFileForWriting

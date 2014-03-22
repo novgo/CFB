@@ -1,18 +1,18 @@
 <?xml version="1.0" standalone="no"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:docset="http://developer.apple.com/rss/docset_extensions" xml:lang="en">
-    <id>http://dynamic-cast.com/HerveyWilson/HerveyWilson.atom/20131207005856</id>
+    <id>http://dynamic-cast.com/HerveyWilson/HerveyWilson.atom/20140321215353</id>
     <title type="text">CFB-OSX Documentation</title>
-    <rights>Copyright © 2013 HerveyWilson. All rights reserved.</rights>
+    <rights>Copyright © 2014 HerveyWilson. All rights reserved.</rights>
     <link rel="self" href="http://dynamic-cast.com/HerveyWilson/HerveyWilson.atom"></link>
     <docset:publisherName>HerveyWilson</docset:publisherName>
     <docset:publisherID>com.dynamic-cast.documentation</docset:publisherID>
-    <updated>2013-12-07T00:58:56-08:00</updated>
+    <updated>2014-03-21T21:53:53-07:00</updated>
     <entry>
-        <id>tag:dynamic-cast.com,2013-12-07:com.dynamic-cast.CFB-OSX/1.0.0</id>
+        <id>tag:dynamic-cast.com,2014-03-21:com.dynamic-cast.CFB-OSX/1.0.0</id>
         <title type="text">CFB-OSX Documentation</title>
-        <updated>2013-12-07T00:58:56-08:00</updated>
+        <updated>2014-03-21T21:53:53-07:00</updated>
         <content type="text">CFB-OSX Documentation (v1.0.0)</content>
-        <link rel="enclosure" type="application/octet-stream" href="http:/dynamic-cast.com/HerveyWilson/com.dynamic-cast.CFB-OSX-1.0.xar" length="96761"></link>
+        <link rel="enclosure" type="application/octet-stream" href="http:/dynamic-cast.com/HerveyWilson/com.dynamic-cast.CFB-OSX-1.0.xar" length="95753"></link>
         <docset:identifier>com.dynamic-cast.CFB-OSX</docset:identifier>
         <docset:version>1.0.0</docset:version>
         <docset:minimumXcodeVersion>3.0.0</docset:minimumXcodeVersion>

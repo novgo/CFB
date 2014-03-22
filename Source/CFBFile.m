@@ -294,7 +294,7 @@
             // Point to next sector
             sectorIndex = [_fat nextSectorInChain:sectorIndex];
         }
-        while ( bytesRemaining > 0 );
+        while ( bytesRemaining > 0 && sectorIndex != FAT_SECTOR_END_OF_CHAIN );
     }
     
     NSAssert( bytes.length == range.length, @"Failed to read correct number of bytes" );
@@ -365,7 +365,7 @@
             // Point to next sector
             sectorIndex = miniFAT->nextSector[sectorIndex];
         }
-        while ( bytesRemaining > 0 );
+        while ( bytesRemaining > 0 && sectorIndex != FAT_SECTOR_END_OF_CHAIN );
     }
     
     NSAssert( bytes.length == range.length, @"Failed to read correct number of bytes" );
